@@ -10,20 +10,22 @@
         $email = $_POST['email'];
         $password = $_POST['password'];
         
-        if (!isset($email) || $email == '' || !isset($password) || $password == '') {
+        echo $email, $password;
+
+        if ($email == '' || $password == '') {
             echo 'Rellenar todo el formulario';
         } else {
             $query = "SELECT * FROM cliente WHERE email='$email' AND password='$password'";
             $response = mysqli_query($db, $query);
             $user = $response->fetch_assoc();
-            if ($response->num_rows > 0 && $password == $user['password']) {
+            if ($response->num_rows > 0) {
                 // Inicio de sesión exitoso
                 header("Location: menuCL.php?status=success");
                 exit();
             } else {
                 $query = "SELECT * FROM empleados WHERE email='$email' AND password='$password'";
                 $response = mysqli_query($db, $query);
-                if ($response->num_rows > 0 && $password == $user['password']) {
+                if ($response->num_rows > 0) {
                     // Inicio de sesión exitoso
                     header("Location: menuCL.php?status=success");
                     exit();
@@ -62,10 +64,10 @@
             <form action="" method="POST">
                 <div class="align-items-form">
                     <div class="input-form">
-                        <input type="text" name="email" id="email" placeholder="Email" required>
+                        <input type="text" name="email" id="email" placeholder="Email">
                     </div>
                     <div class="input-form">
-                        <input type="password" name="password" id="password" placeholder="Password" required>
+                        <input type="password" name="password" id="password" placeholder="Password">
                     </div>
                     <div class="button-form">
                         <button style="font-size: 1.5rem" type="submit">Log In</button>
