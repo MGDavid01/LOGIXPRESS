@@ -1,0 +1,48 @@
+html {
+    font-size: 62.5%;
+}
+
+.navbar {
+    max-height: 6rem;
+    width: 100vw;
+    position: relative;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0 0.5rem .5rem rgba(0, 0, 0, 0.411);
+    padding: 0.5rem;
+    display: flex;
+    justify-content: space-around;
+    font-size: 2.5rem;
+    margin: 0 auto;
+    gap: 20rem;
+}
+
+.section-nav {
+    max-height: 6rem;
+    display: flex;
+    align-items: center;
+    align-content: center;
+}
+
+.nav-links {
+    font-family: Arial, sans-serif;
+    display: flex;
+    gap: 8rem;
+}
+
+.auth-links {
+    font-family: Arial, sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    gap: 1.2rem;
+}
+
+.navbar .nav-links a, .auth-links a {
+    color: #27434e;;
+    text-decoration: none;
+}
+
+.logo {
+    max-height: 4.5rem;
+}

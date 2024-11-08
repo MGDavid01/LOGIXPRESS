@@ -1,0 +1,96 @@
+/* General */
+
+html {
+    font-size: 62.5%;
+    margin: 0;
+    padding: 0;
+    max-height: 100%;
+    overflow: hidden;
+}
+
+body {
+    max-height: 100%;
+    max-width: 100%;
+    height: 100%;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    display: flex;
+    flex-direction: column;
+}
+
+.content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+/* Seccion informativa */
+.info-sections {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    background-image: url('/LOGIXPRESS/imagenes/Escritorio1.JPG');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: white;
+}
+
+.info-box {
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 1rem;
+    margin-bottom: 2rem;
+    border-radius: 8px;
+    max-width: 40%;
+}
+
+.box-info-in {
+    display: flex;
+    gap: 4rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.info-box h2 {
+    color: #ffffff;
+    margin: 0rem;
+    padding: 0rem;
+    font-size: 5rem;
+    font-weight: bold;
+}
+
+.info-box p {
+    color: #ffffff;
+    margin: 0rem;
+    padding: 0rem;
+    font-size: 1.5rem;
+    font-weight: lighter;
+}
+/*Fondo texto seccion informativa*/
+.info-bg-in {
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 8px;
+    max-width: 35%;
+}
+
+.info-bg-in h3 {
+    color: #ffffff;
+    font-size: 2rem;
+    font-weight: normal;
+}
+
+.info-bg-in p {
+    padding: 1.5rem;
+    line-height: 1.9rem;
+    color: #d3d3d3;
+    font-size: 1.5rem;
+    text-align: justify;
+}

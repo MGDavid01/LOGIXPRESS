@@ -1,0 +1,131 @@
+html {
+    font-size: 62.5%;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #ffffff;
+    margin: 0;
+    width: 100vw;
+    height: 100vh;
+}
+
+section {
+    padding-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+
+.legend-form {
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+
+.align-items-form {
+    display: flex;
+    justify-content: center;
+    gap: 5rem;
+    
+}
+
+.row-form {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    padding: 1rem;
+    margin-top: 0;
+}
+
+.input-form {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+}
+
+h2 {
+    font-size: 2rem;
+}
+
+h3 {
+    font-size: 1.5rem;
+}
+
+.border {
+    text-align: center;
+    font-size: 1.5rem;
+    padding-bottom: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+}
+
+input {
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid #ccc;
+    border-radius: 0.5rem;
+    font-size: 1.6rem;
+}
+
+input:focus {
+    border-bottom: 0.2rem solid #007bff;
+}
+
+.button-form {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+}
+
+button {
+    width: 25%;
+    padding: 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1.2rem;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+#to-login {
+    padding-top: 1.5rem;
+    text-decoration: none;
+    font-size: 16px;
+    color: black;
+    display: flex;
+    justify-content: center;
+}
+
+#back-index {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+#href-back {
+    text-decoration: none;
+    font-size: 2rem;
+    font-family: Arial, sans-serif;
+    color: black;
+    font-weight: bold;
+}
+
+p {
+    font-size: 2rem;
+    font-family: Arial, sans-serif;
+    color: black;
+    font-weight: bold;
+}
