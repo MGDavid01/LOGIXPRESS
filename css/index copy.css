@@ -1,0 +1,158 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.background-image {
+    background: url("/LOGIXPRESS/imagenes/Inicio.JPG") no-repeat center center fixed;
+    background-size: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.login-register {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.login-register a {
+    color: rgb(255, 255, 255);
+    font-size: 1.2rem;
+    text-decoration: none;
+    font-weight: bold;
+    text-shadow: 90% #000;
+}
+
+.login-register a:hover {
+    text-decoration: underline;
+}
+
+.content-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.header-oval {
+    background-color: rgba(0, 29, 192, 0.7); /* Fondo con opacidad */
+    padding: 30px 80px;
+    border-radius: 50%; /* Estilo de óvalo */
+    text-align: center;
+    margin-bottom: 40px;
+    width: fit-content;
+}
+
+.header-oval h1 {
+    margin: 0;
+    font-size: 2.5rem;
+    color: white;
+}
+
+.header-oval p {
+    margin-top: 10px;
+    font-size: 1.2rem;
+    color: white;
+}
+
+/* Contenedor para los botones tipo caja */
+.container {
+    display: flex;
+    justify-content: space-around;
+    width: 90%;
+}
+
+.box {
+    text-decoration: none;
+    position: relative;
+    width: 170px;
+    height: 140px;
+    background-color: #d19e63;
+    border: 2px solid #b4823d;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+/* Efecto hover para destacar una caja */
+.box:hover {
+    transform: scale(1.1);
+    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Cinta adhesiva en la parte superior */
+.tape {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30px;
+    height: 40px;
+    background-color: #8b5a2b;
+}
+
+/* Detalles de los iconos en la parte inferior derecha */
+.icons {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    display: flex;
+    gap: 5px;
+    border: 2px solid #000;
+    padding: 5px;
+}
+
+.icon {
+    font-size: 14px;
+    text-align: center;
+    width: 30px;
+    height: 30px;
+    border: 1px solid #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Simulando los íconos de 'arriba' y 'paraguas' */
+.up-icon {
+    font-size: 12px;
+    color: #000;
+}
+
+.umbrella-icon {
+    font-size: 20px;
+}
+
+a.box {
+    text-decoration: none;
+}
+
+/* Estilo para el texto dentro del botón */
+a.box p {
+    text-decoration: none;
+    margin: 10px 0;
+    font-size: 18px;
+    font-weight: bold;
+    color: #000;
+    padding-bottom: 50px;
+    text-decoration: none;
+}
+
+a.box:hover p {
+    text-decoration: none;
+}

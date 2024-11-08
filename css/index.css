@@ -1,0 +1,82 @@
+/* General */
+
+html {
+    font-size: 62.5%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    display: flex;
+    flex-direction: column;
+}
+
+.content {
+    flex: 1;
+}
+/* Seccion informativa */
+.info-sections {
+    width: 100%;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2rem 0;
+    background-image: url('/LOGIXPRESS/imagenes/Escritorio1.JPG');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    color: white;
+}
+
+.info-box {
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 1rem;
+    border-radius: 8px;
+    max-width: 40%;
+}
+
+.box-info-in {
+    display: flex;
+    padding: 5rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.info-box h2 {
+    color: #ffffff;
+    margin-bottom: 1rem;
+    font-size: 5rem;
+    font-weight: bold;
+}
+/*Fondo texto seccion informativa*/
+.info-bg-in {
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 8px;
+    max-width: 35%;
+    
+}
+
+.info-bg-in h3 {
+    color: #ffffff;
+    font-size: 2rem;
+    font-weight: normal;
+}
+
+.info-bg-in p {
+    padding: 1.5rem;
+    line-height: 1.9rem;
+    color: #d3d3d3;
+    font-size: 1.5rem;
+    text-align: justify;
+}

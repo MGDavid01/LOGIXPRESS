@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administración de Cuenta de Usuario</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        .tab {
+            flex: 1;
+            padding: 10px;
+            background: #e0e0e0;
+            text-align: center;
+            cursor: pointer;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        .tab:hover {
+            background: #d0d0d0;
+        }
+        .active {
+            background: #fff;
+            border-bottom: 1px solid white;
+        }
+        .content {
+            display: none;
+        }
+        .active-content {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Administración de Cuenta de Usuario</h1>
+    <div class="tabs">
+        <div class="tab active" onclick="showContent('infoPersonal')">Información Personal</div>
+        <div class="tab" onclick="showContent('infoCuenta')">Información de la Cuenta</div>
+        <div class="tab" onclick="showContent('ubicacion')">Ubicación</div>
+    </div>
+
+    <div id="infoPersonal" class="content active-content">
+        <h2>Información Personal</h2>
+        <p>Aquí puedes ver y editar tu información personal.</p>
+    </div>
+    <div id="infoCuenta" class="content">
+        <h2>Información de la Cuenta</h2>
+        <p>Aquí puedes ver y editar tu información de cuenta.</p>
+    </div>
+    <div id="ubicacion" class="content">
+        <h2>Ubicación</h2>
+        <p>Aquí puedes ver y editar tu ubicación asociada.</p>
+    </div>
+</div>
+
+<script>
+    function showContent(category) {
+        // Oculta todas las secciones de contenido
+        document.querySelectorAll('.content').forEach((content) => {
+            content.classList.remove('active-content');
+        });
+
+        // Elimina la clase activa de todas las pestañas
+        document.querySelectorAll('.tab').forEach((tab) => {
+            tab.classList.remove('active');
+        });
+
+        // Muestra la sección correspondiente y establece la pestaña activa
+        document.getElementById(category).classList.add('active-content');
+        event.target.classList.add('active');
+    }
+</script>
+
+</body>
+</html>

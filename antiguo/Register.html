@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/Register.css">
+    <title>Register</title>
+</head>
+<body>
+    <section>
+        <div class="stacked-paper-container">
+            <div class="paper-layer" id="paper1"></div>
+            <div class="paper-layer" id="paper2"></div>
+            <div class="paper-layer" id="paper3"></div>
+    
+            <!-- Formulario 1 -->
+            <div class="form-box form-page" id="form1">
+                <form id="form1-content">
+                    <h2>Login</h2>
+                    <label for="nombre">Ingrese Su Nombre</label>
+                    <input type="text" id="nombre" name="nombre">
+                    <br>
+                    <label for="primerApe">Ingrese Su Primer Apellido</label>
+                    <input type="text" id="primerApe" name="primerApe">
+                    <br>
+                    <label for="segundoApe">Ingrese Su Segundo Apellido</label>
+                    <input type="text" id="segundoApe" name="segundoApe">
+                    <br>
+                    <button type="button" id="nextBtn">Siguiente</button>
+                </form>
+            </div>
+    
+            <!-- Formulario 2 (visible pero detrás del formulario 1) -->
+            <div class="form-box form-page" id="form2">
+                <form id="form2-content">
+                    <h2>Detalles de la Empresa</h2>
+                    <label for="empresa">Nombre De La Empresa</label>
+                    <input type="text" id="empresa" name="empresa">
+                    <br>
+                    <label for="telefono">Ingrese Su Teléfono</label>
+                    <input type="tel" id="telefono" name="telefono">
+                    <br>
+                    <button type="submit">Finalizar</button>
+                </form>
+            </div>
+        </div>
+    </section>
+    <script src="js/registro.js"></script>
+</body>
+</html>

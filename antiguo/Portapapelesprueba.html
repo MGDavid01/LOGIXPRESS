@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/portapapeles.css">
+    <title>Solicitar Entrega</title>
+</head>
+<body>
+    <div class="clipboard">
+        <div class="paper">
+            <!-- Contenido de Solicitar Entrega -->
+            <div id="SolicitarEntrega" class="tab-content active-content">
+                <form class="form" onsubmit="nextTab(event)">
+                    <h2>Solicitar Entrega</h2>
+    
+                    <label for="producto">Categoria del producto:</label>
+                    <select id="producto" name="producto" placeholder="Categoria del producto">
+                        <option value="" disabled selected>Seleccione una Categoria</option>
+                        <option value="" disabled selected>Seleccione una Categoria</option>
+                        <option value="opcion1">Opción 1</option>
+                        <option value="opcion2">Opción 2</option>
+                        <option value="opcion3">Opción 3</option>
+                    </select>
+
+                    <label for="cuidado">Tipo de cuidado:</label>
+                    <select type="text" id="cuidado" name="cuidado" placeholder="Tipo de cuidado">
+                        <option value="" disabled selected>Seleccione un tipo de cuidado</option>
+                        <option value="opcion1">Opción 1</option>
+                        <option value="opcion2">Opción 2</option>
+                        <option value="opcion3">Opción 3</option>
+                    </select>
+    
+                    <label for="peso">Peso x pallet:</label>
+                    <input type="text" id="peso" name="peso" placeholder="Peso por pallet">
+    
+                    <label for="dimensiones">Dimensiones:</label>
+                    <input type="num" id="dimensiones" name="dimensiones" placeholder="Dimensiones del pallet">
+    
+                    <label for="cantidad">Cantidad de Pallets:</label>
+                    <select type="num" id="cantidad" name="cantidad" placeholder="Cantidad de pallets">
+                        <option value="" disabled selected>Seleccione una cantidad</option>
+                        <option value="opcion1">Opción 1</option>
+                        <option value="opcion2">Opción 2</option>
+                        <option value="opcion3">Opción 3</option>
+                    </select>
+    
+                    <button class="next-button" type="submit">Siguiente</button>
+                </form>
+            </div>
+    
+            <!-- Contenido de Tipo de Transporte -->
+            <div id="Transporte" class="tab-content">
+                <h2>Tipo de Transporte</h2>
+                <p>Aquí va el contenido de tipo de transporte.</p>
+            </div>
+    
+            <!-- Contenido de Ubicaciones de Entrega -->
+            <div id="Ubicaciones" class="tab-content">
+                <h2>Ubicaciones de Entrega</h2>
+                <p>Aquí va el contenido de ubicaciones de entrega.</p>
+            </div>
+    
+            <!-- Contenido de Pre-confirmacion -->
+            <div id="Pre-confirmar" class="tab-content">
+                <h2>Pre-Confirmacion</h2>
+                <p>Aquí va el contenido de pre-confirmación.</p>
+            </div>
+    
+            <!-- Contenido de Confirmar -->
+            <div id="Confirmar" class="tab-content">
+                <h2>Confirmar</h2>
+                <p>Aquí va el contenido de confirmación.</p>
+            </div>
+        </div>
+    
+        <div class="sticky-notes">
+            <button class="sticky yellow active" onclick="openTab('SolicitarEntrega')">Solicitar Entrega</button>
+            <button class="sticky pink" onclick="openTab('Transporte')">Tipo de Transporte</button>
+            <button class="sticky blue" onclick="openTab('Ubicaciones')">Ubicaciones de Entrega</button>
+            <button class="sticky green" onclick="openTab('Pre-confirmar')">Pre-Confirmacion</button>
+            <button class="sticky orange" onclick="openTab('Confirmar')">Confirmar</button>
+        </div>
+    </div>
+    
+
+    <script src="js/post-it.js"></script>
+
+      
+</body>
+</html>
