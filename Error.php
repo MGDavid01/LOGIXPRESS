@@ -8,7 +8,7 @@
 <body>
     <section>
         <div>
-            <h2>Correo Registrado</h2>
+            <h2>Email Register</h2>
             <p>Esta cuennta de correo Electronico ya esta asociada a una empresa</p>
         </div>
         <div>
