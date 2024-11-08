@@ -55,7 +55,7 @@
             <div id="back-index">
                 <a id="href-back" href="/LOGIXPRESS/index.php">Home</a>
                 <p>></p>
-                <h2> Login</h2>
+                <h2>Login</h2>
             </div>
             <h3>LOGIXPRESS</h3>
             <h3 class="border">Login Credentials</h3>
