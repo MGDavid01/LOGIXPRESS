@@ -281,7 +281,7 @@ CREATE TABLE vehi_remo (
     remolque INT,
     fechaAsig DATE,
     PRIMARY KEY (vehiculo, remolque),
-    FOREIGN KEY (vehiculo) REFERENCES vehi(num),
+    FOREIGN KEY (vehiculo) REFERENCES vehiculo(num),
     FOREIGN KEY (remolque) REFERENCES remolque(num)
 );
 
