@@ -1,10 +1,5 @@
-<?php
+<?php include_once('includes/headIndexRelations.php');?>
 
-    include_once('includes/head.html');
-    //Menú de navegación
-    include_once('includes/navbar.html');
-
-?>
 <link rel="stylesheet" href="css/aboutUs.css">
 <section id="about-us">
     <h1>About Us</h1>
@@ -30,6 +25,5 @@
     <h2>Join Us on Our Journey</h2>
     <p>Logixpress is not just a logistics provider; we’re a team of passionate professionals who are driven to make a difference in the industry. As we expand our services and explore new opportunities, we invite businesses of all sizes to join us on this journey. Partnering with Logixpress means having a dedicated ally who’s invested in your success, committed to overcoming logistical challenges, and ready to go the extra mile for every delivery. Whether you’re a small start-up or an established enterprise, let us help you reach new destinations and unlock new growth opportunities.</p>
 </section>
-<?php
-    include_once('includes/footer.html');
-?>
+
+<?php include_once('includes/footer.html');?>
