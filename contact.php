@@ -3,7 +3,7 @@
 <link rel="stylesheet" href="css/contact.css">
 <section id="about-us">
     <!-- Encabezado -->
-    <header>
+    <div id="box-info-contact">
         <h1>PONTE EN CONTACTO CON NOSOTROS PARA APOYARTE</h1>
     </header>
 

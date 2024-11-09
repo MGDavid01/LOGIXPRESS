@@ -19,3 +19,39 @@ body {
     display: flex;
     flex-direction: column;
 }
+
+/*Contenido Pagina*/
+
+header {
+    background-color: #003399;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+.banner img {
+    width: 100%;
+    height: auto;
+}
+
+.contact-info {
+    padding: 40px;
+    display: flex;
+    justify-content: space-around;
+    background-color: #f8f8f8;
+    text-align: center;
+}
+
+.contact-item {
+    flex: 1;
+    padding: 20px;
+}
+
+.contact-item h2 {
+    margin-top: 0;
+}
+
+.contact-item a {
+    color: #003399;
+    text-decoration: none;
+}
