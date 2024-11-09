@@ -1,26 +1,26 @@
-INSERT INTO CLIENTE (nomEmpresa, nomPila, primerApe, segundoApe, numTelefono, email, password) VALUES
+INSERT INTO cliente (nomEmpresa, nomPila, primerApe, segundoApe, numTelefono, email, password) VALUES
 ('Transporte Seguro S.A.', 'Juan', 'Pérez', 'García', '5551234567', 'juan.perez@ejemplo.com', 'contraseña123'),
 ('Logística Global', 'María', 'López', NULL, '5559876543', 'maria.lopez@ejemplo.com', 'segura456'),
 ('Envíos Rápidos', 'Carlos', 'Rodríguez', 'Martínez', '5555555555', 'carlos.rodriguez@ejemplo.com', 'envio789'),
 ('Distribuciones MX', 'Ana', 'Gómez', 'Hernández', '5553332211', 'ana.gomez@ejemplo.com', 'distribucion101'),
 ('Carga Express', 'Luis', 'Fernández', 'Díaz', '5557778899', 'luis.fernandez@ejemplo.com', 'express202');
 
-INSERT INTO ESTADO_ENTRE (descripcion) VALUES
+INSERT INTO estado_entre (descripcion) VALUES
 ('pendiente'),
 ('en proceso'),
 ('completado');
 
-INSERT INTO PRIORIDAD (descripcion, prioridadPorce) VALUES
+INSERT INTO prioridad (descripcion, prioridadPorce) VALUES
 ('Baja', 10.00),
 ('Media', 12.50),
 ('Alta', 15.00);
 
-INSERT INTO TIPO_CARGA (codigo, descripcion) VALUES
+INSERT INTO tipo_carga (codigo, descripcion) VALUES
 ('GRN', 'Granel'),
 ('PER', 'Perecedero'),
 ('GEN', 'General');
 
-INSERT INTO CAT_PROD (codigo, nombre, descripcion, categoriaPrecio) VALUES
+INSERT INTO cat_prod (codigo, nombre, descripcion, categoriaPrecio) VALUES
 ('ALI01', 'Alimentos y Bebidas', 'Productos alimenticios y bebidas variadas', 5000.00),
 ('FRE01', 'Productos Frescos', 'Alimentos frescos que requieren refrigeración', 7000.00),
 ('CON01', 'Productos Congelados', 'Alimentos congelados para conservación prolongada', 8000.00),
@@ -66,11 +66,11 @@ INSERT INTO CAT_PROD (codigo, nombre, descripcion, categoriaPrecio) VALUES
 ('TEC01', 'Productos de Oficina y Tecnología', 'Equipos tecnológicos para oficinas', 15000.00),
 ('LIB01', 'Libros y Revistas', 'Publicaciones impresas y digitales', 5000.00);
 
-INSERT INTO ETIQUETADO (codigo, descripcion, etiquetadoPrecio) VALUES
+INSERT INTO etiquetado (codigo, descripcion, etiquetadoPrecio) VALUES
 ('EST', 'Estándar', 0.00),
 ('FRA', 'Frágil', 1000.00);
 
-INSERT INTO TARIFA_PESO (pesoMin, pesoMax, porcePeso) VALUES
+INSERT INTO tarifa_peso (pesoMin, pesoMax, porcePeso) VALUES
 (100.01, 200.00, 10),
 (200.01, 300.00, 11),
 (300.01, 400.00, 12),
