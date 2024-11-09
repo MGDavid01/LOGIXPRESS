@@ -6,5 +6,5 @@
     <link rel="stylesheet" href="css/footer.css">
 </head>
 <body>
-    <?php include_once('includes/navbarIndexRelations.html');?>
+    <?php include_once('includes/navbarIndex.html');?>
     <div class="content">

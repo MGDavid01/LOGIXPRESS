@@ -1,0 +1,57 @@
+/* General */
+
+html {
+    font-size: 62.5%;
+    margin: 0;
+    padding: 0;
+    max-height: 100%;
+    overflow: hidden;
+}
+
+body {
+    max-height: 100%;
+    max-width: 100%;
+    height: 100%;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    display: flex;
+    flex-direction: column;
+}
+
+/*Contenido Pagina*/
+
+header {
+    background-color: #003399;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+.banner img {
+    width: 100%;
+    height: auto;
+}
+
+.contact-info {
+    padding: 40px;
+    display: flex;
+    justify-content: space-around;
+    background-color: #f8f8f8;
+    text-align: center;
+}
+
+.contact-item {
+    flex: 1;
+    padding: 20px;
+}
+
+.contact-item h2 {
+    margin-top: 0;
+}
+
+.contact-item a {
+    color: #003399;
+    text-decoration: none;
+}
