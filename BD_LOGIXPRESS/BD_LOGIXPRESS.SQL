@@ -116,6 +116,7 @@ CREATE TABLE empleado (
     segundoApe VARCHAR(50),
     telefono VARCHAR(15),
     email VARCHAR(100),
+    password VARCHAR(255) NOT NULL,
     puesto VARCHAR(5),
     FOREIGN KEY (puesto) REFERENCES puesto(codigo)
 );

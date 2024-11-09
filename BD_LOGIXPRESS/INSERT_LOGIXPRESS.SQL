@@ -97,3 +97,14 @@ INSERT INTO TARIFA_PESO (pesoMin, pesoMax, porcePeso) VALUES
 (15000.01, 20000.00, 48),
 (20000.01, 25000.00, 50);
 
+INSERT INTO puesto (codigo, descripcion) VALUES
+('ADM', 'Administrador'),
+('CHD', 'Checador'),
+('CHF', 'Chofer');
+
+INSERT INTO empleado (nombre, primerApe, segundoApe, telefono, email, password, puesto) VALUES 
+('Carlos', 'García', 'Hernández', '5551234567', 'carlos.gh@example.com', 'pass1234', 'ADM'),
+('María', 'López', 'Rodríguez', '5559876543', 'maria.lr@example.com', 'maria123', 'CHF'),
+('Juan', 'Martínez', 'Sánchez', '5551112233', 'juan.ms@example.com', 'juanpass', 'CHD'),
+('Ana', 'Pérez', 'Jiménez', '5554445566', 'ana.pj@example.com', 'anapass', 'ADM'),
+('Luis', 'Ramírez', 'González', '5556667788', 'luis.rg@example.com', 'luis1234', 'CHF');

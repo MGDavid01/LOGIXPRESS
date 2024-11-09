@@ -1,45 +1,65 @@
 <?php 
-    session_start();
-    require ('includes/config/conection.php');
-    $db = connectTo2DB();
-    
-    if (isset($_GET['status']) && $_GET['status'] === 'error') {
-        echo "<p>Credenciales incorrectas, por favor intente de nuevo</p>";
-    }
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $email = $_POST['email'];
-        $password = $_POST['password'];
-        
-        echo $email, $password;
+session_start();
+require ('includes/config/conection.php');
+$db = connectTo2DB();
 
-        if ($email == '' || $password == '') {
-            echo 'Rellenar todo el formulario';
+if (isset($_GET['status']) && $_GET['status'] === 'error') {
+    echo "<p>Credenciales incorrectas, por favor intente de nuevo</p>";
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+
+    if (empty($email) || empty($password)) {
+        echo 'Rellenar todo el formulario';
+    } else {
+        // Comprobamos en la tabla cliente
+        $query = "SELECT * FROM cliente WHERE email='$email' AND password='$password'";
+        $response = mysqli_query($db, $query);
+        $user = mysqli_fetch_assoc($response);
+
+        if ($user) {
+            // Inicio de sesión exitoso como cliente
+            $_SESSION['user'] = $user; // Guardo la sesión del cliente
+            header("Location: menuCL.php?status=success");
+            exit();
         } else {
-            $query = "SELECT * FROM cliente WHERE email='$email' AND password='$password'";
+            // Comprobamos en la tabla empleado
+            $query = "SELECT * FROM empleado WHERE email='$email' AND password='$password'";
             $response = mysqli_query($db, $query);
-            $user = $response->fetch_assoc();
-            if ($response->num_rows > 0) {
-                // Inicio de sesión exitoso
-                header("Location: menuCL.php?status=success");
+            $user = mysqli_fetch_assoc($response);
+
+            if ($user) {
+                // Inicio de sesión exitoso como empleado
+                $_SESSION['user'] = $user; // Guardo la sesión del empleado
+                
+                // Redirección basada en el puesto
+                switch ($user['puesto']) {
+                    case 'ADM':
+                        header("Location: menuADM.php?status=success");
+                        break;
+                    case 'CHF':
+                        header("Location: menuCHF.php?status=success");
+                        break;
+                    case 'CHD':
+                        header("Location: menuCHD.php?status=success");
+                        break;
+                    default:
+                        header("Location: menuEM.php?status=success");
+                        break;
+                }
                 exit();
             } else {
-                $query = "SELECT * FROM empleados WHERE email='$email' AND password='$password'";
-                $response = mysqli_query($db, $query);
-                if ($response->num_rows > 0) {
-                    // Inicio de sesión exitoso
-                    header("Location: menuCL.php?status=success");
-                    exit();
-                } else {
-                    // Credenciales incorrectas
-                    header("Location: Login.php?status=error");
-                    exit();
-                }
-                header("Location: index.php?status=errorLog");
+                // Credenciales incorrectas
+                header("Location: Login.php?status=error");
                 exit();
             }
         }
-    }    
+    }
+}
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
