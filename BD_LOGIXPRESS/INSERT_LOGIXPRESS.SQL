@@ -426,3 +426,6 @@ INSERT INTO mantenimiento (fechas, costo, descripcion, vehiculo, remolque) VALUE
 INSERT INTO cliente_ubi (cliente, ubicacion, fechaRegistro) VALUES
 (1,'UBI04', CURRENT_DATE),
 (1,'UBI03', CURRENT_DATE);
+
+INSERT INTO cliente_ubi (cliente, ubicacion, fechaRegistro) VALUES
+(1,'UBI06', CURRENT_DATE);

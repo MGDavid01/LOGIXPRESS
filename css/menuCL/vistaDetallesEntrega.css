@@ -18,6 +18,7 @@
 
 .datos-generales {
     width: 50%;
+    height: 100%;
     margin: auto;
     display: flex;
     flex-direction: column;
@@ -28,6 +29,7 @@
     border-radius: 8px; /* Bordes redondeados */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para dar profundidad */
     padding: 1rem; /* Espaciado interno */
+    overflow-y: auto;
 }
 
 .detalle-entrega {

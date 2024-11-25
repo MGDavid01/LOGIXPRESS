@@ -62,15 +62,15 @@ BEGIN
         -- Insertar en la tabla `ubi_entrega_salida`
         INSERT INTO ubi_entrega_salida (entrega, ubicacion, hraSalida)
         VALUES (entrega_id, origen, NOW());
-        SET mensaje = "OK";
+    SET mensaje = "OK";
     COMMIT;
 END $$
 /*************************************************************/
 DELIMITER $$
-CREATE PROCEDURE SP_asociarDestinoEntrega (
-    IN entrega_id INT,           -- ID de la entrega ya registrada
-    IN destino VARCHAR(5),       -- Ubicación del destino
-    OUT mensaje VARCHAR(255)     -- Mensaje de confirmación o error
+CREATE PROCEDURE SP_asociarDestinosEntrega (
+    IN entrega_id INT,
+    IN destino VARCHAR(5),
+    OUT mensaje VARCHAR(255)
 )
 BEGIN
     DECLARE error_msg TEXT;
@@ -86,16 +86,11 @@ BEGIN
         SET mensaje = CONCAT("Error al asociar destino de la entrega: ", error_code, " - ", error_msg);
     END;
 
-    -- Iniciar la transacción
     START TRANSACTION;
-
     -- Insertar en la tabla `ubi_entrega_destino`
-    INSERT INTO ubi_entrega_destino (entrega, ubicacion, fechaRegistro)
-    VALUES (entrega_id, destino, CURDATE());
-
+    INSERT INTO ubi_entrega_llegada (entrega, ubicacion, hraLlegada)
+    VALUES (entrega_id, destino, NULL);
     SET mensaje = "OK";
-
-    -- Finalizar la transacción si todo ha salido bien
     COMMIT;
 END $$
 /*************************************************************/
@@ -150,21 +145,15 @@ BEGIN
     WHERE codigo = p_producto
     LIMIT 1;
 
-    -- Verificar si el producto no fue encontrado
-    IF v_not_found = 1 THEN
-        SET mensaje = 'Error: Producto no encontrado.';
+    -- Validar que las dimensiones no sean nulas o cero
+    IF v_alto IS NULL OR v_ancho IS NULL OR v_largo IS NULL OR
+        v_alto = 0 OR v_ancho = 0 OR v_largo = 0 THEN
+        SET mensaje = 'Error: Dimensiones del producto inválidas.';
         SET volumenProducto = NULL;
     ELSE
-        -- Validar que las dimensiones no sean nulas o cero
-        IF v_alto IS NULL OR v_ancho IS NULL OR v_largo IS NULL OR
-           v_alto = 0 OR v_ancho = 0 OR v_largo = 0 THEN
-            SET mensaje = 'Error: Dimensiones del producto inválidas.';
-            SET volumenProducto = NULL;
-        ELSE
-            -- Calcular el volumen total
-            SET volumenProducto = v_alto * v_ancho * v_largo * p_cantidad;
-            SET mensaje = 'OK';
-        END IF;
+        -- Calcular el volumen total
+        SET volumenProducto = v_alto * v_ancho * v_largo * p_cantidad;
+        SET mensaje = 'OK';
     END IF;
 END$$
 /*************************************************************/
