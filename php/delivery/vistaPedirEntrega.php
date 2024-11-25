@@ -127,7 +127,7 @@ function vistaPedirEntrega() {
                         </div>
                         <div class="location-destination-field">
                             <label for="desLocation">Destination Location 1:</label>
-                            <select name="desLocation[]" required onchange="actualizarOpcionesUbicacion()">
+                            <select id="originLocation[]" name="desLocation[]" required onchange="actualizarOpcionesUbicacion()">
                                 <?php
                                     $resultUbicaciones->data_seek(0); // Reinicia el cursor
                                     while ($rowLoc = $resultUbicaciones->fetch_assoc()) {

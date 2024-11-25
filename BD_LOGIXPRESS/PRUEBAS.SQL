@@ -12,3 +12,8 @@ CALL SP_actualizarInformacionCliente(2, 'Empresa Ejemplo', 'Juan', 'PÃ©rez', 'GÃ
 
 SELECT @mensaje AS mensaje;
 
+INSERT INTO mantenimiento VALUES
+(DEFAULT, NOW(), 20000, 'Mantenimiento Ejemplo', 1, NULL);
+
+INSERT INTO mantenimiento VALUES
+(DEFAULT, NOW(), 5000, 'Mantenimiento Ejemplo', NULL, 1);

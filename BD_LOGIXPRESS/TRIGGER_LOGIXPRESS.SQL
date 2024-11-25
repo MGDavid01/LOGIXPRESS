@@ -52,7 +52,7 @@ END$$
   Vehiculo y Remolque
 **********************/
 DELIMITER $$
-CREATE TRIGGER actualizar_costo_vehiculo
+CREATE TRIGGER TR_actualizarCostoVehiculo
 AFTER INSERT ON mantenimiento
 FOR EACH ROW
 BEGIN
@@ -63,7 +63,7 @@ BEGIN
 END$$
  /*************************************************************/
 DELIMITER $$
-CREATE TRIGGER actualizar_costo_remolque
+CREATE TRIGGER TR_actualizarCostoRemolque
 AFTER INSERT ON mantenimiento
 FOR EACH ROW
 BEGIN

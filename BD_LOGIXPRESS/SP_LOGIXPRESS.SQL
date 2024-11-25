@@ -61,6 +61,67 @@ BEGIN
     START TRANSACTION;
         -- Insertar en la tabla `ubi_entrega_salida`
         INSERT INTO ubi_entrega_salida (entrega, ubicacion, hraSalida)
+        VALUES (entrega_id, origen, NOW());
+        SET mensaje = "OK";
+    COMMIT;
+END $$
+/*************************************************************/
+DELIMITER $$
+CREATE PROCEDURE SP_asociarDestinoEntrega (
+    IN entrega_id INT,           -- ID de la entrega ya registrada
+    IN destino VARCHAR(5),       -- Ubicación del destino
+    OUT mensaje VARCHAR(255)     -- Mensaje de confirmación o error
+)
+BEGIN
+    DECLARE error_msg TEXT;
+    DECLARE error_code INT;
+
+    -- Manejo de errores
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        GET DIAGNOSTICS CONDITION 1
+            error_code = MYSQL_ERRNO,
+            error_msg = MESSAGE_TEXT;
+        ROLLBACK;
+        SET mensaje = CONCAT("Error al asociar destino de la entrega: ", error_code, " - ", error_msg);
+    END;
+
+    -- Iniciar la transacción
+    START TRANSACTION;
+
+    -- Insertar en la tabla `ubi_entrega_destino`
+    INSERT INTO ubi_entrega_destino (entrega, ubicacion, fechaRegistro)
+    VALUES (entrega_id, destino, CURDATE());
+
+    SET mensaje = "OK";
+
+    -- Finalizar la transacción si todo ha salido bien
+    COMMIT;
+END $$
+/*************************************************************/
+DELIMITER $$
+CREATE PROCEDURE SP_asociarDestinosEntrega (
+    IN entrega_id INT, -- ID de la entrega ya registrada
+    IN origen VARCHAR(5),
+    OUT mensaje VARCHAR(255)
+)
+BEGIN
+    DECLARE error_msg TEXT;
+    DECLARE error_code INT;
+
+    -- Manejo de errores
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        GET DIAGNOSTICS CONDITION 1
+            error_code = MYSQL_ERRNO,
+            error_msg = MESSAGE_TEXT;
+        ROLLBACK;
+        SET mensaje = CONCAT("Error al asociar producto: ", error_code, " - ", error_msg);
+    END;
+
+    START TRANSACTION;
+        -- Insertar en la tabla `ubi_entrega_salida`
+        INSERT INTO ubi_entrega_salida (entrega, ubicacion, hraSalida)
         VALUES (entrega_id, origen, cantidadE);
         SET mensaje = "OK";
     COMMIT;
