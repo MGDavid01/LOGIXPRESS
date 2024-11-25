@@ -16,7 +16,6 @@ INSERT INTO cliente (nomEmpresa, nomPila, primerApe, segundoApe, numTelefono, em
 ('Limpieza Hogar', 'Daniel', 'Castro', 'Ortiz', '5550123456', 'daniel.castro@limpiezahogar.com', sha2('contraseña123', 256)),
 ('Nada prueba', 'David', 'Prueba', '', '5559012345', 'nada.nada@nada.com', sha2('contraseña123', 256));
 
-
 INSERT INTO estado_entre (codigo, descripcion) VALUES
 ('PROG', 'Programada'),
 ('ENPR', 'En Proceso'),
