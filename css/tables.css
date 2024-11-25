@@ -17,6 +17,8 @@ th, td {
     text-align: left; /* Alineación a la izquierda */
     border: 1px solid #ddd; /* Borde claro entre celdas */
     text-align: center;
+    word-wrap: break-word; /* Permitir el ajuste de palabras largas */
+    white-space: normal; /* Permitir saltos de línea si el contenido es largo */
 }
 
 th {

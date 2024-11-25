@@ -119,8 +119,6 @@ include_once('includes/headUsers.php');
                             <tr>
                                 <th>No.</th>
                                 <th>Num Serie</th>
-                                <th>Gas/KM</th>
-                                <th>Capacidad Carga</th>
                                 <th>Kilometraje</th>
                                 <th>Costo</th>
                                 <th>Marca</th>
@@ -132,8 +130,6 @@ include_once('includes/headUsers.php');
                                 <tr>
                                     <td><?= htmlspecialchars($vehiculo['num']); ?></td>
                                     <td><?= htmlspecialchars($vehiculo['numSerie']); ?></td>
-                                    <td><?= htmlspecialchars($vehiculo['gasXKM']); ?></td>
-                                    <td><?= htmlspecialchars($vehiculo['capacidadCarga']); ?></td>
                                     <td><?= htmlspecialchars($vehiculo['kilometraje']); ?></td>
                                     <td><?= htmlspecialchars($vehiculo['costoAcumulado']); ?></td>
                                     <td><?= htmlspecialchars($vehiculo['marca']); ?></td>
