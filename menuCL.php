@@ -1,4 +1,4 @@
- <?php
+<?php
 session_start();
 require('includes/config/conection.php');
 $db = connectTo2DB();
