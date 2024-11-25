@@ -55,46 +55,137 @@
         global $db;
     
         // Consulta los detalles de la entrega con LEFT JOIN
-        $queryEntrega = "SELECT e.num, e.fechaRegistro, e.fechaEntrega, CONCAT(e.horaInicio, ' - ', e.horaFin) AS ventanaHorario, 
-                        p.descripcion AS prioridad, es.descripcion AS estado, e.subtotal, e.IVA, e.precio 
+        $queryPrecio = "SELECT e.num, e.fechaRegistro, e.fechaEntrega, 
+                        CONCAT(e.horaInicio, ' - ', e.horaFin) AS ventanaHorario, 
+                        p.descripcion AS prioridad, 
+                        es.descripcion AS estado, 
+                        e.subtotal, e.IVA, e.precio,
+                        e.tarifaPeso, e.tarifaDistancia, e.tarifaVolumen, 
+                        e.tarifaPrio, e.tarifaEti, e.tarifaCat
                         FROM entrega e
                         INNER JOIN prioridad p ON e.prioridad = p.codigo
                         INNER JOIN entre_estado en ON en.entrega = e.num
                         INNER JOIN estado_entre es ON en.estadoEntrega = es.codigo
                         WHERE e.num = $entrega_id";
     
-        $resultEntrega = mysqli_query($db, $queryEntrega);
+        $resultEntrega = mysqli_query($db, $queryPrecio);
         $detalle = mysqli_fetch_assoc($resultEntrega);
     
         if (!$detalle) {
             echo '<p style="font-size:2rem;">Error: No se encontró la entrega.</p>';
             return;
         }
-    
-        // Mostrar los datos
-        echo '<div class="detalle-entrega">';
-        // Estado y Datos Generales
-        echo '<div class="section">';
-        echo '<h3>General Information</h3>';
-        echo '<table>';
-        echo '<tr><th>Start Date</th><td>' . htmlspecialchars($detalle['fechaRegistro']) . '</td></tr>';
-        echo '<tr><th>End Date</th><td>' . htmlspecialchars($detalle['fechaEntrega']) . '</td></tr>';
-        echo '<tr><th>Time Window</th><td>' . htmlspecialchars($detalle['ventanaHorario']) . '</td></tr>';
-        echo '<tr><th>Status</th><td>' . htmlspecialchars($detalle['estado'] ?? 'N/A') . '</td></tr>';
-        echo '<tr><th>Priority</th><td>' . htmlspecialchars($detalle['prioridad'] ?? 'N/A') . '</td></tr>';
-        echo '</table>';
-        echo '</div>';
-    
-        // Desglose del Precio
-        echo '<div class="section">';
-        echo '<h3>Price Breakdown</h3>';
-        echo '<table>';
-        echo '<tr><th>Subtotal</th><td>' . $detalle['subtotal'] . '</td></tr>';
-        echo '<tr><th>IVA</th><td>' . $detalle['IVA'] . '</td></tr>';
-        echo '<tr><th>Total</th><td>' . $detalle['precio'] . '</td></tr>';
-        echo '</table>';
-        echo '</div>';
-        echo '</div>';
+
+        // Consulta para obtener los productos de la entrega específica
+        $queryProductos = "SELECT p.nombre, pe.cantidad 
+                            FROM entre_producto pe
+                            INNER JOIN producto p ON pe.producto = p.codigo
+                            WHERE pe.entrega = $entrega_id";
+
+        $resultProductos = mysqli_query($db, $queryProductos);
+        $productos = mysqli_fetch_assoc($resultProductos);
+
+        if (!$productos) {
+            echo '<p style="font-size:2rem;">Error: No se encontró la entrega.</p>';
+            return;
+        }
+        ?>
+        <div class="detalle-entrega">
+            <!-- Estado y Datos Generales -->
+            <div class="section">
+                <h3>General Information</h3>
+                <table>
+                    <tr>
+                        <th>Start Date</th>
+                        <td><?= htmlspecialchars($detalle['fechaRegistro']); ?></td>
+                    </tr>
+                    <tr>
+                        <th>End Date</th>
+                        <td><?= htmlspecialchars($detalle['fechaEntrega']); ?></td>
+                    </tr>
+                    <tr>
+                        <th>Time Window</th>
+                        <td><?= htmlspecialchars($detalle['ventanaHorario']); ?></td>
+                    </tr>
+                    <tr>
+                        <th>Status</th>
+                        <td><?= htmlspecialchars($detalle['estado'] ?? 'N/A'); ?></td>
+                    </tr>
+                    <tr>
+                        <th>Priority</th>
+                        <td><?= htmlspecialchars($detalle['prioridad'] ?? 'N/A'); ?></td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- Desglose del Precio -->
+            <div class="section">
+                <h3>Price Breakdown</h3>
+                <table>
+                    <tr>
+                        <th>Weight rate</th>
+                        <td><?= $detalle['tarifaPeso'] != 0 ? '$' . htmlspecialchars($detalle['tarifaPeso']) . ' MXN' : 'N/A'; ?></td>
+                    </tr>
+                    <tr>
+                        <th>Distance Rate</th>
+                        <td><?= $detalle['tarifaDistancia'] != 0 ? '$' . htmlspecialchars($detalle['tarifaDistancia']) . ' MXN' : 'N/A'; ?></td>
+                    </tr>
+                    <tr>
+                        <th>Volume Rate</th>
+                        <td><?= $detalle['tarifaVolumen'] != 0 ? '$' . htmlspecialchars($detalle['tarifaVolumen']) . ' MXN' : 'N/A'; ?></td>
+                    </tr>
+                    <tr>
+                        <th>Priority Rate</th>
+                        <td><?= $detalle['tarifaPrio'] != 0 ? '$' . htmlspecialchars($detalle['tarifaPrio']) . ' MXN' : 'N/A'; ?></td>
+                    </tr>
+                    <tr>
+                        <th>Labeling for Surcharge</th>
+                        <td><?= $detalle['tarifaEti'] != 0 ? '$' . htmlspecialchars($detalle['tarifaEti']) . ' MXN' : 'N/A'; ?></td>
+                    </tr>
+                    <tr>
+                        <th>Surcharge for Categories</th>
+                        <td><?= $detalle['tarifaCat'] != 0 ? '$' . htmlspecialchars($detalle['tarifaCat']) . ' MXN' : 'N/A'; ?></td>
+                    </tr>
+                    <tr>
+                        <th>Subtotal</th>
+                        <td>$<?= htmlspecialchars($detalle['subtotal']); ?> MXN</td>
+                    </tr>
+                    <tr>
+                        <th>IVA</th>
+                        <td>$<?= htmlspecialchars($detalle['IVA']); ?> MXN</td>
+                    </tr>
+                    <tr>
+                        <th>Total</th>
+                        <td>$<?= htmlspecialchars($detalle['precio']); ?> MXN</td>
+                    </tr>
+                </table>
+                <p style="margin-top: 1rem; font-family: Arial, sans-serif;">N/A = No Aplica</p>
+            </div>
+            <div class="section">
+                <h3>Delivery Products</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Product Name</th>
+                            <th>Quantity</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        // Iterar sobre todos los productos de la entrega
+                        mysqli_data_seek($resultProductos, 0); // Restablecer el puntero para recorrer todos los productos
+                        while ($producto = mysqli_fetch_assoc($resultProductos)): ?>
+                            <tr>
+                                <td><?= htmlspecialchars($producto['nombre']); ?></td>
+                                <td><?= htmlspecialchars($producto['cantidad']); ?></td>
+                            </tr>
+                        <?php endwhile; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <?php
+
     }
       
 ?>

@@ -55,41 +55,13 @@ BEGIN
             error_code = MYSQL_ERRNO,
             error_msg = MESSAGE_TEXT;
         ROLLBACK;
-        SET mensaje = CONCAT("Error al asociar producto: ", error_code, " - ", error_msg);
+        SET mensaje = CONCAT("Error al asociar origen: ", error_code, " - ", error_msg);
     END;
 
     START TRANSACTION;
         -- Insertar en la tabla `ubi_entrega_salida`
         INSERT INTO ubi_entrega_salida (entrega, ubicacion, hraSalida)
         VALUES (entrega_id, origen, NOW());
-    SET mensaje = "OK";
-    COMMIT;
-END $$
-/*************************************************************/
-DELIMITER $$
-CREATE PROCEDURE SP_asociarDestinosEntrega (
-    IN entrega_id INT,
-    IN destino VARCHAR(5),
-    OUT mensaje VARCHAR(255)
-)
-BEGIN
-    DECLARE error_msg TEXT;
-    DECLARE error_code INT;
-
-    -- Manejo de errores
-    DECLARE EXIT HANDLER FOR SQLEXCEPTION
-    BEGIN
-        GET DIAGNOSTICS CONDITION 1
-            error_code = MYSQL_ERRNO,
-            error_msg = MESSAGE_TEXT;
-        ROLLBACK;
-        SET mensaje = CONCAT("Error al asociar destino de la entrega: ", error_code, " - ", error_msg);
-    END;
-
-    START TRANSACTION;
-    -- Insertar en la tabla `ubi_entrega_destino`
-    INSERT INTO ubi_entrega_llegada (entrega, ubicacion, hraLlegada)
-    VALUES (entrega_id, destino, NULL);
     SET mensaje = "OK";
     COMMIT;
 END $$
@@ -111,13 +83,13 @@ BEGIN
             error_code = MYSQL_ERRNO,
             error_msg = MESSAGE_TEXT;
         ROLLBACK;
-        SET mensaje = CONCAT("Error al asociar producto: ", error_code, " - ", error_msg);
+        SET mensaje = CONCAT("Error al asociar destino: ", error_code, " - ", error_msg);
     END;
 
     START TRANSACTION;
-        -- Insertar en la tabla `ubi_entrega_salida`
-        INSERT INTO ubi_entrega_salida (entrega, ubicacion, hraSalida)
-        VALUES (entrega_id, origen, cantidadE);
+        -- Insertar en la tabla `ubi_entrega_llegada`
+        INSERT INTO ubi_entrega_llegada (entrega, ubicacion, hraLlegada)
+        VALUES (entrega_id, origen, NULL);
         SET mensaje = "OK";
     COMMIT;
 END $$
@@ -289,10 +261,11 @@ BEGIN
     WHERE ep.entrega = p_entrega_id;
 
     IF v_tarifaCat < 0 THEN
-        SET mensaje = 'Error: El recargo de Categoria Producto no esta definida.';
+        SET mensaje = "Error: El recargo de Categoria Producto no esta definida.";
     ELSE
         -- Confirmar éxito
         SET mensaje = "OK";
+    END IF;
 END$$
 /*************************************************************/
 DELIMITER $$

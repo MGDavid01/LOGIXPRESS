@@ -10,23 +10,27 @@
 
 .datos-desglose {
     width: 50%;
-    margin: auto;
+    height: 100%;
+    margin-left: 1rem;
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: #ffffff; /* Fondo blanco para un diseño más limpio */
+    border: 1px solid #ddd; /* Borde gris claro */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para dar profundidad */
+    padding: 1rem 1rem 1rem 1rem; /* Espaciado interno */
+    overflow-y: auto;
 }
 
 .datos-generales {
     width: 50%;
     height: 100%;
-    margin: auto;
+    margin-right: 1rem;
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: auto 2rem; /* Espaciado externo */
     background-color: #ffffff; /* Fondo blanco para un diseño más limpio */
     border: 1px solid #ddd; /* Borde gris claro */
-    border-radius: 8px; /* Bordes redondeados */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para dar profundidad */
     padding: 1rem; /* Espaciado interno */
     overflow-y: auto;
@@ -36,7 +40,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 5rem;
     width: 100%;
 }
 
@@ -45,18 +48,17 @@
     flex-direction: column;
     align-items: center;
     width: 90%;
-    background-color: #ffffff; /* Fondo blanco para un diseño más limpio */
-    border: 1px solid #ddd; /* Borde gris claro */
-    border-radius: 8px; /* Bordes redondeados */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para dar profundidad */
-    padding: 1rem; /* Espaciado interno */
     font-family: Arial, sans-serif; /* Fuente legible */
 }
 
 .section h3 {
     font-size: 1.5rem; /* Tamaño de fuente más grande para el encabezado */
     color: #333; /* Color de texto oscuro */
-    margin-bottom: 15px; /* Espaciado debajo del encabezado */
+    margin: 1.5rem 0rem 1.5rem 0rem;
     text-align: center; /* Centrar el texto */
     text-transform: uppercase; /* Texto en mayúsculas */
+}
+
+.section table th {
+    width: 20%;
 }
