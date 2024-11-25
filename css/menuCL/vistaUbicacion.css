@@ -1,0 +1,52 @@
+.content-origin {
+    all: unset;
+    width: 90%; /* Ajusta el ancho al 90% del contenedor padre */
+    height: 99%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.content-tools {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    height: 99%;
+    background-color: #ffffff; /* Fondo blanco para un diseño más limpio */
+    border: 1px solid #ddd; /* Borde gris claro */
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para dar profundidad */
+}
+
+.tools {
+    width: 80%;
+    display: flex;
+    justify-content: space-around;
+    padding: 1rem 1rem 0rem 1rem;
+}
+
+.information {
+    width: 80%;
+    height: 80%;
+    display: flex;
+    background-color: #ffffff; /* Fondo blanco para un diseño más limpio */
+    border: 1px solid #ddd; /* Borde gris claro */
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para dar profundidad */
+    padding: 1rem; /* Espaciado interno */
+    margin: 1rem;
+}
+
+.general-info {
+    width: 50%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.info-locations {
+    width: 50%;
+}

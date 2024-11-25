@@ -1,0 +1,41 @@
+.table {
+    width: 100%;
+}
+
+table {
+    width: 80%; /* Tabla ocupa todo el ancho del contenedor */
+    border-collapse: collapse; /* Elimina los espacios entre celdas */
+    background-color: #ffffff; /* Fondo blanco para un diseño más limpio */
+    border: 1px solid #ddd; /* Borde gris claro */
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para dar profundidad */
+    font-family: Arial, sans-serif; /* Fuente legible */
+}
+
+th, td {
+    padding: 10px; /* Espaciado interno en las celdas */
+    text-align: left; /* Alineación a la izquierda */
+    border: 1px solid #ddd; /* Borde claro entre celdas */
+    text-align: center;
+}
+
+th {
+    background-color: #27434e; /* Color de fondo azul oscuro */
+    color: white; /* Color de texto blanco */
+    text-transform: uppercase; /* Texto en mayúsculas */
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9; /* Fondo gris claro para filas pares */
+}
+
+tr:nth-child(odd) {
+    background-color: #ffffff; /* Fondo blanco para filas impares */
+}
+
+table a {
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+    font-style: italic;
+}

@@ -1,0 +1,70 @@
+/*********************
+        CLIENTE
+**********************/
+DELIMITER $$
+CREATE TRIGGER TR_validarEntrega
+BEFORE INSERT ON entrega 
+FOR EACH ROW
+BEGIN
+    -- Validar que la fechaEntrega no sea sea null.
+    IF NEW.fechaEntrega = NULL THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'La fecha de entrega no debe estar vacio .';
+    -- Validar que la fechaEntrega no sea sea anterior a la fechaRegistro.
+    ELSEIF NEW.fechaEntrega <= NEW.fechaRegistro THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'La fecha de entrega debe ser al menos un día posterior a la fecha de registro.';
+    -- Validar que horaInicio y horaFin no sean nulas
+    ELSEIF NEW.horaInicio IS NULL OR NEW.horaFin IS NULL THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Las horas de inicio y/o fin no deben estar vacías.';
+    -- Validar que horaInicio esté dentro del rango permitido
+    ELSEIF NEW.horaInicio < '00:00:00' OR NEW.horaInicio > '23:59:59' THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'La hora de inicio debe estar entre 00:00:00 y 23:59:59.';
+    -- Validar que horaFin esté dentro del rango permitido
+    ELSEIF NEW.horaFin < '00:00:00' OR NEW.horaFin > '23:59:59' THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'La hora de fin debe estar entre 00:00:00 y 23:59:59.';
+    END IF;
+END$$
+/*************************************************************/
+
+/*************************************************************/
+
+/*************************************************************/
+DELIMITER $$
+CREATE TRIGGER TR_asignacionValoresTablasDeEntrega
+AFTER INSERT ON entrega
+FOR EACH ROW
+BEGIN
+    -- Hacer update directamente, las fechas y horas ya estan validadas
+    INSERT INTO entre_estado (entrega, estadoEntrega, fechaCambio)
+    VALUES (NEW.num, 'PROG', NOW());
+END$$
+/*************************************************************/
+
+/*********************
+  Vehiculo y Remolque
+**********************/
+DELIMITER $$
+CREATE TRIGGER actualizar_costo_vehiculo
+AFTER INSERT ON mantenimiento
+FOR EACH ROW
+BEGIN
+    -- Verifica que el costoAcumulado del vehículo exista y se actualice correctamente.
+    UPDATE vehiculo
+    SET costoAcumulado = IFNULL(costoAcumulado, 0) + NEW.costo
+    WHERE num = NEW.vehiculo;
+END$$
+ /*************************************************************/
+DELIMITER $$
+CREATE TRIGGER actualizar_costo_remolque
+AFTER INSERT ON mantenimiento
+FOR EACH ROW
+BEGIN
+    -- Verifica que el costoAcumulado del mantenimiento exista y se actualice correctamente.
+    UPDATE remolque
+    SET costoAcumulado = IFNULL(costoAcumulado, 0) + NEW.costo
+    WHERE num = NEW.remolque;
+END$$

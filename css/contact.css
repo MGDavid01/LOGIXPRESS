@@ -1,0 +1,91 @@
+/* General */
+
+html, body {
+    font-size: 62.5%;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    flex-direction: column;
+}
+
+body {
+    overflow-x: hidden;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+/* Encabezado */
+#box-info-contact {
+    background-color: #27434e;
+    color: white;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+/* Banner */
+.banner {
+    width: 100%;
+    height: 40rem;
+    overflow: hidden;
+}
+
+#img-contact {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center -5rem;
+}
+
+/* Sección de Información de Contacto */
+.contact-info {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: space-around;
+    background-color: #f8f8f8;
+    text-align: center;
+    padding: 2rem;
+}
+
+.contact-item {
+    flex: 1 1 22rem;
+    text-align: center;
+    align-content: center;
+    background: white;
+    min-height: 11rem;
+    max-width: 30rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    font-size: 3rem;
+}
+
+.contact-item h2 {
+    font-size: 1.8rem;
+    color: #27434e;
+    margin-bottom: 1rem;
+}
+
+.contact-item p {
+    font-size: 1.4rem;
+    color: #333;
+}
+
+.contact-item a {
+    color: #333;
+    text-decoration: none;
+}
+
+.contact-item a:hover {
+    text-decoration: underline;
+}

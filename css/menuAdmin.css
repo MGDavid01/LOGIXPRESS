@@ -1,0 +1,26 @@
+.container {
+    display: flex;
+    width: 100%;
+}
+
+/* Estilos para tablas (si las usas en tu página) */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table th, table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+table th {
+    background-color: #0d47a1; /* Azul rey */
+    color: white;
+}
+
+table tr:nth-child(even) {
+    background-color: #f4f4f9; /* Fondo gris claro para filas pares */
+}

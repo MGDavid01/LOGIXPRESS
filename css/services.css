@@ -1,0 +1,79 @@
+/* General */
+
+html, body {
+    font-size: 62.5%;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    flex-direction: column;
+}
+
+body {
+    overflow-x: hidden;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+/* Encabezado de Servicios */
+.services-header {
+    text-align: center;
+    padding: 1rem 2rem;
+    background-color: #27434e;
+    color: white;
+}
+
+.services-header h1 {
+    font-size: 3.2rem;
+    margin-bottom: 1rem;
+}
+
+.services-header p {
+    font-size: 1.6rem;
+}
+
+#img-bg-services {
+    background-image: url('../imagenes/imgServices.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    flex: 1;
+}
+
+/* Lista de Servicios */
+.services-list {
+    padding: 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.service-item {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 2rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.service-item h2 {
+    font-size: 2.4rem;
+    color: #27434e;
+    margin-bottom: 1rem;
+}
+
+.service-item p {
+    font-size: 1.6rem;
+    color: #333;
+    line-height: 1.6;
+}

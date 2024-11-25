@@ -1,0 +1,25 @@
+<<<<<<< HEAD
+.container {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+}
+
+
+#delivery-succ {
+    padding: 2rem;
+    font-size: 2rem;
+}
+=======
+.container {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+}
+
+
+#delivery-succ {
+    padding: 2rem;
+    font-size: 2rem;
+}
+>>>>>>> fe9383e77c2e7b64f75023ff74c6b17d9a98311b

@@ -1,0 +1,204 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+ 
+  
+.clipboard {
+    position: relative;
+    background-color: #8B4513; /* Color marrón del portapapeles */
+    width: 400px;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 50px;
+}
+  
+.clipboard::before {
+    content: '';
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 20px;
+    background-color: #c1c1c1;
+    border-radius: 5px 5px 0 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+  
+  /* Simulación de la hoja en blanco dentro del portapapeles */
+.paper {
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 20px;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+}
+  
+  /* Estilo del formulario */
+.form {
+    display: flex;
+    flex-direction: column;
+}
+  
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+  
+label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+  
+  /* Estilo de los inputs como renglones (solo una línea negra) */
+input {
+    border: none;
+    border-bottom: 1px solid black;
+    padding: 5px 10px;
+    margin-bottom: 15px;
+    outline: none;
+    font-size: 16px;
+}
+  
+button {
+    padding: 10px;
+    background-color: #eb0808;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+  
+  /* Sticky notes tipo post-it */
+.sticky-notes {
+    position: absolute;
+    top: 20px;
+    right: -140px;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+}
+
+/* Botón de "Siguiente" estilo óvalo rojo */
+.next-button {
+    background: none;
+    border: 4px solid rgb(255, 255, 255);
+    color: red;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 50px;
+    cursor: pointer;
+    text-transform: uppercase;
+    position: relative;
+    transition: transform 0.2s ease;
+    display: inline-block;
+}
+
+.next-button::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: 25px;
+    width: 80%;
+    height: 100%;
+    border: 2px solid red;
+    border-radius: 50px;
+    transform: rotate(-10deg);
+    z-index: -1;
+}
+
+.next-button:hover {
+    transform: scale(1.05);
+}
+
+  
+.sticky {
+    width: 180px; /* Ancho ajustado para que el texto quepa en una sola línea */
+    height: 40px; /* Reducido el alto para que se vea más como un botón */
+    border-radius: 3px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    border: none;
+    text-align: left; /* Alineación del texto a la izquierda */
+  padding-left: 10px; /* Espacio para que el texto no esté pegado al borde */
+  font-size: 14px; /* Tamaño del texto ajustado */
+  white-space: nowrap; /* Evita que el texto se envuelva */
+  transition: transform 0.2s ease, box-shadow 0.2s ease; /* Evita que el texto se envuelva */
+}
+
+/* Efecto cuando el botón está activo */
+.sticky.active {
+    transform: translateY(-5px); /* Mueve el botón hacia arriba */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4); /* Sombra más pronunciada */
+}
+  
+.sticky:hover {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.sticky.yellow {
+    background-color: #e7d10a;
+}
+  
+.sticky.pink {
+    background-color: #ff4081;
+}
+  
+.sticky.blue {
+    background-color: #2196f3;
+}
+  
+.sticky.green {
+    background-color: #4caf50;
+}
+  
+.sticky.orange {
+    background-color: #ff9800;
+}
+
+.tab-content {
+    display: none;
+}
+
+.active-content {
+    display: block;
+}
+
+select {
+    appearance: none; /* Elimina el estilo por defecto del navegador */
+    -webkit-appearance: none; /* Elimina el estilo por defecto en Safari */
+    background: none;
+    border: none;
+    border-bottom: 1px solid black; /* Aplica la línea negra solo en la parte inferior */
+    padding: 5px 10px;
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+    color: #000;
+    width: 100%;
+    outline: none;
+    cursor: pointer;
+}
+
+/* Agregar un pequeño icono de flecha para el select */
+select::after {
+    content: '\25BC'; /* Triángulo como icono de flecha */
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+/* Añadir margen al label y al select para que estén alineados */
+label, select {
+    margin-bottom: 15px;
+    display: block;
+}
