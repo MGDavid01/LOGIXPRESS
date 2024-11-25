@@ -1,15 +1,102 @@
-.container {
+/* Contenedor principal */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex; /* Flexbox para separar nav y contenido */
+    background-color: #f8f9fa;
+    color: #333;
+}
+
+/* Contenido principal */
+.main-content {
+    margin-left: 250px; /* Espacio dejado por el navbar vertical */
+    padding: 20px; /* Espaciado interno para separar el contenido de los bordes */
+    width: calc(100% - 250px); /* Ajusta el ancho para no superponerse al navbar */
+    background-color: #f8f9fa; /* Fondo claro para contraste */
+    min-height: 100vh; /* Asegura que el contenido ocupe al menos la altura de la pantalla */
+    box-sizing: border-box; /* Incluye padding en el cálculo del ancho */
+}
+
+/* Navbar vertical */
+nav {
+    width: 200px;
+    background-color: #27434e;
+    color: white;
     display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 10px;
+    height: 100vh; /* Altura completa */
+    position: fixed; /* Mantener fijo al scroll */
+}
+
+nav .logo-container {
+    width: 60%;
+    background-color: white; /* Fondo blanco para el logo */
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2); /* Sombra suave */
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+nav .logo-container img {
+    max-width: 80%;
+    max-height: 80px;
+    object-fit: contain; /* Asegura que el logo se ajuste correctamente */
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
     width: 100%;
 }
 
-#no-delivery {
-    background-color: #27434e;
+nav ul li {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+nav ul li a {
+    display: block;
+    padding: 10px 20px;
+    color: #ffffff;
+    text-decoration: none;
+    text-align: left;
+    font-size: 1rem;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+nav ul li a:hover {
+    background-color: #2b5363;
     color: white;
-    padding: 1rem 2rem;
-    font-family: Arial, sans-serif;
-    font-size: 2rem;
-    font-weight: 500;
+}
+
+nav form {
+    margin-top: 600px; /* Empuja el botón hacia abajo */
+    width: 100%;
+    text-align: center;
+}
+
+nav form button {
+    width: 90%;
+    background-color: #2b5363;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+nav form button:hover {
+    background-color: #ffffff;
+    color: #333;
 }
 
 /* Estilos para tablas (si las usas en tu página) */
@@ -26,10 +113,21 @@ table th, table td {
 }
 
 table th {
-    background-color: #0d47a1; /* Azul rey */
+    background-color: #2b5363; /* Azul rey */
     color: white;
 }
 
 table tr:nth-child(even) {
     background-color: #f4f4f9; /* Fondo gris claro para filas pares */
+}
+
+/* Contenedor del mapa */
+#map {
+    height: 500px; /* Altura fija para el mapa */
+    width: 100%;   /* Ancho completo dentro del contenedor principal */
+    margin-top: 20px; /* Espaciado superior */
+    border: 1px solid #ddd; /* Borde alrededor del mapa */
+    border-radius: 8px; /* Esquinas redondeadas */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sombra para destacar el mapa */
+    background-color: #f4f4f9; /* Fondo claro mientras se carga */
 }

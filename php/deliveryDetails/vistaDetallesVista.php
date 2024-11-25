@@ -89,6 +89,28 @@
             echo '<p style="font-size:2rem;">Error: No se encontró la entrega.</p>';
             return;
         }
+        // Consulta para obtener los productos con su volumen, peso y otros detalles
+        $queryDetallesProductos = "SELECT p.nombre, 
+                                  (p.alto * p.ancho * p.largo) AS volumen,
+                                  p.peso, 
+                                  pe.cantidad, 
+                                  (p.alto * p.ancho * p.largo * pe.cantidad) AS volumen_total,
+                                  (p.peso * pe.cantidad) AS peso_total
+                           FROM entre_producto pe
+                           INNER JOIN producto p ON pe.producto = p.codigo
+                           WHERE pe.entrega = $entrega_id";
+
+        $resultDetallesProductos = mysqli_query($db, $queryDetallesProductos);
+
+        if (!$resultDetallesProductos || mysqli_num_rows($resultDetallesProductos) == 0) {
+            echo '<p style="font-size:2rem;">Error: No se encontró información sobre los productos de la entrega.</p>';
+            return;
+        }
+
+        // Inicializar acumuladores para volumen y peso totales
+        $volumenTotal = 0;
+        $pesoTotal = 0;
+        $cantidadTotal = 0;
         ?>
         <div class="detalle-entrega">
             <!-- Estado y Datos Generales -->
@@ -181,6 +203,74 @@
                             </tr>
                         <?php endwhile; ?>
                     </tbody>
+                </table>
+            </div>
+            <div class="section">
+                <h3>Product Details (Volume and Weight)</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Product Name</th>
+                            <th>Individual Volume (m³)</th>
+                            <th>Individual Weight (kg)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        // Inicializar acumuladores para volumen y peso totales
+                        $volumenTotal = 0;
+                        $pesoTotal = 0;
+
+                        // Iterar sobre todos los productos de la entrega
+                        while ($producto = mysqli_fetch_assoc($resultDetallesProductos)):
+                            // Sumar al total acumulado de volumen y peso
+                            $volumenTotal += $producto['volumen_total'];
+                            $pesoTotal += $producto['peso_total'];
+                        ?>
+                            <tr>
+                                <td><?= htmlspecialchars($producto['nombre']); ?></td>
+                                <td><?= number_format($producto['volumen'], 2); ?> m³</td>
+                                <td><?= number_format($producto['peso'], 2); ?> kg</td>
+                            </tr>
+                        <?php endwhile; ?>
+                    </tbody>
+                </table>
+            </div>
+            <div class="section">
+                <h3>Product Summary (Total Quantity, Weight, and Volume)</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Quantity</th>
+                            <th>Total Weight (kg)</th>
+                            <th>Total Volume (m³)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        // Reiniciar el puntero del resultado y recorrer todos los productos nuevamente
+                        mysqli_data_seek($resultDetallesProductos, 0);
+
+                        while ($producto = mysqli_fetch_assoc($resultDetallesProductos)):
+                            // Sumar la cantidad, volumen y peso totales de cada producto
+                            $cantidadTotal += $producto['cantidad'];
+                            $volumenTotal += $producto['volumen_total'];
+                            $pesoTotal += $producto['peso_total'];
+                        ?>
+                            <tr>
+                                <td><?= htmlspecialchars($producto['cantidad']); ?></td>
+                                <td><?= number_format($producto['peso_total'], 2); ?> kg</td>
+                                <td><?= number_format($producto['volumen_total'], 2); ?> m³</td>
+                            </tr>
+                        <?php endwhile; ?>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>Total</th>
+                            <th><?= number_format($pesoTotal, 2); ?> kg</th>
+                            <th><?= number_format($volumenTotal, 2); ?> m³</th>
+                        </tr>
+                    </tfoot>
                 </table>
             </div>
         </div>

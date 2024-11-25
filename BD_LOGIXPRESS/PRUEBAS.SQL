@@ -17,3 +17,5 @@ INSERT INTO mantenimiento VALUES
 
 INSERT INTO mantenimiento VALUES
 (DEFAULT, NOW(), 5000, 'Mantenimiento Ejemplo', NULL, 1);
+
+INSERT INTO VALUES

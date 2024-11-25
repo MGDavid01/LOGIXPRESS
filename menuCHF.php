@@ -1,115 +1,127 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-session_start();
-require('includes/config/conection.php');
-$db = connectTo2DB();
-// Funcion para mostrar el inicio
-function vistaInicial(){
-    echo "<p id='welcome'>Welcome, " . $_SESSION['nombre'] . "</p>";
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
 }
-// Función para mostrar la entrega asignada
-function vistaEntrega() {
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL); 
+if (!isset($_SESSION['user_id']) || !isset($_SESSION['puesto']) || $_SESSION['puesto'] !== 'CHF') {
+    echo "Empleado no autenticado o sin permisos.";
+    exit();
+}
+
+require_once('includes/config/conection.php');
+
+$db = connectTo2DB();
+if (!$db) {
+    die("Error en la conexión a la base de datos.");
+}
+
+// Función para obtener el ID del empleado logueado
+function getEmpleadoId() {
+    return isset($_SESSION['user_id']) ? intval($_SESSION['user_id']) : null;
+}
+
+// Función para mostrar entregas pendientes
+function vistaEntregasPendientes() {
     global $db;
-    $entrega = [];
-    $query = "SELECT num, fechaInicio, fechaFin, CONCAT(horaInicio,' - ', horaFin) AS 'ventanaHorario',
-     (SELECT es.descripcion
-        FROM entre_estado en
-        INNER JOIN estado_entre es on es.codigo = en.estadoEntrega
-        WHERE e.num = en.entrega) AS estado, (SELECT p.descripcion
-                                                FROM prioridad p
-                                                WHERE e.prioridad = p.codigo)prioridad FROM entrega e";
-    $result = mysqli_query($db, $query);
-    if (!$result) {
-        die("Error en la consulta: " . mysqli_error($db));
-    }
-    while ($row = mysqli_fetch_assoc($result)) {
-        $entrega[] = $row;
+    $empleadoId = getEmpleadoId();
+    $entregas = [];
+
+    if (!$empleadoId) {
+        echo "<p>Error: Empleado no autenticado.</p>";
+        return;
     }
 
-    // Mostrar los datos en una tabla HTML
-    if (!empty($entrega)) {
-        echo "<table border='1' cellpadding='10'>";
+    $query = "
+        SELECT e.num, e.fechaRegistro, e.fechaEntrega, CONCAT(e.horaInicio, ' - ', e.horaFin) AS ventanaHorario
+        FROM entrega e
+        INNER JOIN entre_empleado ee ON e.num = ee.entrega
+        WHERE ee.empleado = ?
+          AND (SELECT en.estadoEntrega 
+               FROM entre_estado en
+               WHERE en.entrega = e.num
+               ORDER BY en.fechaCambio DESC
+               LIMIT 1) = 'PROG'
+    ";
+
+    // Preparar y ejecutar la consulta
+    $stmt = $db->prepare($query);
+    $stmt->bind_param('i', $empleadoId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    // Recorrer los resultados
+    while ($row = $result->fetch_assoc()) {
+        $entregas[] = $row;
+    }
+    
+    if (!empty($entregas)) {
+        echo "<table border='1'>";
         echo "<tr>
-                <th>Number</th>
-                <th>Start Date</th>
-                <th>End Date</th>
-                <th>Time Window</th>
-                <th>Status</th>
-                <th>Priority</th>
+                <th>Número</th>
+                <th>Fecha Inicio</th>
+                <th>Fecha Fin</th>
+                <th>Horario</th>
+                <th>Acciones</th>
             </tr>";
         
-        foreach ($entrega as $row) {
+        foreach ($entregas as $row) {
+            //$_SESSION['entrega'] = $row['num'];
             echo "<tr>
-                    <td>{$row['num']}</td>
-                    <td>{$row['fechaInicio']}</td>
-                    <td>{$row['fechaFin']}</td>
-                    <td>{$row['ventanaHorario']}</td>
-                    <td>{$row['estado']}</td>
-                    <td>{$row['prioridad']}</td>
+                    <td>" . htmlspecialchars($row['num']) . "</td>
+                    <td>" . htmlspecialchars($row['fechaRegistro']) . "</td>
+                    <td>" . htmlspecialchars($row['fechaEntrega']) . "</td>
+                    <td>" . htmlspecialchars($row['ventanaHorario']) . "</td>
+                    <td><a href='?section=routeDelivery&entrega=" . htmlspecialchars($row['num']) . "'>Ver Ruta</a></td>
                 </tr>";
         }
         echo "</table>";
     } else {
-        echo "<p id='no-delivery'>There Are No Deliveries Assigned.</p>";
+        echo "<p>No hay entregas pendientes asignadas.</p>";
     }
 }
+
+// Renderizar la página principal
+$section = isset($_GET['section']) ? htmlspecialchars($_GET['section']) : '';
 ?>
-<?php
-// Función para mostrar detalles de la entrega
-function vistaDetallesEntrega(){
-
-}
-// Función para mostrar el formulario de incidentes
-function vistaIncidentes(){
-
-}
-$section = isset($_GET['section']) ? $_GET['section'] : '';
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST['accion']) && $_POST['accion'] === 'logout') {
-        // Cerrar sesión
-        session_unset();
-        session_destroy();
-        header("Location: index.php");
-        exit();
-    }
-}
-include_once('includes/headUsers.php');
-?>
-<link rel="stylesheet" href="css/menuDriver.css">
-    <nav>
-        <div class="logo-container">
-            <img src="imagenes/LOGIXPRESS_LOGO_F2.png" alt="Logo">
-        </div>
-        <ul>
-            <li><a href="?section=entrega">Delivery</a></li>
-            <li><a href="?section=detallesEntrega">Delivery Details</a></li>
-            <li><a href="?section=incidentes">Incidents</a></li>
-        </ul>
-        <!-- Botón de Logout -->
-        <form action="" method="post" >
-            <button type="submit" name="accion" value="logout">Log out</button>
-        </form>
-    </nav>
-
-    <div class="main-content">
-        <?php
-        switch ($section) {
-            case 'entrega':
-                vistaEntrega();
-                break;
-            case 'detailsDelivery':
-                vistaDetallesEntrega();
-                break;
-            case 'incidents':
-                vistaIncidentes();
-                break;
-            default:
-                vistaInicial();
-                break;
-        }
-        ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/menuDriver.css">
+    <title>Menu CHF</title>
+</head>
+<body>
+<nav>
+    <div class="logo-container">
+        <img src="imagenes/LOGIXPRESS_LOGO_F2.png" alt="Logo">
     </div>
+    <ul>
+        <li><a href="?section=entrega">Delivery</a></li>
+        <li><a href="?section=detailsDelivery">Delivery Details</a></li>
+        <li><a href="?section=routeDelivery">Route</a></li>
+    </ul>
+    <form style="all:unset;" method="post">
+        <button type="submit" name="accion" value="logout">Log out</button>
+    </form>
+</nav>
+
+<div class="main-content">
+    <?php
+    switch ($section) {
+        case 'entrega':
+            vistaEntregasPendientes();
+            break;
+        case 'routeDelivery':
+            require_once('mapas/mapa.php');
+            break;
+        default:
+            vistaEntregasPendientes();
+            break;
+    }
+    ?>
 </div>
 </body>
 </html>
