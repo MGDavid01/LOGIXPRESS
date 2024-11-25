@@ -1,8 +1,8 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['accion']) && $_POST['accion'] === 'registerDelivery') {
     $fechaEntrega = $_POST['fechaEntrega'];
-    $horaInicio = $_POST['horaInicio'];
-    $horaFin = $_POST['horaFin'];
+    $horaInicio = date("H:i", strtotime($_POST['horaInicio']));
+$horaFin = date("H:i", strtotime($_POST['horaFin']));
     $tipoCarga = $_POST['tipoCarga'];
     $prioridad = $_POST['prioridad'];
     $clienteId = $_SESSION['user_id'];

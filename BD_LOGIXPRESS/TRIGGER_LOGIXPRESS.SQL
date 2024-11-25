@@ -18,6 +18,10 @@ BEGIN
     ELSEIF NEW.horaInicio IS NULL OR NEW.horaFin IS NULL THEN
         SIGNAL SQLSTATE '45000'
         SET MESSAGE_TEXT = 'Las horas de inicio y/o fin no deben estar vacías.';
+    -- Validar que la diferencia entre horaInicio y horaFin sea al menos de 4 horas
+    ELSEIF TIMESTAMPDIFF(HOUR, NEW.horaInicio, NEW.horaFin) < 4 THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Debe haber un margen de 4hrs como ventana de horario.';
     -- Validar que horaInicio esté dentro del rango permitido
     ELSEIF NEW.horaInicio < '00:00:00' OR NEW.horaInicio > '23:59:59' THEN
         SIGNAL SQLSTATE '45000'
@@ -34,7 +38,7 @@ END$$
 
 /*************************************************************/
 DELIMITER $$
-CREATE TRIGGER TR_asignacionValoresTablasDeEntrega
+CREATE TRIGGER TR_asignarEstadoEntrega
 AFTER INSERT ON entrega
 FOR EACH ROW
 BEGIN
