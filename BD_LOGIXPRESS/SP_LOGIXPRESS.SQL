@@ -289,11 +289,10 @@ BEGIN
     WHERE ep.entrega = p_entrega_id;
 
     IF v_tarifaCat < 0 THEN
-        SET mensaje = 'Error: La tarifa de Categoria Producto no esta definida.';
+        SET mensaje = 'Error: El recargo de Categoria Producto no esta definida.';
     ELSE
         -- Confirmar éxito
         SET mensaje = "OK";
-    END IF;
 END$$
 /*************************************************************/
 DELIMITER $$
