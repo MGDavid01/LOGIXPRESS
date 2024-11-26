@@ -14,7 +14,6 @@
     width: 80%;
     height: 100%;
     background-color: #ffffff; /* Fondo blanco para un diseño más limpio */
-    border: 1px solid #ddd; /* Borde gris claro */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para dar profundidad */
 }
 
@@ -25,8 +24,7 @@
     justify-content: space-around;
     align-items: center;
     background-color: #27434e; /* Fondo blanco para un diseño más limpio */
-
-    margin: 1% 0% 1% 0%;
+    margin: 0% 0% 1% 0%;
 }
 
 .text-tool {
@@ -56,4 +54,9 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+}
+
+.tool-text {
+    color: #ffffff;
+    text-decoration: none;
 }

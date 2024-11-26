@@ -21,10 +21,10 @@ function vistaUbicaciones($cliente) {
     <section class="content-tools">
         <div class="tools">
             <div>
-                <a class="text-tool" href="?section=locations&tool=add">Add Location</a>
+                <a class="tool-text" href="?section=locations&addLocation">Add Location</a>
             </div>
             <div>
-                <a class="text-tool" href="?section=locations&tool=edit">Edit Location</a>
+                <a class="tool-text" href="?section=locations&editLocation">Edit Location</a>
             </div>
         </div>
         <div class="information">
