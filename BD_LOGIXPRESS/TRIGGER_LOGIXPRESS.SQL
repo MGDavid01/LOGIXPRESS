@@ -21,7 +21,7 @@ BEGIN
     -- Validar que la diferencia entre horaInicio y horaFin sea al menos de 4 horas
     ELSEIF TIMESTAMPDIFF(HOUR, NEW.horaInicio, NEW.horaFin) < 4 THEN
         SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'Debe haber un margen de 4hrs como ventana de horario.';
+        SET MESSAGE_TEXT = 'Debe haber un margen de 4hrs    mo ventana de horario.';
     -- Validar que horaInicio esté dentro del rango permitido
     ELSEIF NEW.horaInicio < '00:00:00' OR NEW.horaInicio > '23:59:59' THEN
         SIGNAL SQLSTATE '45000'

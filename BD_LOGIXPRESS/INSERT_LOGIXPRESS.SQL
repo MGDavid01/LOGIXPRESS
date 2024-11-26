@@ -235,95 +235,95 @@ INSERT INTO modelo (codigo, nombre, marca) VALUES
 ('TANK1', 'Tanker', 'WBER'),
 ('TIPPR', 'Tipper Trailer', 'MAC');
 
-INSERT INTO producto (codigo, nombre, descripcion, categoria, etiquetado, alto, ancho, largo, peso, cliente) VALUES
-('P0001', 'Caja de cereales (Pallet)', 'Pallet de cajas de cereales integrales', 'ALI01', 'EST', 1.5, 1.0, 1.2, 500, 1), -- ALI01 - Alimentos y Bebidas
-('P0002', 'Botellas de vino tinto (Caja)', 'Caja con botellas de vino tinto de reserva', 'ALI01', 'FRA', 0.8, 0.6, 0.4, 15, 1),
-('P0003', 'Lechugas frescas (Caja)', 'Caja con lechugas orgánicas recién cosechadas', 'FRE01', 'EST', 0.5, 0.4, 0.6, 10, 2), -- FRE01 - Productos Frescos
-('P0004', 'Huevos (Pallet)', 'Pallet con cajas de huevos frescos de granja', 'FRE01', 'FRA', 1.2, 1.0, 1.0, 600, 2),
-('P0005', 'Pizzas congeladas (Pallet)', 'Pallet de pizzas de pepperoni listas para hornear', 'CON01', 'EST', 1.8, 1.0, 1.2, 800, 3), -- CON01 - Productos Congelados
-('P0006', 'Tartas heladas (Caja)', 'Caja con tartas de queso congeladas delicadas', 'CON01', 'FRA', 0.6, 0.4, 0.4, 12, 3),
-('P0007', 'Filetes de res (Caja)', 'Caja con cortes premium de carne de res', 'CAR01', 'EST', 0.4, 0.6, 0.8, 25, 4), -- CAR01 - Carnes y Pescados
-('P0008', 'Pescados frescos (Pallet)', 'Pallet con pescados frescos que requieren cuidado', 'CAR01', 'FRA', 1.0, 1.0, 1.5, 700, 4),
-('P0009', 'Quesos cheddar (Caja)', 'Caja con bloques de queso cheddar', 'LAC01', 'EST', 0.5, 0.4, 0.6, 20, 5), -- LAC01 - Lácteos y Derivados
-('P0010', 'Yogur en frascos de vidrio (Pallet)', 'Pallet con yogures en envases de vidrio', 'LAC01', 'FRA', 1.2, 1.0, 1.0, 500, 5),
-('P0011', 'Panes integrales (Caja)', 'Caja con panes integrales recién horneados', 'PAN01', 'EST', 0.6, 0.4, 0.5, 15, 6), -- PAN01 - Panadería y Pastelería
-('P0012', 'Pasteles de boda (Pallet)', 'Pallet con pasteles de boda delicados', 'PAN01', 'FRA', 1.5, 1.0, 1.0, 300, 6),
-('P0013', 'Chips de patata (Pallet)', 'Pallet de bolsas de chips de patata clásica', 'SNA01', 'EST', 1.8, 1.0, 1.2, 200, 7), -- SNA01 - Snacks y Dulces
-('P0014', 'Figuras de chocolate (Caja)', 'Caja con figuras de chocolate delicadas', 'SNA01', 'FRA', 0.5, 0.4, 0.3, 8, 7),
-('P0015', 'Champús revitalizantes (Pallet)', 'Pallet de champús para todo tipo de cabello', 'COS01', 'EST', 1.6, 1.0, 1.2, 600, 8), -- COS01 - Cosméticos y Cuidado Personal
-('P0016', 'Perfumes de lujo (Caja)', 'Caja con perfumes en botellas de vidrio', 'COS01', 'FRA', 0.4, 0.3, 0.2, 5, 8),
-('P0017', 'Jabones en barra (Caja)', 'Caja con jabones antibacteriales', 'HIG01', 'EST', 0.4, 0.4, 0.6, 18, 9), -- HIG01 - Higiene Personal
-('P0018', 'Enjuagues bucales en vidrio (Pallet)', 'Pallet con enjuagues bucales en botellas de vidrio', 'HIG01', 'FRA', 1.2, 1.0, 1.0, 550, 9),
-('P0019', 'Detergentes líquidos (Pallet)', 'Pallet de detergentes para ropa', 'LIM01', 'EST', 1.5, 1.0, 1.2, 800, 10), -- LIM01 - Limpieza del Hogar
-('P0020', 'Limpiavidrios en vidrio (Caja)', 'Caja con limpiavidrios en envases frágiles', 'LIM01', 'FRA', 0.6, 0.4, 0.4, 10, 10),
-('P0021', 'Mesas de centro (Pallet)', 'Pallet con mesas de centro de madera', 'MOB01', 'EST', 2.0, 1.2, 1.5, 1000, 1), -- MOB01 - Mobiliario y Decoración
-('P0022', 'Mesas de vidrio (Pallet)', 'Pallet con mesas de centro de vidrio', 'MOB01', 'FRA', 2.0, 1.2, 1.5, 900, 1),
-('P0023', 'Camisetas de algodón (Caja)', 'Caja con camisetas básicas de algodón', 'ROP01', 'EST', 0.5, 0.6, 0.8, 20, 2), -- ROP01 - Ropa y Accesorios
-('P0024', 'Collares de perlas (Caja)', 'Caja con collares de perlas naturales', 'ROP01', 'FRA', 0.3, 0.2, 0.2, 3, 2),
-('P0025', 'Zapatillas deportivas (Pallet)', 'Pallet de calzado para correr', 'CAL01', 'EST', 1.8, 1.0, 1.2, 500, 3), -- CAL01 - Calzado
-('P0026', 'Zapatos de tacón alto (Caja)', 'Caja con zapatos de tacón delicados', 'CAL01', 'FRA', 0.5, 0.4, 0.6, 12, 3),
-('P0027', 'Pelotas de fútbol (Pallet)', 'Pallet de balones de fútbol estándar', 'JUG01', 'EST', 2.0, 1.0, 1.2, 250, 4), -- JUG01 - Juguetes y Juegos
-('P0028', 'Muñecas de porcelana (Caja)', 'Caja con muñecas coleccionables de porcelana', 'JUG01', 'FRA', 0.6, 0.4, 0.5, 15, 4),
-('P0029', 'Papeles para impresora (Pallet)', 'Pallet de resmas de papel A4', 'MAT01', 'EST', 1.2, 1.0, 1.0, 800, 5), -- MAT01 - Material de Oficina
-('P0030', 'Organizadores de escritorio de vidrio (Caja)', 'Caja con organizadores de vidrio', 'MAT01', 'FRA', 0.5, 0.4, 0.3, 10, 5),
-('P0031', 'Cuadernos de notas (Caja)', 'Caja con cuadernos de espiral', 'PAP01', 'EST', 0.4, 0.6, 0.8, 25, 6), -- PAP01 - Papelería y Librería
-('P0032', 'Plumas estilográficas de cristal (Caja)', 'Caja con plumas de cristal', 'PAP01', 'FRA', 0.2, 0.1, 0.1, 5, 6),
-('P0033', 'Televisores LED 40" (Pallet)', 'Pallet de televisores LED de 40 pulgadas', 'ELE01', 'EST', 2.0, 1.2, 1.5, 1200, 7), -- ELE01 - Electrónica y Electrodomésticos
-('P0034', 'Microondas con puerta de vidrio (Caja)', 'Caja con hornos microondas frágiles', 'ELE01', 'FRA', 0.8, 0.6, 0.5, 20, 7),
-('P0035', 'Laptops 15" (Pallet)', 'Pallet de computadoras portátiles de 15 pulgadas', 'COM01', 'EST', 1.2, 1.0, 1.0, 800, 8), -- COM01 - Computadoras y Accesorios
-('P0036', 'Monitores LED 24" (Caja)', 'Caja con monitores de pantalla frágil', 'COM01', 'FRA', 0.6, 0.5, 0.4, 15, 8),
-('P0037', 'Teléfonos inteligentes (Caja)', 'Caja con smartphones de última generación', 'TEL01', 'EST', 0.4, 0.3, 0.2, 8, 9), -- TEL01 - Telefonía Móvil y Accesorios
-('P0038', 'Protectores de pantalla de vidrio (Caja)', 'Caja con protectores de pantalla frágiles', 'TEL01', 'FRA', 0.2, 0.1, 0.1, 2, 9),
-('P0039', 'Tijeras de podar (Caja)', 'Caja con herramientas para poda', 'JAR01', 'EST', 0.5, 0.4, 0.6, 22, 10), -- JAR01 - Jardinería y Herramientas de Exterior
-('P0040', 'Esferas decorativas de vidrio (Caja)', 'Caja con adornos de vidrio para jardín', 'JAR01', 'FRA', 0.6, 0.5, 0.5, 18, 10),
-('P0041', 'Martillos estándar (Pallet)', 'Pallet de martillos de uso general', 'HER01', 'EST', 1.5, 1.0, 1.2, 1000, 1), -- HER01 - Herramientas y Ferretería
-('P0042', 'Niveles de burbuja de vidrio (Caja)', 'Caja con niveles de burbuja frágiles', 'HER01', 'FRA', 0.3, 0.2, 0.5, 8, 1),
-('P0043', 'Sacos de cemento (Pallet)', 'Pallet de cemento para construcción', 'MAC01', 'EST', 1.0, 1.0, 1.2, 2000, 2), -- MAC01 - Material de Construcción
-('P0044', 'Azulejos de cerámica (Pallet)', 'Pallet de azulejos frágiles', 'MAC01', 'FRA', 1.2, 1.0, 1.0, 1500, 2),
-('P0045', 'Filtros de aceite (Caja)', 'Caja con filtros para motor', 'AUT01', 'EST', 0.4, 0.4, 0.6, 12, 3), -- AUT01 - Automotriz y Repuestos
-('P0046', 'Parabrisas (Pallet)', 'Pallet de cristales frontales para automóvil', 'AUT01', 'FRA', 1.5, 1.2, 0.2, 500, 3),
-('P0047', 'Raquetas de tenis (Caja)', 'Caja con raquetas para jugadores intermedios', 'DEP01', 'EST', 0.6, 0.4, 0.8, 18, 4), -- DEP01 - Artículos Deportivos
-('P0048', 'Gafas de natación (Caja)', 'Caja con gafas de lente de vidrio', 'DEP01', 'FRA', 0.3, 0.2, 0.2, 4, 4),
-('P0049', 'Sábanas de algodón (Caja)', 'Caja con sábanas para cama matrimonial', 'CAM01', 'EST', 0.5, 0.6, 0.8, 20, 5), -- CAM01 - Ropa y Artículos de Cama
-('P0050', 'Lámparas de mesita de noche (Caja)', 'Caja con lámparas de vidrio', 'CAM01', 'FRA', 0.6, 0.4, 0.4, 12, 5),
-('P0051', 'Botellas de plástico (Pallet)', 'Pallet de botellas reutilizables', 'PLA01', 'EST', 1.8, 1.0, 1.2, 250, 6), -- PLA01 - Plásticos y Embalajes
-('P0052', 'Cajas de embalaje con burbujas (Caja)', 'Caja frágil para envío de productos', 'PLA01', 'FRA', 0.5, 0.4, 0.4, 6, 6),
-('P0053', 'Semillas de maíz (Saco)', 'Saco con semillas para siembra', 'AGR01', 'EST', 0.8, 0.5, 0.3, 40, 7), -- AGR01 - Suministros Agrícolas
-('P0054', 'Termómetros de suelo de vidrio (Caja)', 'Caja con instrumentos frágiles', 'AGR01', 'FRA', 0.3, 0.2, 0.2, 5, 7),
-('P0055', 'Libros de texto (Pallet)', 'Pallet de libros educativos', 'EDU01', 'EST', 1.0, 1.0, 1.2, 700, 8), -- EDU01 - Material Educativo
-('P0056', 'Microscopios escolares (Caja)', 'Caja con instrumentos ópticos frágiles', 'EDU01', 'FRA', 0.6, 0.4, 0.5, 20, 8),
-('P0057', 'Licuadoras (Pallet)', 'Pallet de licuadoras multifunción', 'ECO01', 'EST', 1.5, 1.0, 1.2, 800, 9), -- ECO01 - Electrodomésticos de Cocina
-('P0058', 'Juegos de copas de vino (Caja)', 'Caja con copas de vidrio frágiles', 'ECO01', 'FRA', 0.5, 0.4, 0.4, 10, 9),
-('P0059', 'Ventiladores de piso (Pallet)', 'Pallet de ventiladores con varias velocidades', 'CLI01', 'EST', 2.0, 1.2, 1.5, 900, 10), -- CLI01 - Calefacción y Climatización
-('P0060', 'Paneles calefactores de vidrio (Caja)', 'Caja con equipos de calefacción frágiles', 'CLI01', 'FRA', 0.8, 0.6, 0.5, 18, 10),
-('P0061', 'Bombillas LED (Caja)', 'Caja con bombillas de bajo consumo', 'ILU01', 'EST', 0.4, 0.3, 0.2, 6, 1), -- ILU01 - Artículos de Iluminación
-('P0062', 'Lámparas de techo de cristal (Caja)', 'Caja con lámparas colgantes frágiles', 'ILU01', 'FRA', 0.8, 0.6, 0.5, 15, 1),
-('P0063', 'Altavoces portátiles (Pallet)', 'Pallet de altavoces Bluetooth resistentes', 'AUD01', 'EST', 1.2, 1.0, 1.0, 500, 2), -- AUD01 - Productos de Audio y Video
-('P0064', 'Proyectores de cine en casa (Caja)', 'Caja con proyectores de lentes frágiles', 'AUD01', 'FRA', 0.5, 0.4, 0.3, 12, 2),
-('P0065', 'Ambientadores de aire (Caja)', 'Caja con sprays aromatizantes', 'HOG01', 'EST', 0.4, 0.3, 0.2, 8, 3), -- HOG01 - Productos de Cuidado del Hogar
-('P0066', 'Termómetros de pared de vidrio (Caja)', 'Caja con termómetros frágiles', 'HOG01', 'FRA', 0.3, 0.2, 0.1, 3, 3),
-('P0067', 'Cera para autos (Caja)', 'Caja con productos para pulir vehículos', 'AUT02', 'EST', 0.5, 0.4, 0.6, 15, 4), -- AUT02 - Cuidado del Automóvil
-('P0068', 'Espejos retrovisores (Caja)', 'Caja con espejos frágiles para automóvil', 'AUT02', 'FRA', 0.4, 0.3, 0.2, 7, 4),
-('P0069', 'Vitaminas (Caja)', 'Caja con suplementos alimenticios', 'SAL01', 'EST', 0.4, 0.3, 0.2, 6, 5), -- SAL01 - Cuidado de la Salud
-('P0070', 'Termómetros clínicos de vidrio (Caja)', 'Caja con termómetros frágiles', 'SAL01', 'FRA', 0.2, 0.1, 0.1, 2, 5),
-('P0071', 'Uniformes de seguridad (Caja)', 'Caja con ropa para trabajo industrial', 'UNI01', 'EST', 0.6, 0.5, 0.8, 22, 6), -- UNI01 - Ropa de Trabajo y Uniformes
-('P0072', 'Gafas de protección con vidrio (Caja)', 'Caja con equipos frágiles para protección ocular', 'UNI01', 'FRA', 0.3, 0.2, 0.1, 4, 6),
-('P0073', 'Vigas de acero (Pallet)', 'Pallet con materiales estructurales', 'CON02', 'EST', 1.5, 1.2, 6.0, 5000, 7), -- CON02 - Material de Construcción Pesado
-('P0074', 'Ventanas de vidrio templado (Pallet)', 'Pallet con elementos frágiles para construcción', 'CON02', 'FRA', 2.0, 1.5, 0.5, 800, 7),
-('P0075', 'Abonos orgánicos (Pallet)', 'Pallet de fertilizantes para plantas', 'FER01', 'EST', 1.0, 1.0, 1.2, 900, 8), -- FER01 - Fertilizantes y Productos de Jardinería
-('P0076', 'Macetas de cerámica (Caja)', 'Caja con macetas frágiles para plantas', 'FER01', 'FRA', 0.6, 0.5, 0.5, 20, 8),
-('P0077', 'Platos de cerámica (Caja)', 'Caja con platos resistentes para uso diario', 'CER01', 'EST', 0.5, 0.4, 0.6, 25, 9), -- CER01 - Cerámica y Productos de Vidrio
-('P0078', 'Floreros de vidrio (Caja)', 'Caja con floreros decorativos frágiles', 'CER01', 'FRA', 0.6, 0.4, 0.4, 15, 9),
-('P0079', 'Guitarras acústicas (Pallet)', 'Pallet de instrumentos musicales de cuerda', 'INS01', 'EST', 1.5, 1.0, 1.2, 400, 10), -- INS01 - Instrumentos Musicales y de Precisión
-('P0080', 'Violines (Caja)', 'Caja con instrumentos frágiles de precisión', 'INS01', 'FRA', 0.6, 0.4, 0.8, 10, 10),
-('P0081', 'Guantes desechables (Caja)', 'Caja con guantes de látex', 'SAN01', 'EST', 0.4, 0.3, 0.2, 5, 1), -- SAN01 - Material Sanitario y Desechables Médicos
-('P0082', 'Jeringas de vidrio (Caja)', 'Caja con suministros médicos frágiles', 'SAN01', 'FRA', 0.2, 0.1, 0.1, 3, 1),
-('P0083', 'Cascos de seguridad (Pallet)', 'Pallet de equipos de protección para la cabeza', 'SEG01', 'EST', 1.2, 1.0, 1.0, 600, 2), -- SEG01 - Productos de Seguridad Industrial
-('P0084', 'Máscaras de soldadura con vidrio (Caja)', 'Caja con equipos frágiles para soldadores', 'SEG01', 'FRA', 0.5, 0.4, 0.3, 12, 2),
-('P0085', 'Impresoras láser (Pallet)', 'Pallet de impresoras para oficinas', 'TEC01', 'EST', 1.5, 1.0, 1.2, 700, 3), -- TEC01 - Productos de Oficina y Tecnología
-('P0086', 'Escáneres de documentos (Caja)', 'Caja con equipos frágiles para digitalización', 'TEC01', 'FRA', 0.6, 0.5, 0.4, 18, 3),
-('P0087', 'Revistas mensuales (Caja)', 'Caja con publicaciones periódicas', 'LIB01', 'EST', 0.4, 0.3, 0.2, 10, 4), -- LIB01 - Libros y Revistas
-('P0088', 'Libros de edición coleccionista (Caja)', 'Caja con libros frágiles de edición limitada', 'LIB01', 'FRA', 0.5, 0.4, 0.6, 15, 4);
+INSERT INTO producto (nombre, descripcion, categoria, etiquetado, alto, ancho, largo, peso, cliente) VALUES
+('Caja de cereales (Pallet)', 'Pallet de cajas de cereales integrales', 'ALI01', 'EST', 1.5, 1.0, 1.2, 500, 1),
+('Botellas de vino tinto (Caja)', 'Caja con botellas de vino tinto de reserva', 'ALI01', 'FRA', 0.8, 0.6, 0.4, 15, 1),
+('Lechugas frescas (Caja)', 'Caja con lechugas orgánicas recién cosechadas', 'FRE01', 'EST', 0.5, 0.4, 0.6, 10, 2),
+('Huevos (Pallet)', 'Pallet con cajas de huevos frescos de granja', 'FRE01', 'FRA', 1.2, 1.0, 1.0, 600, 2),
+('Pizzas congeladas (Pallet)', 'Pallet de pizzas de pepperoni listas para hornear', 'CON01', 'EST', 1.8, 1.0, 1.2, 800, 3),
+('Tartas heladas (Caja)', 'Caja con tartas de queso congeladas delicadas', 'CON01', 'FRA', 0.6, 0.4, 0.4, 12, 3),
+('Filetes de res (Caja)', 'Caja con cortes premium de carne de res', 'CAR01', 'EST', 0.4, 0.6, 0.8, 25, 4),
+('Pescados frescos (Pallet)', 'Pallet con pescados frescos que requieren cuidado', 'CAR01', 'FRA', 1.0, 1.0, 1.5, 700, 4),
+('Quesos cheddar (Caja)', 'Caja con bloques de queso cheddar', 'LAC01', 'EST', 0.5, 0.4, 0.6, 20, 5),
+('Yogur en frascos de vidrio (Pallet)', 'Pallet con yogures en envases de vidrio', 'LAC01', 'FRA', 1.2, 1.0, 1.0, 500, 5),
+('Panes integrales (Caja)', 'Caja con panes integrales recién horneados', 'PAN01', 'EST', 0.6, 0.4, 0.5, 15, 6),
+('Pasteles de boda (Pallet)', 'Pallet con pasteles de boda delicados', 'PAN01', 'FRA', 1.5, 1.0, 1.0, 300, 6),
+('Chips de patata (Pallet)', 'Pallet de bolsas de chips de patata clásica', 'SNA01', 'EST', 1.8, 1.0, 1.2, 200, 7),
+('Figuras de chocolate (Caja)', 'Caja con figuras de chocolate delicadas', 'SNA01', 'FRA', 0.5, 0.4, 0.3, 8, 7),
+('Champús revitalizantes (Pallet)', 'Pallet de champús para todo tipo de cabello', 'COS01', 'EST', 1.6, 1.0, 1.2, 600, 8),
+('Perfumes de lujo (Caja)', 'Caja con perfumes en botellas de vidrio', 'COS01', 'FRA', 0.4, 0.3, 0.2, 5, 8),
+('Jabones en barra (Caja)', 'Caja con jabones antibacteriales', 'HIG01', 'EST', 0.4, 0.4, 0.6, 18, 9),
+('Enjuagues bucales en vidrio (Pallet)', 'Pallet con enjuagues bucales en botellas de vidrio', 'HIG01', 'FRA', 1.2, 1.0, 1.0, 550, 9),
+('Detergentes líquidos (Pallet)', 'Pallet de detergentes para ropa', 'LIM01', 'EST', 1.5, 1.0, 1.2, 800, 10),
+('Limpiavidrios en vidrio (Caja)', 'Caja con limpiavidrios en envases frágiles', 'LIM01', 'FRA', 0.6, 0.4, 0.4, 10, 10),
+('Mesas de centro (Pallet)', 'Pallet con mesas de centro de madera', 'MOB01', 'EST', 2.0, 1.2, 1.5, 1000, 1),
+('Mesas de vidrio (Pallet)', 'Pallet con mesas de centro de vidrio', 'MOB01', 'FRA', 2.0, 1.2, 1.5, 900, 1),
+('Camisetas de algodón (Caja)', 'Caja con camisetas básicas de algodón', 'ROP01', 'EST', 0.5, 0.6, 0.8, 20, 2),
+('Collares de perlas (Caja)', 'Caja con collares de perlas naturales', 'ROP01', 'FRA', 0.3, 0.2, 0.2, 3, 2),
+('Zapatillas deportivas (Pallet)', 'Pallet de calzado para correr', 'CAL01', 'EST', 1.8, 1.0, 1.2, 500, 3),
+('Zapatos de tacón alto (Caja)', 'Caja con zapatos de tacón delicados', 'CAL01', 'FRA', 0.5, 0.4, 0.6, 12, 3),
+('Pelotas de fútbol (Pallet)', 'Pallet de balones de fútbol estándar', 'JUG01', 'EST', 2.0, 1.0, 1.2, 250, 4),
+('Muñecas de porcelana (Caja)', 'Caja con muñecas coleccionables de porcelana', 'JUG01', 'FRA', 0.6, 0.4, 0.5, 15, 4),
+('Papeles para impresora (Pallet)', 'Pallet de resmas de papel A4', 'MAT01', 'EST', 1.2, 1.0, 1.0, 800, 5),
+('Organizadores de escritorio de vidrio (Caja)', 'Caja con organizadores de vidrio', 'MAT01', 'FRA', 0.5, 0.4, 0.3, 10, 5),
+('Cuadernos de notas (Caja)', 'Caja con cuadernos de espiral', 'PAP01', 'EST', 0.4, 0.6, 0.8, 25, 6),
+('Plumas estilográficas de cristal (Caja)', 'Caja con plumas de cristal', 'PAP01', 'FRA', 0.2, 0.1, 0.1, 5, 6),
+('Televisores LED 40" (Pallet)', 'Pallet de televisores LED de 40 pulgadas', 'ELE01', 'EST', 2.0, 1.2, 1.5, 1200, 7),
+('Microondas con puerta de vidrio (Caja)', 'Caja con hornos microondas frágiles', 'ELE01', 'FRA', 0.8, 0.6, 0.5, 20, 7),
+('Laptops 15" (Pallet)', 'Pallet de computadoras portátiles de 15 pulgadas', 'COM01', 'EST', 1.2, 1.0, 1.0, 800, 8),
+('Monitores LED 24" (Caja)', 'Caja con monitores de pantalla frágil', 'COM01', 'FRA', 0.6, 0.5, 0.4, 15, 8),
+('Teléfonos inteligentes (Caja)', 'Caja con smartphones de última generación', 'TEL01', 'EST', 0.4, 0.3, 0.2, 8, 9),
+('Protectores de pantalla de vidrio (Caja)', 'Caja con protectores de pantalla frágiles', 'TEL01', 'FRA', 0.2, 0.1, 0.1, 2, 9),
+('Tijeras de podar (Caja)', 'Caja con herramientas para poda', 'JAR01', 'EST', 0.5, 0.4, 0.6, 22, 10),
+('Esferas decorativas de vidrio (Caja)', 'Caja con adornos de vidrio para jardín', 'JAR01', 'FRA', 0.6, 0.5, 0.5, 18, 10),
+('Martillos estándar (Pallet)', 'Pallet de martillos de uso general', 'HER01', 'EST', 1.5, 1.0, 1.2, 1000, 1),
+('Niveles de burbuja de vidrio (Caja)', 'Caja con niveles de burbuja frágiles', 'HER01', 'FRA', 0.3, 0.2, 0.5, 8, 1),
+('Sacos de cemento (Pallet)', 'Pallet de cemento para construcción', 'MAC01', 'EST', 1.0, 1.0, 1.2, 2000, 2),
+('Azulejos de cerámica (Pallet)', 'Pallet de azulejos frágiles', 'MAC01', 'FRA', 1.2, 1.0, 1.0, 1500, 2),
+('Filtros de aceite (Caja)', 'Caja con filtros para motor', 'AUT01', 'EST', 0.4, 0.4, 0.6, 12, 3),
+('Parabrisas (Pallet)', 'Pallet de cristales frontales para automóvil', 'AUT01', 'FRA', 1.5, 1.2, 0.2, 500, 3),
+('Raquetas de tenis (Caja)', 'Caja con raquetas para jugadores intermedios', 'DEP01', 'EST', 0.6, 0.4, 0.8, 18, 4),
+('Gafas de natación (Caja)', 'Caja con gafas de lente de vidrio', 'DEP01', 'FRA', 0.3, 0.2, 0.2, 4, 4),
+('Sábanas de algodón (Caja)', 'Caja con sábanas para cama matrimonial', 'CAM01', 'EST', 0.5, 0.6, 0.8, 20, 5),
+('Lámparas de mesita de noche (Caja)', 'Caja con lámparas de vidrio', 'CAM01', 'FRA', 0.6, 0.4, 0.4, 12, 5),
+('Botellas de plástico (Pallet)', 'Pallet de botellas reutilizables', 'PLA01', 'EST', 1.8, 1.0, 1.2, 250, 6),
+('Cajas de embalaje con burbujas (Caja)', 'Caja frágil para envío de productos', 'PLA01', 'FRA', 0.5, 0.4, 0.4, 6, 6),
+('Semillas de maíz (Saco)', 'Saco con semillas para siembra', 'AGR01', 'EST', 0.8, 0.5, 0.3, 40, 7),
+('Termómetros de suelo de vidrio (Caja)', 'Caja con instrumentos frágiles', 'AGR01', 'FRA', 0.3, 0.2, 0.2, 5, 7),
+('Libros de texto (Pallet)', 'Pallet de libros educativos', 'EDU01', 'EST', 1.0, 1.0, 1.2, 700, 8),
+('Microscopios escolares (Caja)', 'Caja con instrumentos ópticos frágiles', 'EDU01', 'FRA', 0.6, 0.4, 0.5, 20, 8),
+('Licuadoras (Pallet)', 'Pallet de licuadoras multifunción', 'ECO01', 'EST', 1.5, 1.0, 1.2, 800, 9),
+('Juegos de copas de vino (Caja)', 'Caja con copas de vidrio frágiles', 'ECO01', 'FRA', 0.5, 0.4, 0.4, 10, 9),
+('Ventiladores de piso (Pallet)', 'Pallet de ventiladores con varias velocidades', 'CLI01', 'EST', 2.0, 1.2, 1.5, 900, 10),
+('Paneles calefactores de vidrio (Caja)', 'Caja con equipos de calefacción frágiles', 'CLI01', 'FRA', 0.8, 0.6, 0.5, 18, 10),
+('Bombillas LED (Caja)', 'Caja con bombillas de bajo consumo', 'ILU01', 'EST', 0.4, 0.3, 0.2, 6, 1),
+('Lámparas de techo de cristal (Caja)', 'Caja con lámparas colgantes frágiles', 'ILU01', 'FRA', 0.8, 0.6, 0.5, 15, 1),
+('Altavoces portátiles (Pallet)', 'Pallet de altavoces Bluetooth resistentes', 'AUD01', 'EST', 1.2, 1.0, 1.0, 500, 2),
+('Proyectores de cine en casa (Caja)', 'Caja con proyectores de lentes frágiles', 'AUD01', 'FRA', 0.5, 0.4, 0.3, 12, 2),
+('Ambientadores de aire (Caja)', 'Caja con sprays aromatizantes', 'HOG01', 'EST', 0.4, 0.3, 0.2, 8, 3),
+('Termómetros de pared de vidrio (Caja)', 'Caja con termómetros frágiles', 'HOG01', 'FRA', 0.3, 0.2, 0.1, 3, 3),
+('Cera para autos (Caja)', 'Caja con productos para pulir vehículos', 'AUT02', 'EST', 0.5, 0.4, 0.6, 15, 4),
+('Espejos retrovisores (Caja)', 'Caja con espejos frágiles para automóvil', 'AUT02', 'FRA', 0.4, 0.3, 0.2, 7, 4),
+('Vitaminas (Caja)', 'Caja con suplementos alimenticios', 'SAL01', 'EST', 0.4, 0.3, 0.2, 6, 5),
+('Termómetros clínicos de vidrio (Caja)', 'Caja con termómetros frágiles', 'SAL01', 'FRA', 0.2, 0.1, 0.1, 2, 5),
+('Uniformes de seguridad (Caja)', 'Caja con ropa para trabajo industrial', 'UNI01', 'EST', 0.6, 0.5, 0.8, 22, 6),
+('Gafas de protección con vidrio (Caja)', 'Caja con equipos frágiles para protección ocular', 'UNI01', 'FRA', 0.3, 0.2, 0.1, 4, 6),
+('Vigas de acero (Pallet)', 'Pallet con materiales estructurales', 'CON02', 'EST', 1.5, 1.2, 6.0, 5000, 7),
+('Ventanas de vidrio templado (Pallet)', 'Pallet con elementos frágiles para construcción', 'CON02', 'FRA', 2.0, 1.5, 0.5, 800, 7),
+('Abonos orgánicos (Pallet)', 'Pallet de fertilizantes para plantas', 'FER01', 'EST', 1.0, 1.0, 1.2, 900, 8),
+('Macetas de cerámica (Caja)', 'Caja con macetas frágiles para plantas', 'FER01', 'FRA', 0.6, 0.5, 0.5, 20, 8),
+('Platos de cerámica (Caja)', 'Caja con platos resistentes para uso diario', 'CER01', 'EST', 0.5, 0.4, 0.6, 25, 9),
+('Floreros de vidrio (Caja)', 'Caja con floreros decorativos frágiles', 'CER01', 'FRA', 0.6, 0.4, 0.4, 15, 9),
+('Guitarras acústicas (Pallet)', 'Pallet de instrumentos musicales de cuerda', 'INS01', 'EST', 1.5, 1.0, 1.2, 400, 10),
+('Violines (Caja)', 'Caja con instrumentos frágiles de precisión', 'INS01', 'FRA', 0.6, 0.4, 0.8, 10, 10),
+('Guantes desechables (Caja)', 'Caja con guantes de látex', 'SAN01', 'EST', 0.4, 0.3, 0.2, 5, 1),
+('Jeringas de vidrio (Caja)', 'Caja con suministros médicos frágiles', 'SAN01', 'FRA', 0.2, 0.1, 0.1, 3, 1),
+('Cascos de seguridad (Pallet)', 'Pallet de equipos de protección para la cabeza', 'SEG01', 'EST', 1.2, 1.0, 1.0, 600, 2),
+('Máscaras de soldadura con vidrio (Caja)', 'Caja con equipos frágiles para soldadores', 'SEG01', 'FRA', 0.5, 0.4, 0.3, 12, 2),
+('Impresoras láser (Pallet)', 'Pallet de impresoras para oficinas', 'TEC01', 'EST', 1.5, 1.0, 1.2, 700, 3),
+('Escáneres de documentos (Caja)', 'Caja con equipos frágiles para digitalización', 'TEC01', 'FRA', 0.6, 0.5, 0.4, 18, 3),
+('Revistas mensuales (Caja)', 'Caja con publicaciones periódicas', 'LIB01', 'EST', 0.4, 0.3, 0.2, 10, 4),
+('Libros de edición coleccionista (Caja)', 'Caja con libros frágiles de edición limitada', 'LIB01', 'FRA', 0.5, 0.4, 0.6, 15, 4);
 
 INSERT INTO estado_emple (codigo, descripcion) VALUES
 ('ACT', 'Activo'),

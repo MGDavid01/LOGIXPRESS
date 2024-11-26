@@ -114,7 +114,7 @@ BEGIN
     SELECT alto, ancho, largo
     INTO v_alto, v_ancho, v_largo
     FROM producto
-    WHERE codigo = p_producto
+    WHERE num = p_producto
     LIMIT 1;
 
     -- Validar que las dimensiones no sean nulas o cero
@@ -192,7 +192,7 @@ BEGIN
         SELECT SUM(p.peso * ep.cantidad)
         INTO p_pesoTotal
         FROM entre_producto ep
-        INNER JOIN producto p ON ep.producto = p.codigo
+        INNER JOIN producto p ON ep.producto = p.num
         WHERE ep.entrega = p_entrega_id;
 
         IF p_pesoTotal IS NULL OR p_pesoTotal = 0 THEN
@@ -256,7 +256,7 @@ BEGIN
     SELECT IFNULL(SUM((cp.categoriaPrecio * ep.cantidad)), 0)
     INTO v_tarifaCat
     FROM entre_producto ep
-    INNER JOIN producto p ON ep.producto = p.codigo
+    INNER JOIN producto p ON ep.producto = p.num
     INNER JOIN cat_prod cp ON p.categoria = cp.codigo
     WHERE ep.entrega = p_entrega_id;
 
@@ -279,7 +279,7 @@ BEGIN
     SELECT IFNULL(SUM((e.etiquetadoPrecio * ep.cantidad)), 0)
     INTO v_tarifaEti
     FROM entre_producto ep
-    INNER JOIN producto p ON ep.producto = p.codigo
+    INNER JOIN producto p ON ep.producto = p.num
     INNER JOIN etiquetado e ON p.etiquetado = e.codigo
     WHERE ep.entrega = p_entrega_id;
 
@@ -543,10 +543,9 @@ BEGIN
     COMMIT;
     SET mensaje = "Ubicacion asociada exitosamente.";
 END $$
-DELIMITER ;
 /*************************************************************/
+DELIMITER $$
 CREATE PROCEDURE SP_registrarAsociarProducto(
-    IN codigoGen VARCHAR(5),
     IN Enombre VARCHAR(100),
     IN Edescripcion VARCHAR(100),
     IN Ecategoria VARCHAR(5),
@@ -572,8 +571,8 @@ BEGIN
         SET mensaje = CONCAT("Error al asociar producto: ", error_code, " - ", error_msg);
     END;
     START TRANSACTION;
-        INSERT INTO producto (codigo, nombre, descripcion, categoria, etiquetado, alto, ancho, largo, peso, cliente)
-        VALUES (codigoGen, Enombre, Edescripcion, Ecategoria, Eetiquetado, Ealto, Eancho, Elargo, Epeso, Ecliente);
+        INSERT INTO producto (nombre, descripcion, categoria, etiquetado, alto, ancho, largo, peso, cliente)
+        VALUES (Enombre, Edescripcion, Ecategoria, Eetiquetado, Ealto, Eancho, Elargo, Epeso, Ecliente);
     COMMIT;
     SET mensaje = "Producto asociado exitosamente.";
 END $$

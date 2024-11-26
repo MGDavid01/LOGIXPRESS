@@ -13,7 +13,7 @@ function vistaPedirEntrega() {
     }  else {
 
         $cliente_id = $_SESSION['user_id'];
-        $queryProductosTotal = "SELECT COUNT(codigo) AS total FROM producto WHERE cliente = $cliente_id";
+        $queryProductosTotal = "SELECT COUNT(num) AS total FROM producto WHERE cliente = $cliente_id";
         $resultProductos = mysqli_query($db, $queryProductosTotal);
         $totalProductos = 0;
         if ($resultProductos) {
@@ -41,7 +41,7 @@ function vistaPedirEntrega() {
         $resultPrioridad = mysqli_query($db, $queryPrio);
 
         $cliente_id = $_SESSION['user_id'];
-        $queryProd = "SELECT codigo, nombre FROM producto WHERE cliente = $cliente_id";
+        $queryProd = "SELECT num, nombre FROM producto WHERE cliente = $cliente_id";
         $resultProducto = mysqli_query($db, $queryProd);
     ?>
         
@@ -94,7 +94,7 @@ function vistaPedirEntrega() {
                                     <?php
                                         $resultProducto->data_seek(0); // Reinicia el cursor
                                         while ($rowPro = $resultProducto->fetch_assoc()) {
-                                            echo "<option value='" . $rowPro['codigo'] . "'>" . $rowPro['nombre'] . "</option>";
+                                            echo "<option value='" . $rowPro['num'] . "'>" . $rowPro['nombre'] . "</option>";
                                         }
                                     ?>
                                 </select>

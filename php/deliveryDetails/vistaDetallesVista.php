@@ -79,7 +79,7 @@
         // Consulta para obtener los productos de la entrega específica
         $queryProductos = "SELECT p.nombre, pe.cantidad 
                             FROM entre_producto pe
-                            INNER JOIN producto p ON pe.producto = p.codigo
+                            INNER JOIN producto p ON pe.producto = p.num
                             WHERE pe.entrega = $entrega_id";
 
         $resultProductos = mysqli_query($db, $queryProductos);
@@ -97,7 +97,7 @@
                                   (p.alto * p.ancho * p.largo * pe.cantidad) AS volumen_total,
                                   (p.peso * pe.cantidad) AS peso_total
                            FROM entre_producto pe
-                           INNER JOIN producto p ON pe.producto = p.codigo
+                           INNER JOIN producto p ON pe.producto = p.num
                            WHERE pe.entrega = $entrega_id";
 
         $resultDetallesProductos = mysqli_query($db, $queryDetallesProductos);
