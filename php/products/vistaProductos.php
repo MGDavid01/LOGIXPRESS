@@ -85,7 +85,7 @@ function vistaFormularioProducto($cliente, $producto_id) {
     // Mostrar el formulario para editar el producto
     ?>
     <div class="form">
-        <?php if (isset($_GET['status']) && $_GET['status'] === 'productupdated'): ?>
+        <?php if (isset($_GET['status']) && $_GET['status'] === 'productUpdated'): ?>
             <p style="font-size:2rem; text-align: end; color: #57cf8b;">Product Updated</p>
         <?php endif; ?>
         <h2>Edit Product</h2>
@@ -175,6 +175,10 @@ function vistaFormularioNuevoProducto($cliente) {
     // Mostrar el formulario para agregar un nuevo producto
     ?>
     <div class="form">
+        <?php
+        if (isset($_GET['status']) && $_GET['status'] === 'addedProduct'): ?>
+        <p style="font-size:2rem; text-align: end; color: #57cf8b;">Product Added</p>
+        <?php endif; ?>
         <h2>Add Product</h2>
         <form action="" method="POST">
             <!-- Campo: Nombre del Producto -->
