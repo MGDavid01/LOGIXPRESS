@@ -1,15 +1,11 @@
 .content-origin {
     all: unset;
-    width: 90%; /* Ajusta el ancho al 90% del contenedor padre */
-    height: 99%;
+    flex-grow: 1;
+    height: 100%;
     display: flex;
     justify-content: center;
-    margin: auto;
+
     overflow: auto; /* Agrega barra de desplazamiento si el contenido excede el tamaño */
-    background-color: #ffffff; /* Fondo blanco para un diseño más limpio */
-    border: 0.1rem solid #ddd; /* Borde gris claro */
-    border-radius: 0.8rem; /* Bordes redondeados */
-    box-shadow: 0 0.4rem, 0.9rem rgba(0, 0, 0, 0.1); /* Sombra para dar profundidad */
 }
 
 form {

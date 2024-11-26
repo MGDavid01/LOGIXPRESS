@@ -49,7 +49,7 @@ include_once('includes/headUsers.php');
         <link rel="stylesheet" href="css/forms.css">
         <link rel="stylesheet" href="css/tables.css">
         
-        <nav>
+        <nav class="side-nav">
             <div class="logo-container">
                 <a href="menuCL.php" id="logo-hover"><img src="imagenes/LOGIXPRESS_LOGO_F2.png" alt="Logo"></a>
             </div>

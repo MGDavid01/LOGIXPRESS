@@ -2,7 +2,7 @@
 html {
     font-size: 62.5%;
     height: 100vh;
-    width: 100vw;
+    width: 100%;
 }
 
 * {
@@ -20,11 +20,6 @@ body {
     font-size: 1.5rem;
 }
 
-/* Contenedor principal */
-.main-content {
-    width: 100%;
-}
-
 #welcome {
     background-color: #27434e;
     color: white;
@@ -35,14 +30,14 @@ body {
 }
 
 /* Panel lateral */
-nav {
+.side-nav {
     width: 20%;
+    height: 100%;
     background-color: #27434e;
     color: white;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top: 20px;
     justify-content: space-between; /* Para mantener el botón de logout abajo */
 }
 
@@ -51,6 +46,7 @@ nav {
     background-color: white;
     padding: 0.5rem;
     border-radius: 0.8rem;
+    margin-top: 2rem;
     margin-bottom: 2rem;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -113,16 +109,4 @@ nav form button {
 
 nav form button:hover {
     background-color: #17282f;
-}
-
-/* Contenido principal */
-.main-content {
-    flex-grow: 1;
-    padding: 20px;
-    background-color: white;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
 }
