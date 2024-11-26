@@ -1,7 +1,7 @@
 .content-origin {
     all: unset;
-    width: 90%; /* Ajusta el ancho al 90% del contenedor padre */
-    height: 99%;
+    flex-grow: 1;
+    height: 100%;
     display: flex;
     justify-content: center;
     margin: auto;
