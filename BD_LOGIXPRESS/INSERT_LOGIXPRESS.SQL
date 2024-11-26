@@ -154,7 +154,7 @@ INSERT INTO disponibilidad (codigo, descripcion) VALUES
 ('RESER', 'Reservado');
 
 -- Tabla: cat_vehi
-INSERT INTO cat_vehi (codigo, descripcion) VALUES
+INSERT INTO cat_vehi (codigo, descripcion, tipoCarga) VALUES
 ('FURGG', 'Furgoneta'),
 ('FURGR', 'Furgoneta de Refrigeracion'),
 ('CARCG', 'Camión Rígido de Caja Cerrada'),
@@ -338,27 +338,27 @@ INSERT INTO empleado (nombre, primerApe, segundoApe, telefono, email, password, 
 ('Ana', 'Pérez', 'Jiménez', '5554445566', 'ana.pj@example.com', sha2('contraseña123', 256), 'ADM', 'ACT'),
 ('Luis', 'Ramírez', 'González', '5556667788', 'luis.rg@example.com', sha2('contraseña123', 256), 'CHF', 'ACT');
 
-INSERT INTO vehiculo (numSerie, gasXKM, capacidadCarga, kilometraje, costoAcumulado, marca, modelo, categoriavehiculo, tipoCarga, disponibilidad) VALUES
-('SNTOY01HIACE001', 0.08, 1000, 50000, 0, 'TOY', 'TOY01', 'FURGG', 'GEN', 'DISPO'), -- Toyota Hiace
-('SNHON01ACTY001', 0.06, 500, 30000, 0, 'HON', 'HON01', 'FURGG', 'GEN', 'DISPO'), -- Honda Acty
-('SNFOR01TRANSIT001', 0.09, 1200, 60000, 0, 'FOR', 'FOR01', 'FURGG', 'GEN', 'DISPO'), -- Ford Transit
-('SNFOR02ETRANSIT001', 0.00, 1100, 20000, 0, 'FOR', 'FOR02', 'FURGG', 'GEN', 'DISPO'), -- Ford E-Transit (Eléctrico)
-('SNCHE01EXPRESS001', 0.10, 1300, 55000, 0, 'CHE', 'CHE01', 'FURGG', 'GEN', 'DISPO'), -- Chevrolet Express Cargo
-('SNTOY02DYNA001', 0.12, 2000, 70000, 0, 'TOY', 'TOY02', 'CARCG', 'GEN', 'DISPO'), -- Toyota Dyna
-('SNCHE02NSERIES001', 0.11, 2500, 65000, 0, 'CHE', 'CHE02', 'CARCG', 'GEN', 'DISPO'), -- Chevrolet N-Series
-('SNVOL01FL001', 0.15, 5000, 80000, 0, 'VOL', 'VOL01', 'CARCG', 'GEN', 'DISPO'), -- Volvo FL
-('SNMAN01TGL001', 0.14, 4500, 75000, 0, 'MAN', 'MAN01', 'CARCG', 'GEN', 'DISPO'), -- MAN TGL
-('SNTOY03DYNAPLAT001', 0.12, 2200, 40000, 0, 'TOY', 'TOY03', 'CAMRP', 'GEN', 'DISPO'), -- Toyota Dyna Plataforma
-('SNVOL03FLPLAT001', 0.15, 5200, 60000, 0, 'VOL', 'VOL03', 'CAMRP', 'GEN', 'DISPO'), -- Volvo FL Plataforma
-('SNMAN03TGLPLAT001', 0.14, 4800, 55000, 0, 'MAN', 'MAN03', 'CAMRP', 'GEN', 'DISPO'), -- MAN TGL Plataforma
-('SNINT03CVPLAT001', 0.13, 4600, 50000, 0, 'INT', 'INT03', 'CAMRP', 'GEN', 'DISPO'), -- International CV Plataforma
-('SNKEN02T370PLAT001', 0.14, 4700, 45000, 0, 'KEN', 'KEN02', 'CAMRP', 'GEN', 'DISPO'), -- Kenworth T370 Plataforma
-('SNINT01CVSERIES001', 0.13, 4000, 60000, 0, 'INT', 'INT01', 'CARCG', 'GEN', 'DISPO'), -- International CV Series
-('SNFRE01CASCADIA001', 0.30, 20000, 120000, 0, 'FRE', 'FRE01', 'CAMAP', 'GRN', 'DISPO'), -- Freightliner Cascadia
-('SNVOL02FH16001', 0.32, 22000, 110000, 0, 'VOL', 'VOL02', 'CAMAP', 'GRN', 'DISPO'), -- Volvo FH16
-('SNMAN02TGX001', 0.31, 21000, 115000, 0, 'MAN', 'MAN02', 'CAMAP', 'GRN', 'DISPO'), -- MAN TGX
-('SNINT02LTSERIES001', 0.29, 20000, 105000, 0, 'INT', 'INT02', 'CAMAP', 'GRN', 'DISPO'), -- International LT Series
-('SNKEN01T680001', 0.30, 21000, 100000, 0, 'KEN', 'KEN01', 'CAMAP', 'GRN', 'DISPO'); -- Kenworth T680
+INSERT INTO vehiculo (numSerie, gasXKM, capacidadCarga, kilometraje, costoAcumulado, marca, modelo, categoriavehiculo, disponibilidad) VALUES
+('SNTOY01HIACE001', 0.08, 1000, 50000, 0, 'TOY', 'TOY01', 'FURGG', 'DISPO'), -- Toyota Hiace
+('SNHON01ACTY001', 0.06, 500, 30000, 0, 'HON', 'HON01', 'FURGG', 'DISPO'), -- Honda Acty
+('SNFOR01TRANSIT001', 0.09, 1200, 60000, 0, 'FOR', 'FOR01', 'FURGG', 'DISPO'), -- Ford Transit
+('SNFOR02ETRANSIT001', 0.00, 1100, 20000, 0, 'FOR', 'FOR02', 'FURGG', 'DISPO'), -- Ford E-Transit (Eléctrico)
+('SNCHE01EXPRESS001', 0.10, 1300, 55000, 0, 'CHE', 'CHE01', 'FURGG', 'DISPO'), -- Chevrolet Express Cargo
+('SNTOY02DYNA001', 0.12, 2000, 70000, 0, 'TOY', 'TOY02', 'CARCG', 'DISPO'), -- Toyota Dyna
+('SNCHE02NSERIES001', 0.11, 2500, 65000, 0, 'CHE', 'CHE02', 'CARCG', 'DISPO'), -- Chevrolet N-Series
+('SNVOL01FL001', 0.15, 5000, 80000, 0, 'VOL', 'VOL01', 'CARCG', 'DISPO'), -- Volvo FL
+('SNMAN01TGL001', 0.14, 4500, 75000, 0, 'MAN', 'MAN01', 'CARCG', 'DISPO'), -- MAN TGL
+('SNTOY03DYNAPLAT001', 0.12, 2200, 40000, 0, 'TOY', 'TOY03', 'CAMRP', 'DISPO'), -- Toyota Dyna Plataforma
+('SNVOL03FLPLAT001', 0.15, 5200, 60000, 0, 'VOL', 'VOL03', 'CAMRP', 'DISPO'), -- Volvo FL Plataforma
+('SNMAN03TGLPLAT001', 0.14, 4800, 55000, 0, 'MAN', 'MAN03', 'CAMRP', 'DISPO'), -- MAN TGL Plataforma
+('SNINT03CVPLAT001', 0.13, 4600, 50000, 0, 'INT', 'INT03', 'CAMRP', 'DISPO'), -- International CV Plataforma
+('SNKEN02T370PLAT001', 0.14, 4700, 45000, 0, 'KEN', 'KEN02', 'CAMRP', 'DISPO'), -- Kenworth T370 Plataforma
+('SNINT01CVSERIES001', 0.13, 4000, 60000, 0, 'INT', 'INT01', 'CARCG', 'DISPO'), -- International CV Series
+('SNFRE01CASCADIA001', 0.30, 20000, 120000, 0, 'FRE', 'FRE01', 'CAMAP', 'DISPO'), -- Freightliner Cascadia
+('SNVOL02FH16001', 0.32, 22000, 110000, 0, 'VOL', 'VOL02', 'CAMAP', 'DISPO'), -- Volvo FH16
+('SNMAN02TGX001', 0.31, 21000, 115000, 0, 'MAN', 'MAN02', 'CAMAP', 'DISPO'), -- MAN TGX
+('SNINT02LTSERIES001', 0.29, 20000, 105000, 0, 'INT', 'INT02', 'CAMAP', 'DISPO'), -- International LT Series
+('SNKEN01T680001', 0.30, 21000, 100000, 0, 'KEN', 'KEN01', 'CAMAP', 'DISPO'); -- Kenworth T680
 
 INSERT INTO tipo_remolque (codigo, descripcion) VALUES
 ('TR001', 'Remolque Estándar'),

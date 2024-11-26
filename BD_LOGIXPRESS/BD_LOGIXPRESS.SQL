@@ -67,7 +67,9 @@ CREATE TABLE disponibilidad (
 
 CREATE TABLE cat_vehi (
     codigo VARCHAR(5) PRIMARY KEY,
-    descripcion VARCHAR(100) NOT NULL
+    descripcion VARCHAR(100) NOT NULL,
+    tipoCarga VARCHAR(5),
+    FOREIGN KEY (tipoCarga) REFERENCES tipo_carga(codigo)
 );
 
 CREATE TABLE marca (
@@ -181,11 +183,9 @@ CREATE TABLE vehiculo (
     marca VARCHAR(5),
     modelo VARCHAR(5),
     categoriavehiculo VARCHAR(5),
-    tipoCarga VARCHAR(5),
     disponibilidad VARCHAR(5),
     FOREIGN KEY (marca) REFERENCES marca(codigo),
     FOREIGN KEY (modelo) REFERENCES modelo(codigo),
-    FOREIGN KEY (tipoCarga) REFERENCES tipo_carga(codigo),
     FOREIGN KEY (categoriavehiculo) REFERENCES cat_vehi(codigo),
     FOREIGN KEY (disponibilidad) REFERENCES disponibilidad(codigo)
 );
