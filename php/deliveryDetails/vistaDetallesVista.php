@@ -146,64 +146,42 @@
                 <table>
                     <tr>
                         <th>Weight rate</th>
-                        <td><?= $detalle['tarifaPeso'] != 0 ? '$' . htmlspecialchars($detalle['tarifaPeso']) . ' MXN' : 'N/A'; ?></td>
+                        <td><?= $detalle['tarifaPeso'] != 0 ? '$' . number_format($detalle['tarifaPeso'], 2, '.', ',') . ' MXN' : 'N/A'; ?></td>
                     </tr>
                     <tr>
                         <th>Distance Rate</th>
-                        <td><?= $detalle['tarifaDistancia'] != 0 ? '$' . htmlspecialchars($detalle['tarifaDistancia']) . ' MXN' : 'N/A'; ?></td>
+                        <td><?= $detalle['tarifaDistancia'] != 0 ? '$' . number_format($detalle['tarifaDistancia'], 2, '.', ',') . ' MXN' : 'N/A'; ?></td>
                     </tr>
                     <tr>
                         <th>Volume Rate</th>
-                        <td><?= $detalle['tarifaVolumen'] != 0 ? '$' . htmlspecialchars($detalle['tarifaVolumen']) . ' MXN' : 'N/A'; ?></td>
+                        <td><?= $detalle['tarifaVolumen'] != 0 ? '$' . number_format($detalle['tarifaVolumen'], 2, '.', ',') . ' MXN' : 'N/A'; ?></td>
                     </tr>
                     <tr>
                         <th>Priority Rate</th>
-                        <td><?= $detalle['tarifaPrio'] != 0 ? '$' . htmlspecialchars($detalle['tarifaPrio']) . ' MXN' : 'N/A'; ?></td>
+                        <td><?= $detalle['tarifaPrio'] != 0 ? '$' . number_format($detalle['tarifaPrio'], 2, '.', ',') . ' MXN' : 'N/A'; ?></td>
                     </tr>
                     <tr>
                         <th>Labeling for Surcharge</th>
-                        <td><?= $detalle['tarifaEti'] != 0 ? '$' . htmlspecialchars($detalle['tarifaEti']) . ' MXN' : 'N/A'; ?></td>
+                        <td><?= $detalle['tarifaEti'] != 0 ? '$' . number_format($detalle['tarifaEti'], 2, '.', ',') . ' MXN' : 'N/A'; ?></td>
                     </tr>
                     <tr>
                         <th>Surcharge for Categories</th>
-                        <td><?= $detalle['tarifaCat'] != 0 ? '$' . htmlspecialchars($detalle['tarifaCat']) . ' MXN' : 'N/A'; ?></td>
+                        <td><?= $detalle['tarifaCat'] != 0 ? '$' . number_format($detalle['tarifaCat'], 2, '.', ',') . ' MXN' : 'N/A'; ?></td>
                     </tr>
                     <tr>
                         <th>Subtotal</th>
-                        <td>$<?= htmlspecialchars($detalle['subtotal']); ?> MXN</td>
+                        <td>$<?= number_format($detalle['subtotal'], 2, '.', ','); ?> MXN</td>
                     </tr>
                     <tr>
                         <th>IVA</th>
-                        <td>$<?= htmlspecialchars($detalle['IVA']); ?> MXN</td>
+                        <td>$<?= number_format($detalle['IVA'], 2, '.', ','); ?> MXN</td>
                     </tr>
                     <tr>
                         <th>Total</th>
-                        <td>$<?= htmlspecialchars($detalle['precio']); ?> MXN</td>
+                        <td>$<?= number_format($detalle['precio'], 2, '.', ','); ?> MXN</td>
                     </tr>
                 </table>
                 <p style="margin-top: 1rem; font-family: Arial, sans-serif;">N/A = No Aplica</p>
-            </div>
-            <div class="section">
-                <h3>Delivery Products</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Product Name</th>
-                            <th>Quantity</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        // Iterar sobre todos los productos de la entrega
-                        mysqli_data_seek($resultProductos, 0); // Restablecer el puntero para recorrer todos los productos
-                        while ($producto = mysqli_fetch_assoc($resultProductos)): ?>
-                            <tr>
-                                <td><?= htmlspecialchars($producto['nombre']); ?></td>
-                                <td><?= htmlspecialchars($producto['cantidad']); ?></td>
-                            </tr>
-                        <?php endwhile; ?>
-                    </tbody>
-                </table>
             </div>
             <div class="section">
                 <h3>Product Details (Volume and Weight)</h3>
@@ -213,26 +191,19 @@
                             <th>Product Name</th>
                             <th>Individual Volume (m³)</th>
                             <th>Individual Weight (kg)</th>
+                            <th>Quantity</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php
-                        // Inicializar acumuladores para volumen y peso totales
-                        $volumenTotal = 0;
-                        $pesoTotal = 0;
-
-                        // Iterar sobre todos los productos de la entrega
-                        while ($producto = mysqli_fetch_assoc($resultDetallesProductos)):
-                            // Sumar al total acumulado de volumen y peso
-                            $volumenTotal += $producto['volumen_total'];
-                            $pesoTotal += $producto['peso_total'];
+                            $producto = mysqli_fetch_assoc($resultDetallesProductos);
                         ?>
                             <tr>
                                 <td><?= htmlspecialchars($producto['nombre']); ?></td>
                                 <td><?= number_format($producto['volumen'], 2); ?> m³</td>
                                 <td><?= number_format($producto['peso'], 2); ?> kg</td>
+                                <td><?= htmlspecialchars($producto['cantidad']); ?></td>
                             </tr>
-                        <?php endwhile; ?>
                     </tbody>
                 </table>
             </div>
@@ -241,24 +212,23 @@
                 <table>
                     <thead>
                         <tr>
-                            <th>Quantity</th>
                             <th>Total Weight (kg)</th>
                             <th>Total Volume (m³)</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php
+                        $volumenTotalE = 0;
+                        $pesoTotalE = 0;
                         // Reiniciar el puntero del resultado y recorrer todos los productos nuevamente
                         mysqli_data_seek($resultDetallesProductos, 0);
 
                         while ($producto = mysqli_fetch_assoc($resultDetallesProductos)):
                             // Sumar la cantidad, volumen y peso totales de cada producto
-                            $cantidadTotal += $producto['cantidad'];
-                            $volumenTotal += $producto['volumen_total'];
-                            $pesoTotal += $producto['peso_total'];
+                            $volumenTotalE += $producto['volumen_total'];
+                            $pesoTotalE += $producto['peso_total'];
                         ?>
                             <tr>
-                                <td><?= htmlspecialchars($producto['cantidad']); ?></td>
                                 <td><?= number_format($producto['peso_total'], 2); ?> kg</td>
                                 <td><?= number_format($producto['volumen_total'], 2); ?> m³</td>
                             </tr>
@@ -266,9 +236,8 @@
                     </tbody>
                     <tfoot>
                         <tr>
-                            <th>Total</th>
-                            <th><?= number_format($pesoTotal, 2); ?> kg</th>
-                            <th><?= number_format($volumenTotal, 2); ?> m³</th>
+                            <th><?= number_format($pesoTotalE, 2); ?> kg</th>
+                            <th><?= number_format($volumenTotalE, 2); ?> m³</th>
                         </tr>
                     </tfoot>
                 </table>
