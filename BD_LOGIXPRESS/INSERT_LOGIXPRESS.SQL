@@ -31,7 +31,8 @@ INSERT INTO prioridad (codigo, descripcion, prioridadPorce) VALUES
 INSERT INTO tipo_carga (codigo, descripcion) VALUES
 ('GRN', 'Granel'),
 ('PER', 'Perecedero'),
-('GEN', 'General');
+('GEN', 'General'),
+('UNV', 'Universal');
 
 INSERT INTO etiquetado (codigo, descripcion, etiquetadoPrecio) VALUES
 ('EST', 'Estándar', 0.00),
@@ -155,13 +156,13 @@ INSERT INTO disponibilidad (codigo, descripcion) VALUES
 
 -- Tabla: cat_vehi
 INSERT INTO cat_vehi (codigo, descripcion, tipoCarga) VALUES
-('FURGG', 'Furgoneta'),
-('FURGR', 'Furgoneta de Refrigeracion'),
-('CARCG', 'Camión Rígido de Caja Cerrada'),
-('CARCR', 'Camión Rígido de Caja Cerrada Refrigerada'),
-('CARTo', 'Camión Rígido de Tolva'),
-('CAMRP', 'Camión Rígido de Plataforma'),
-('CAMAP', 'Tractocamion Articulado');
+('FURGG', 'Furgoneta', "GEN"),
+('FURGR', 'Furgoneta de Refrigeracion', 'PER'),
+('CARCG', 'Camión Rígido de Caja Cerrada', 'GEN'),
+('CARCR', 'Camión Rígido de Caja Cerrada Refrigerada', 'PER'),
+('CARTo', 'Camión Rígido de Tolva', 'GRN'),
+('CAMRP', 'Camión Rígido de Plataforma', 'GEN'),
+('CAMAP', 'Tractocamion Articulado', 'UNV');
 
 -- Tabla: puesto
 INSERT INTO puesto (codigo, descripcion) VALUES
