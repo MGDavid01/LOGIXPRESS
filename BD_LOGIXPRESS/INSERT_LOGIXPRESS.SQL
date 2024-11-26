@@ -186,27 +186,27 @@ INSERT INTO marca (codigo, nombre) VALUES
 ('WBER', 'Weber'),
 ('MAC', 'Mac Trailer');
 
-INSERT INTO ubicacion (codigo, nombreUbicacion, nombreCalle, numCalle, colonia, codigoPostal) VALUES
-('UBI01', 'Almacén Central Tijuana', 'Avenida Revolución', '1234', 'Zona Centro', '22000'),
-('UBI02', 'Sucursal Otay', 'Boulevard Bellas Artes', '5678', 'Otay Universidad', '22427'),
-('UBI03', 'Sucursal Playas', 'Paseo Ensenada', '910', 'Playas de Tijuana', '22504'),
-('UBI04', 'Cliente Maquiladora XYZ', 'Boulevard Insurgentes', '1122', 'Río Tijuana 3ra Etapa', '22226'),
-('UBI05', 'Proveedor ABC', 'Calle Segunda', '3344', 'Zona Centro', '22000'),
-('UBI06', 'Punto de Entrega Macroplaza', 'Boulevard Insurgentes', '5566', 'El Lago', '22210'),
-('UBI07', 'Punto de Entrega Plaza Río', 'Paseo de los Héroes', '7788', 'Zona Río', '22010'),
-('UBI08', 'Centro de Distribución Este', 'Carretera Libre Tijuana-Tecate', '9900', 'El Florido', '22244'),
-('UBI09', 'Centro de Distribución Oeste', 'Carretera Escénica Tijuana-Ensenada', '1010', 'San Antonio del Mar', '22565'),
-('UBI10', 'Almacén de Productos Perecederos', 'Boulevard Díaz Ordaz', '1212', 'La Mesa', '22115'),
-('UBI11', 'Oficinas Corporativas', 'Paseo de los Héroes', '1313', 'Zona Río', '22010'),
-('UBI12', 'Centro Logístico Alamar', 'Boulevard Terán Terán', '1414', 'Alamar', '22204'),
-('UBI13', 'Planta de Producción', 'Carretera Aeropuerto', '1515', 'Mesa de Otay', '22435'),
-('UBI14', 'Depósito Regional', 'Boulevard Cuauhtémoc Sur', '1616', 'Hipódromo', '22020'),
-('UBI15', 'Terminal de Carga Aérea', 'Avenida Aeropuerto', '1717', 'Colonia Nueva Tijuana', '22435'),
-('UBI16', 'Estación de Transferencia', 'Boulevard Gustavo Díaz Ordaz', '1818', 'La Mesa', '22115'),
-('UBI17', 'Cliente Corporativo ABC', 'Boulevard Agua Caliente', '1919', 'Zona Río', '22420'),
-('UBI18', 'Proveedor Industrial XYZ', 'Boulevard Benítez', '2020', 'La Mesa', '22105'),
-('UBI19', 'Punto de Recolección Plaza Monarca', 'Boulevard Manuel J. Clouthier', '2121', 'Chapultepec Alamar', '22195'),
-('UBI20', 'Centro de Servicio Playas', 'Avenida Del Pacifico', '2222', 'Playas de Tijuana', '22504');
+INSERT INTO ubicacion (nombreUbicacion, nombreCalle, numCalle, colonia, codigoPostal) VALUES
+('Almacén Central Tijuana', 'Avenida Revolución', '1234', 'Zona Centro', '22000'),
+('Sucursal Otay', 'Boulevard Bellas Artes', '5678', 'Otay Universidad', '22427'),
+('Sucursal Playas', 'Paseo Ensenada', '910', 'Playas de Tijuana', '22504'),
+('Cliente Maquiladora XYZ', 'Boulevard Insurgentes', '1122', 'Río Tijuana 3ra Etapa', '22226'),
+('Proveedor ABC', 'Calle Segunda', '3344', 'Zona Centro', '22000'),
+('Punto de Entrega Macroplaza', 'Boulevard Insurgentes', '5566', 'El Lago', '22210'),
+('Punto de Entrega Plaza Río', 'Paseo de los Héroes', '7788', 'Zona Río', '22010'),
+('Centro de Distribución Este', 'Carretera Libre Tijuana-Tecate', '9900', 'El Florido', '22244'),
+('Centro de Distribución Oeste', 'Carretera Escénica Tijuana-Ensenada', '1010', 'San Antonio del Mar', '22565'),
+('Almacén de Productos Perecederos', 'Boulevard Díaz Ordaz', '1212', 'La Mesa', '22115'),
+('Oficinas Corporativas', 'Paseo de los Héroes', '1313', 'Zona Río', '22010'),
+('Centro Logístico Alamar', 'Boulevard Terán Terán', '1414', 'Alamar', '22204'),
+('Planta de Producción', 'Carretera Aeropuerto', '1515', 'Mesa de Otay', '22435'),
+('Depósito Regional', 'Boulevard Cuauhtémoc Sur', '1616', 'Hipódromo', '22020'),
+('Terminal de Carga Aérea', 'Avenida Aeropuerto', '1717', 'Colonia Nueva Tijuana', '22435'),
+('Estación de Transferencia', 'Boulevard Gustavo Díaz Ordaz', '1818', 'La Mesa', '22115'),
+('Cliente Corporativo ABC', 'Boulevard Agua Caliente', '1919', 'Zona Río', '22420'),
+('Proveedor Industrial XYZ', 'Boulevard Benítez', '2020', 'La Mesa', '22105'),
+('Punto de Recolección Plaza Monarca', 'Boulevard Manuel J. Clouthier', '2121', 'Chapultepec Alamar', '22195'),
+('Centro de Servicio Playas', 'Avenida Del Pacifico', '2222', 'Playas de Tijuana', '22504');
 
 INSERT INTO modelo (codigo, nombre, marca) VALUES
 ('TOY01', 'Toyota Hiace', 'TOY'),               -- Furgoneta versátil para distribución urbana
@@ -423,8 +423,6 @@ INSERT INTO mantenimiento (fechas, costo, descripcion, vehiculo, remolque) VALUE
 ('2024-03-12', 8500.00, 'Reemplazo de piso', NULL, 22); -- Remolque 22
 
 INSERT INTO cliente_ubi (cliente, ubicacion, fechaRegistro) VALUES
-(1,'UBI04', CURRENT_DATE),
-(1,'UBI03', CURRENT_DATE);
-
-INSERT INTO cliente_ubi (cliente, ubicacion, fechaRegistro) VALUES
-(1,'UBI06', CURRENT_DATE);
+(1,4, CURRENT_DATE),
+(1,3, CURRENT_DATE),
+(1,6, CURRENT_DATE);

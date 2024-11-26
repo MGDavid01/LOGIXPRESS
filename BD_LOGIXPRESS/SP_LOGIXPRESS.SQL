@@ -504,7 +504,6 @@ END $$
 /*************************************************************/
 DELIMITER $$
 CREATE PROCEDURE SP_registrarAsociarUbicacion(
-    IN codigoGen VARCHAR(5),
     IN EnomUbicacion VARCHAR(100),
     IN EnomCalle VARCHAR(100),
     IN EnumCalle VARCHAR(50),
@@ -516,6 +515,7 @@ CREATE PROCEDURE SP_registrarAsociarUbicacion(
 BEGIN
     DECLARE error_msg TEXT;
     DECLARE error_code INT;
+    DECLARE new_ubicacion_id INT;
 
     -- Manejo de errores
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
@@ -526,15 +526,24 @@ BEGIN
         ROLLBACK;
         SET mensaje = CONCAT("Error al asociar ubicacion: ", error_code, " - ", error_msg);
     END;
-    START TRANSACTION;
-        INSERT INTO ubicacion (codigo, nombreUbicacion, nombreCalle, numCalle, colonia, codigoPostal)
-        VALUES (codigoGen, EnomUbicacion, EnomCalle, EnumCalle, Ecolonia, EcodigoPostal);
 
+    START TRANSACTION;
+
+        -- Insertar en la tabla `ubicacion`
+        INSERT INTO ubicacion (nombreUbicacion, nombreCalle, numCalle, colonia, codigoPostal)
+        VALUES (EnomUbicacion, EnomCalle, EnumCalle, Ecolonia, EcodigoPostal);
+
+        -- Obtener el ID recién insertado
+        SET new_ubicacion_id = LAST_INSERT_ID();
+
+        -- Asociar la ubicación al cliente
         INSERT INTO cliente_ubi (cliente, ubicacion, fechaRegistro)
-        VALUES (Ecliente_id, codigoGen, CURRENT_DATE);
+        VALUES (Ecliente_id, new_ubicacion_id, CURRENT_DATE);
+
     COMMIT;
     SET mensaje = "Ubicacion asociada exitosamente.";
 END $$
+DELIMITER ;
 /*************************************************************/
 CREATE PROCEDURE SP_registrarAsociarProducto(
     IN codigoGen VARCHAR(5),
