@@ -42,21 +42,23 @@
 
 .general-info {
     width: 50%;
-    justify-content: center;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    margin: auto;
 }
 
 .info-products {
     width: 50%;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    margin: auto;
 }
 
 .tool-text {
     color: #ffffff;
     text-decoration: none;
+}
+
+table{
+    margin: auto;
 }

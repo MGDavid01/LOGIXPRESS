@@ -10,20 +10,10 @@ $pesoProd = $_POST['peso'];
 
 // Preparar el mensaje de salida del procedimiento almacenado
 $mensaje = "";
-
+$clienteProd = $_SESSION['user_id'];
 // Llamar al procedimiento almacenado para insertar el producto
-$queryCallSP = "CALL SP_registrarAsociarProducto(
-    '$nombreProd', 
-    '$descripcionProd', 
-    '$categoriaProd', 
-    '$etiquetadoProd', 
-    $altoProd, 
-    $anchoProd, 
-    $largoProd, 
-    $pesoProd, 
-    $cliente,
-    @mensaje
-)";
+$queryCallSP = "CALL SP_registrarAsociarProducto('$nombreProd', '$descripcionProd', '$categoriaProd', 
+'$etiquetadoProd', $altoProd, $anchoProd, $largoProd, $pesoProd, $clienteProd, @mensaje)";
 
 $resultCallSP = mysqli_query($db, $queryCallSP);
 

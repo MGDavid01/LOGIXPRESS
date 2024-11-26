@@ -26,7 +26,7 @@ function vistaProductos($cliente) {
         </div>
         <div class="information">
             <div class="general-info">
-                <h2>Product List</h2>
+                <h2 style="text-align: center;">Product List</h2>
                 <table>
                     <tr>
                         <th>ID</th>

@@ -77,7 +77,7 @@ include_once('includes/headUsers.php');
     <link rel="stylesheet" href="css/menuCHD/menuCHD.css">
     <link rel="stylesheet" href="css/forms.css">
     <link rel="stylesheet" href="css/tables.css">
-    <nav>
+    <nav class="side-nav">
         <div class="logo-container">
             <img src="imagenes/LOGIXPRESS_LOGO_F2.png" alt="Logo">
         </div>
@@ -196,7 +196,7 @@ include_once('includes/headUsers.php');
                                     LEFT JOIN entre_empleado emp ON e.num = emp.entrega
                                     LEFT JOIN entre_vehi ev ON e.num = ev.entrega
                                     LEFT JOIN vehi_remo vr ON ev.vehiculo = vr.vehiculo
-                                    INNER JOIN tipo_carga tc ON e.tipoCarga = tc.codigo
+                                    LEFT JOIN tipo_carga tc ON e.tipoCarga = tc.codigo
                                     WHERE emp.entrega IS NULL OR ev.entrega IS NULL OR vr.remolque IS NULL
                                 ";
                 
