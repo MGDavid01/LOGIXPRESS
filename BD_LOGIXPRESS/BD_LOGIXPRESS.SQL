@@ -75,7 +75,7 @@ CREATE TABLE marca (
 );
 
 CREATE TABLE ubicacion (
-    codigo VARCHAR(5) PRIMARY KEY,
+    num INT AUTO_INCREMENT PRIMARY KEY,
     nombreUbicacion VARCHAR(100),
     nombreCalle VARCHAR(100),
     numCalle VARCHAR(50) NOT NULL,
@@ -264,38 +264,38 @@ CREATE TABLE entre_empleado (
 
 CREATE TABLE ubi_entrega_llegada (
     entrega INT,
-    ubicacion VARCHAR(5),
+    ubicacion INT,
     hraLlegada TIME,
     PRIMARY KEY (entrega, ubicacion),
     FOREIGN KEY (entrega) REFERENCES entrega(num),
-    FOREIGN KEY (ubicacion) REFERENCES ubicacion(codigo)
+    FOREIGN KEY (ubicacion) REFERENCES ubicacion(num)
 );
 
 CREATE TABLE cliente_ubi (
     cliente INT,
-    ubicacion VARCHAR(5),
+    ubicacion INT,
     fechaRegistro DATE,
     PRIMARY KEY (cliente, ubicacion),
     FOREIGN KEY (cliente) REFERENCES cliente(num),
-    FOREIGN KEY (ubicacion) REFERENCES ubicacion(codigo)
+    FOREIGN KEY (ubicacion) REFERENCES ubicacion(num)
 );
 
 CREATE TABLE ubi_entrega_salida (
     entrega INT,
-    ubicacion VARCHAR(5),
+    ubicacion INT,
     hraSalida TIME,
     PRIMARY KEY (entrega, ubicacion),
     FOREIGN KEY (entrega) REFERENCES entrega(num),
-    FOREIGN KEY (ubicacion) REFERENCES ubicacion(codigo)
+    FOREIGN KEY (ubicacion) REFERENCES ubicacion(num)
 );
 
 CREATE TABLE ubicacion_ruta (
-    ubicacion VARCHAR(5),
+    ubicacion INT,
     ruta INT,
     distanXPun VARCHAR(25),
     ordenentrega INT,
     PRIMARY KEY (ubicacion, ruta),
-    FOREIGN KEY (ubicacion) REFERENCES ubicacion(codigo),
+    FOREIGN KEY (ubicacion) REFERENCES ubicacion(num),
     FOREIGN KEY (ruta) REFERENCES ruta(num)
 );
 
