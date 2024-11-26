@@ -20,7 +20,7 @@ $query = "UPDATE ubicacion
             numCalle = '$numCalleU',
             colonia = '$coloniaU',
             codigoPostal = '$codigoPostalU'
-        WHERE codigo = '$ubicacion_id'";
+        WHERE num = '$ubicacion_id'";
 
 $result = mysqli_query($db, $query);
 

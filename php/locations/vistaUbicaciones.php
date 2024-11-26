@@ -5,7 +5,7 @@ function vistaUbicaciones($cliente) {
     $ubicacion = [];
     $queryUbicacion = "SELECT cu.ubicacion, u.nombreUbicacion, cu.fechaRegistro
             FROM ubicacion u
-            INNER JOIN cliente_ubi cu ON cu.ubicacion = u.codigo
+            INNER JOIN cliente_ubi cu ON cu.ubicacion = u.num
             WHERE cu.cliente = $cliente";
     
     $result = mysqli_query($db, $queryUbicacion);
@@ -72,9 +72,9 @@ function vistaFormularoProductos($ubicacion_id) {
     global $db;
 
     // Consulta los detalles de la ubicación
-    $queryUbicacion = "SELECT u.codigo, u.nombreUbicacion, u.nombreCalle, u.numCalle, u.colonia, u.codigoPostal
+    $queryUbicacion = "SELECT u.num, u.nombreUbicacion, u.nombreCalle, u.numCalle, u.colonia, u.codigoPostal
         FROM ubicacion u
-        INNER JOIN cliente_ubi cu ON cu.ubicacion = u.codigo
+        INNER JOIN cliente_ubi cu ON cu.ubicacion = u.num
         WHERE cu.ubicacion = '$ubicacion_id'";
 
     $resultUbicacion = mysqli_query($db, $queryUbicacion);
@@ -94,7 +94,7 @@ function vistaFormularoProductos($ubicacion_id) {
         <h2>Edit Location</h2>
         <form action="" method="POST">
             <!-- Campo oculto para el ID de la ubicación -->
-            <input type="hidden" name="ubicacion_id" value="<?= htmlspecialchars($detalle['codigo']) ?>">
+            <input type="hidden" name="ubicacion_id" value="<?= htmlspecialchars($detalle['num']) ?>">
 
             <!-- Campo: Nombre de la Ubicación -->
             <div class="form-group">
@@ -137,9 +137,6 @@ function vistaFormularoProductos($ubicacion_id) {
 function vistaFormularioAgregarUbicacion() {
     ?>
     <div class="form">
-    <?php if (isset($_GET['status']) && $_GET['status'] === 'addLocation'): ?>
-        <p style="font-size:2rem; text-align: end; color: #57cf8b;">Location Added</p>
-    <?php endif; ?>
         <h2>Add New Location</h2>
         <form action="" method="POST">
             <!-- Campo: Nombre de la Ubicación -->
