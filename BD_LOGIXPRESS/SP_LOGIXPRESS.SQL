@@ -630,14 +630,16 @@ BEGIN
     SELECT 
         v.num AS vehiculo_id,
         v.capacidadCarga,
-        v.tipoCarga,
-        v.disponibilidad
-    FROM 
-        vehiculo AS v
+        cv.tipoCarga
+        v.categoriavehiculo
+    WHERE v.disponibilidad
+    FROM vehiculo AS v
+    INNER JOIN cat_vehi cv ON cv.codigo = v.categoriavehiculo
     WHERE 
         v.disponibilidad = 1 -- Filtra solo los vehículos libres
         AND v.capacidadCarga >= pesoTotal -- Capacidad debe ser suficiente para el pesoTotal de la entrega
-        AND v.tipoCarga = tipoCargaEntrega; -- El tipo de carga debe coincidir con el de la entrega
+        AND v.tipoCarga = tipoCargaEntrega -- El tipo de carga debe coincidir con el de la entrega
+    ORDER BY v.capacidadCarga DESC;
 END $$
 /*ahora tambien quiero el procedimiento pero en este caso tambien agregar que alguna de las dimensiones del producto,
 no sobrepasen las dimesiones*/
