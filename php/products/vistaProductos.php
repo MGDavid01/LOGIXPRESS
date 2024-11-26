@@ -3,7 +3,7 @@ function vistaProductos($cliente) {
     global $db;
 
     $productos = [];
-    $queryProductos = "SELECT p.codigo, p.nombre FROM producto p WHERE p.cliente = $cliente";
+    $queryProductos = "SELECT p.num, p.nombre FROM producto p WHERE p.cliente = $cliente";
 
     $result = mysqli_query($db, $queryProductos);
     if (!$result) {
@@ -37,10 +37,10 @@ function vistaProductos($cliente) {
                     </tr>
                     <?php foreach ($productos as $row): ?>
                         <tr>
-                            <td><?= htmlspecialchars($row['codigo']) ?></td>
+                            <td><?= htmlspecialchars($row['num']) ?></td>
                             <td><?= htmlspecialchars($row['nombre']) ?></td>
                             <?php if (isset($_GET['tool']) && $_GET['tool'] == 'editProduct'): ?>
-                                <td><a href="?section=products&tool=editProduct&product=<?= urlencode($row['codigo']) ?>">Edit</a></td>
+                                <td><a href="?section=products&tool=editProduct&product=<?= $row['num'] ?>">Edit</a></td>
                             <?php endif; ?>
                         </tr>
                     <?php endforeach; ?>
@@ -64,8 +64,8 @@ function vistaFormularioProducto($cliente, $producto_id) {
     global $db;
 
     // Consulta los detalles del producto
-    $queryProducto = "SELECT p.codigo, p.nombre, p.descripcion, p.alto, p.ancho, p.largo, p.peso, p.etiquetado, p.categoria
-    FROM producto p WHERE p.cliente = '$cliente' AND p.codigo = '$producto_id'";
+    $queryProducto = "SELECT p.num, p.nombre, p.descripcion, p.alto, p.ancho, p.largo, p.peso, p.etiquetado, p.categoria
+    FROM producto p WHERE p.cliente = '$cliente' AND p.num = '$producto_id'";
     $resultProducto = mysqli_query($db, $queryProducto);
 
     $producto = mysqli_fetch_assoc($resultProducto);
@@ -91,7 +91,7 @@ function vistaFormularioProducto($cliente, $producto_id) {
         <h2>Edit Product</h2>
         <form action="" method="POST">
             <!-- Campo oculto para el ID del producto -->
-            <input type="hidden" name="producto_id" value="<?= htmlspecialchars($producto['codigo']) ?>">
+            <input type="hidden" name="producto_id" value="<?= htmlspecialchars($producto['num']) ?>">
 
             <!-- Campo: Nombre del Producto -->
             <div class="form-group">

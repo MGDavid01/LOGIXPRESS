@@ -5,7 +5,7 @@ function verificarProductosUbicaciones($soloVerificar) {
 
     // Consultar la cantidad de productos asociados
     $cantidadProductos = 0;
-    $queryCountProductos = "SELECT COUNT(codigo) AS total FROM producto WHERE cliente = " . $_SESSION['user_id'];
+    $queryCountProductos = "SELECT COUNT(num) AS total FROM producto WHERE cliente = " . $_SESSION['user_id'];
     $resultProductos = mysqli_query($db, $queryCountProductos);
     if ($resultProductos) {
         $row = mysqli_fetch_assoc($resultProductos);

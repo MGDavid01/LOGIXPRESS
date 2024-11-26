@@ -1,4 +1,4 @@
--- Active: 1732599920807@@127.0.0.1@3306@LOGIXPRESS
+-- Active: 1730659136493@@127.0.0.1@3306@logixpress
 CREATE TABLE cliente (
     num INT PRIMARY KEY AUTO_INCREMENT,
     nomEmpresa VARCHAR(100) NOT NULL,
@@ -92,7 +92,7 @@ CREATE TABLE modelo (
 );
 
 CREATE TABLE producto (
-    codigo VARCHAR(5) PRIMARY KEY,
+    num INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
     descripcion VARCHAR(255),
     categoria VARCHAR(5),
@@ -228,11 +228,11 @@ CREATE TABLE mantenimiento (
 
 CREATE TABLE entre_producto (
     entrega INT,
-    producto VARCHAR(5),
+    producto INT,
     cantidad INT NOT NULL,
     PRIMARY KEY (entrega, producto),
     FOREIGN KEY (entrega) REFERENCES entrega(num),
-    FOREIGN KEY (producto) REFERENCES producto(codigo)
+    FOREIGN KEY (producto) REFERENCES producto(num)
 );
 
 CREATE TABLE entre_tipocarga (
