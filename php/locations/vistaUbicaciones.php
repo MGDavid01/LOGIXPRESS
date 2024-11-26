@@ -43,7 +43,7 @@ function vistaUbicaciones($cliente) {
                             <td><?= htmlspecialchars($row['ubicacion']) ?></td>
                             <td><?= htmlspecialchars($row['nombreUbicacion']) ?></td>
                             <?php if (isset($_GET['tool']) && $_GET['tool'] === 'edit'): ?>
-                                <td><a href="?section=locations&tool=edit&location=<?= urlencode($row['ubicacion']) ?>">Edit</a></td>
+                                <td><a href="?section=locations&tool=edit&location=<?= $row['ubicacion'] ?>">Edit</a></td>
                             <?php endif; ?>
                         </tr>
                     <?php endforeach; ?>
@@ -88,7 +88,7 @@ function vistaFormularoProductos($ubicacion_id) {
     // Mostrar el formulario para editar la ubicación
     ?>
     <div class="form">
-    <?php if (isset($_GET['status']) && $_GET['status'] === 'updateLocation'): ?>
+    <?php if (isset($_GET['status']) && $_GET['status'] === 'updatedLocation'): ?>
         <p style="font-size:2rem; text-align: end; color: #57cf8b;">Location Updated</p>
     <?php endif; ?>
         <h2>Edit Location</h2>
@@ -137,36 +137,39 @@ function vistaFormularoProductos($ubicacion_id) {
 function vistaFormularioAgregarUbicacion() {
     ?>
     <div class="form">
+    <?php if (isset($_GET['status']) && $_GET['status'] === 'addedLocation'): ?>
+        <p style="font-size:2rem; text-align: end; color: #57cf8b;">Location Added</p>
+    <?php endif; ?>
         <h2>Add New Location</h2>
         <form action="" method="POST">
             <!-- Campo: Nombre de la Ubicación -->
             <div class="form-group">
-                <label for="nombreUbicacion">Location Name:</label>
-                <input type="text" id="nombreUbicacion" name="nombreUbicacion" required>
+                <label for="nombreUbicacionI">Location Name:</label>
+                <input type="text" id="nombreUbicacionI" name="nombreUbicacionI" required>
             </div>
 
             <!-- Campo: Dirección -->
             <div class="form-group">
-                <label for="nombreCalle">Street:</label>
-                <input type="text" id="nombreCalle" name="nombreCalle" required>
+                <label for="nombreCalleI">Street:</label>
+                <input type="text" id="nombreCalleI" name="nombreCalleI" required>
             </div>
 
             <!-- Campo: Número de Calle -->
             <div class="form-group">
-                <label for="numCalle">Street Number:</label>
-                <input type="text" id="numCalle" name="numCalle" required>
+                <label for="numCalleI">Street Number:</label>
+                <input type="text" id="numCalleI" name="numCalleI" required>
             </div>
 
             <!-- Campo: Colonia -->
             <div class="form-group">
-                <label for="colonia">Settlement:</label>
-                <input type="text" id="colonia" name="colonia" required>
+                <label for="coloniaI">Settlement:</label>
+                <input type="text" id="coloniaI" name="coloniaI" required>
             </div>
 
             <!-- Campo: Código Postal -->
             <div class="form-group">
-                <label for="codigoPostal">Zip code:</label>
-                <input type="text" id="codigoPostal" name="codigoPostal" required>
+                <label for="codigoPostalI">Zip code:</label>
+                <input type="text" id="codigoPostalI" name="codigoPostalI" required>
             </div>
 
             <!-- Botón: Añadir Ubicación -->

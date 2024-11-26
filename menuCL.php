@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['accion']) && $_POST['
 }else if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['accion']) && $_POST['accion'] === 'registerDelivery') {
     include_once('php/delivery/logicaInsercionProductos.php');
 } else if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['accion']) && $_POST['accion'] === 'addLocation') {
-    include_once('php/locations/logicaInsercionUbicaciones.php');
+    include_once('php/locations/logicaInsercionUbicacion.php');
 } else if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['accion']) && $_POST['accion'] === 'updateLocation') {
     include_once('php/locations/logicaActualizacionUbicacion.php');
 }
