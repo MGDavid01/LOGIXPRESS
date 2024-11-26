@@ -504,7 +504,7 @@ END $$
 /*************************************************************/
 DELIMITER $$
 CREATE PROCEDURE SP_registrarAsociarUbicacion(
-    IN codigoGen VARCHAR(5),
+    IN Enumero INT,
     IN EnomUbicacion VARCHAR(100),
     IN EnomCalle VARCHAR(100),
     IN EnumCalle VARCHAR(50),
@@ -527,11 +527,11 @@ BEGIN
         SET mensaje = CONCAT("Error al asociar ubicacion: ", error_code, " - ", error_msg);
     END;
     START TRANSACTION;
-        INSERT INTO ubicacion (codigo, nombreUbicacion, nombreCalle, numCalle, colonia, codigoPostal)
-        VALUES (codigoGen, EnomUbicacion, EnomCalle, EnumCalle, Ecolonia, EcodigoPostal);
+        INSERT INTO ubicacion (num, nombreUbicacion, nombreCalle, numCalle, colonia, codigoPostal)
+        VALUES (Enumero, EnomUbicacion, EnomCalle, EnumCalle, Ecolonia, EcodigoPostal);
 
         INSERT INTO cliente_ubi (cliente, ubicacion, fechaRegistro)
-        VALUES (Ecliente_id, codigoGen, CURRENT_DATE);
+        VALUES (Ecliente_id, Enumero, CURRENT_DATE);
     COMMIT;
     SET mensaje = "Ubicacion asociada exitosamente.";
 END $$
