@@ -25,8 +25,8 @@ $query = "UPDATE ubicacion
 $result = mysqli_query($db, $query);
 
 if ($result) {
-    echo "Ubicación actualizada con éxito.";
     header("Location: ?section=locations&tool=edit&location=$ubicacion_id&status=updatededLocation"); // Redirigir a la lista de ubicaciones
+    exit;
 } else {
     echo "Error al actualizar la ubicación: " . mysqli_error($db);
 };

@@ -5,17 +5,42 @@ $nombreCalleI = $_POST['nombreCalleI'];
 $numCalleI = $_POST['numCalleI'];
 $coloniaI = $_POST['coloniaI'];
 $codigoPostalI = $_POST['codigoPostalI'];
+$clienteID = $_SESSION['user_id']; // Asegúrate de que este valor también sea pasado desde el formulario
 
-// Actualizar la información de la ubicación
-$queryInsertUbi = "INSERT INTO ubicacion (nombreUbicacion, nombreCalle, numCalle, colonia, codigoPostal) VALUES
-        ('$nombreUbicacionI', '$nombreCalleI', '$numCalleI', '$coloniaI', '$codigoPostalI')";
+// Preparar el mensaje que se obtendrá del procedimiento almacenado
+$mensaje = "";
 
-$resultInsertUbi = mysqli_query($db, $queryInsertUbi);
+// Preparar la consulta para llamar al procedimiento almacenado
+$queryCallSP = "CALL SP_registrarAsociarUbicacion(
+    '$nombreUbicacionI', 
+    '$nombreCalleI', 
+    '$numCalleI', 
+    '$coloniaI', 
+    '$codigoPostalI', 
+    $clienteID,
+    @mensaje
+)";
 
-if ($resultInsertUbi) {
-    header("Location: ?section=locations&tool=add&status=addedLocation"); // Redirigir a la lista de ubicaciones
+// Ejecutar la llamada al procedimiento almacenado
+$resultCallSP = mysqli_query($db, $queryCallSP);
+
+if ($resultCallSP) {
+    // Obtener el mensaje de salida del procedimiento
+    $queryGetMessage = "SELECT @mensaje AS mensaje";
+    $resultMessage = mysqli_query($db, $queryGetMessage);
+    $rowMessage = mysqli_fetch_assoc($resultMessage);
+    $mensaje = $rowMessage['mensaje'];
+
+    if ($mensaje == "Ubicacion asociada exitosamente.") {
+        // Redirigir o mostrar mensaje de éxito
+        header("Location: ?section=locations&tool=add&status=addedLocation");
+        exit;
+    } else {
+        // Mostrar mensaje de error devuelto por el procedimiento almacenado
+        echo "<p>Error: $mensaje</p>";
+    }
 } else {
-    echo "Error al actualizar la ubicación: " . mysqli_error($db);
-};
-
+    // Mostrar el error de MySQL
+    echo "Error al ejecutar el procedimiento almacenado: " . mysqli_error($db);
+}
 ?>
