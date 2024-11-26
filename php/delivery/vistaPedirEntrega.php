@@ -22,7 +22,7 @@ function vistaPedirEntrega() {
         }
         
         $queryUbicaciones = "SELECT cu.ubicacion, u.nombreUbicacion FROM cliente_ubi cu
-        INNER JOIN ubicacion u ON u.codigo = cu.ubicacion WHERE cu.cliente = $cliente_id";
+        INNER JOIN ubicacion u ON u.num = cu.ubicacion WHERE cu.cliente = $cliente_id";
         $resultUbicaciones = mysqli_query($db, $queryUbicaciones);
 
         // Obtener los datos registrados de tipo_carga
