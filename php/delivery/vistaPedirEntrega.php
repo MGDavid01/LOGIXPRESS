@@ -1,6 +1,7 @@
 <?php 
 function vistaPedirEntrega() {
     global $db;
+    //Prueba pull
     /*Obtener verificacion*/
     $verificacion = verificarProductosUbicaciones(true);
     if($verificacion != 5) {
