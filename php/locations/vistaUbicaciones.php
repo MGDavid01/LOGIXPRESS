@@ -21,10 +21,10 @@ function vistaUbicaciones($cliente) {
     <section class="content-tools">
         <div class="tools">
             <div>
-                <a href="?section=locations&addLocation">Add Location</a>
+                <a class="text-tool" href="?section=locations&tool=add">Add Location</a>
             </div>
             <div>
-                <a href="?section=locations&editLocation">Edit Location</a>
+                <a class="text-tool" href="?section=locations&tool=edit">Edit Location</a>
             </div>
         </div>
         <div class="information">
@@ -34,30 +34,40 @@ function vistaUbicaciones($cliente) {
                     <tr>
                         <th>ID</th>
                         <th>Name</th>
-                        <th>Action</th>
+                        <?php if (isset($_GET['tool']) && $_GET['tool'] === 'edit'): ?>
+                            <th>Action</th>
+                        <?php endif; ?>
                     </tr>
                     <?php foreach ($ubicacion as $row): ?>
                         <tr>
                             <td><?= htmlspecialchars($row['ubicacion']) ?></td>
                             <td><?= htmlspecialchars($row['nombreUbicacion']) ?></td>
-                            <td><a href="?section=locations&location=<?= urlencode($row['ubicacion']) ?>">Edit</a></td>
+                            <?php if (isset($_GET['tool']) && $_GET['tool'] === 'edit'): ?>
+                                <td><a href="?section=locations&tool=edit&location=<?= urlencode($row['ubicacion']) ?>">Edit</a></td>
+                            <?php endif; ?>
                         </tr>
                     <?php endforeach; ?>
                 </table>
             </div>
             <div class="info-locations">
-                <?php if (isset($_GET['section'], $_GET['location']) && $_GET['section'] === "locations"): ?>
-                    <?php vistaFormularoProductos($_GET['location']); ?>
+                <?php if (isset($_GET['tool'])): ?>
+                    <?php if ($_GET['tool'] === 'edit' && isset($_GET['location'])): ?>
+                        <?php vistaFormularoProductos($_GET['location']); ?>
+                    <?php elseif ($_GET['tool'] === 'add'): ?>
+                        <?php vistaFormularioAgregarUbicacion(); ?>
+                    <?php else: ?>
+                        <p style="font-size:2rem;">Select a location to edit or add.</p>
+                    <?php endif; ?>
                 <?php else: ?>
-                    <p style="font-size:2rem;">Select a location to edit.</p>
+                    <p style="font-size:2rem;">Select a location to edit or add.</p>
                 <?php endif; ?> 
             </div>
         </div>
     </section>
     <?php endif;
-    
 }    
 
+// Función para mostrar el formulario de editar ubicación existente.
 function vistaFormularoProductos($ubicacion_id) {
     global $db;
 
@@ -74,13 +84,13 @@ function vistaFormularoProductos($ubicacion_id) {
         echo '<p>Error: No se encontró la ubicación.</p>';
         return;
     }
-    // Mostrar el formulario
+
+    // Mostrar el formulario para editar la ubicación
     ?>
     <div class="form">
-    <?php
-        if (isset($_GET['status']) && $_GET['status'] === 'updateLocation'): ?>
+    <?php if (isset($_GET['status']) && $_GET['status'] === 'updateLocation'): ?>
         <p style="font-size:2rem; text-align: end; color: #57cf8b;">Location Updated</p>
-        <?php endif; ?>
+    <?php endif; ?>
         <h2>Edit Location</h2>
         <form action="" method="POST">
             <!-- Campo oculto para el ID de la ubicación -->
@@ -120,7 +130,52 @@ function vistaFormularoProductos($ubicacion_id) {
             <button type="submit" name="accion" value="updateLocation" class="btn-guardar">Update</button>
         </form>
     </div>
+    <?php
+}
 
+// Función para mostrar el formulario de agregar una nueva ubicación
+function vistaFormularioAgregarUbicacion() {
+    ?>
+    <div class="form">
+    <?php if (isset($_GET['status']) && $_GET['status'] === 'addLocation'): ?>
+        <p style="font-size:2rem; text-align: end; color: #57cf8b;">Location Added</p>
+    <?php endif; ?>
+        <h2>Add New Location</h2>
+        <form action="" method="POST">
+            <!-- Campo: Nombre de la Ubicación -->
+            <div class="form-group">
+                <label for="nombreUbicacion">Location Name:</label>
+                <input type="text" id="nombreUbicacion" name="nombreUbicacion" required>
+            </div>
+
+            <!-- Campo: Dirección -->
+            <div class="form-group">
+                <label for="nombreCalle">Street:</label>
+                <input type="text" id="nombreCalle" name="nombreCalle" required>
+            </div>
+
+            <!-- Campo: Número de Calle -->
+            <div class="form-group">
+                <label for="numCalle">Street Number:</label>
+                <input type="text" id="numCalle" name="numCalle" required>
+            </div>
+
+            <!-- Campo: Colonia -->
+            <div class="form-group">
+                <label for="colonia">Settlement:</label>
+                <input type="text" id="colonia" name="colonia" required>
+            </div>
+
+            <!-- Campo: Código Postal -->
+            <div class="form-group">
+                <label for="codigoPostal">Zip code:</label>
+                <input type="text" id="codigoPostal" name="codigoPostal" required>
+            </div>
+
+            <!-- Botón: Añadir Ubicación -->
+            <button type="submit" name="accion" value="addLocation" class="btn-guardar">Add Location</button>
+        </form>
+    </div>
     <?php
 }
 ?>
