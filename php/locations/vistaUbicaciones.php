@@ -17,7 +17,7 @@ function vistaUbicaciones($cliente) {
     }
 
     // Mostrar los datos en una tabla HTML
-    if (!empty($ubicacion)): ?>
+    ?>
     <section class="content-tools">
         <div class="tools">
             <div>
@@ -64,7 +64,7 @@ function vistaUbicaciones($cliente) {
             </div>
         </div>
     </section>
-    <?php endif;
+    <?php
 }    
 
 // Función para mostrar el formulario de editar ubicación existente.
