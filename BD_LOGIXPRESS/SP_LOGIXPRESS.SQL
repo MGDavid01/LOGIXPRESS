@@ -640,5 +640,3 @@ BEGIN
         AND v.tipoCarga = tipoCargaEntrega -- El tipo de carga debe coincidir con el de la entrega
     ORDER BY v.capacidadCarga ASC;
 END $$
-/*ahora tambien quiero el procedimiento pero en este caso tambien agregar que alguna de las dimensiones del producto,
-no sobrepasen las dimesiones*/
