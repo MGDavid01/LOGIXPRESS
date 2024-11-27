@@ -178,11 +178,10 @@ include_once('includes/headUsers.php');
                     <div class="tools">
                         <!-- Contenedor Tabla -->
                         <div class="table-size">
-                            <h2>Asignar Empleados, Vehículos y Remolques a Entregas</h2>
-                            <table style="width: 100%; border-collapse: collapse;">
+                            <h2 style="text-align: center;">Asignar Recursos</h2>
+                            <table>
                                 <tr>
                                     <th>Entrega ID</th>
-                                    <th>Fecha</th>
                                     <th>Peso Total</th>
                                     <th>Volumen Total</th>
                                     <th>Tipo de Carga</th>
@@ -191,7 +190,7 @@ include_once('includes/headUsers.php');
                                 <?php
                                 // Consulta para seleccionar entregas sin empleado, vehículo y remolque asignados
                                 $query = "
-                                    SELECT e.num AS entregaId, e.fechaRegistro, e.pesoTotal, e.volumenTotal, tc.descripcion AS tipoCarga
+                                    SELECT e.num AS entregaId, e.pesoTotal, e.volumenTotal, tc.descripcion AS tipoCarga
                                     FROM entrega e
                                     LEFT JOIN entre_empleado emp ON e.num = emp.entrega
                                     LEFT JOIN entre_vehi ev ON e.num = ev.entrega
@@ -205,7 +204,6 @@ include_once('includes/headUsers.php');
                                     while ($row = $result->fetch_assoc()) {
                                         echo "<tr>";
                                         echo "<td>{$row['entregaId']}</td>";
-                                        echo "<td>{$row['fechaRegistro']}</td>";
                                         echo "<td>{$row['pesoTotal']} kg</td>";
                                         echo "<td>{$row['volumenTotal']} m³</td>";
                                         echo "<td>{$row['tipoCarga']}</td>";
