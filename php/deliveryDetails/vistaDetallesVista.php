@@ -195,16 +195,15 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php
-                            $producto = mysqli_fetch_assoc($resultDetallesProductos);
-                        ?>
-                            <tr>
-                                <td><?= htmlspecialchars($producto['nombre']); ?></td>
-                                <td><?= number_format($producto['volumen'], 2); ?> m³</td>
-                                <td><?= number_format($producto['peso'], 2); ?> kg</td>
-                                <td><?= htmlspecialchars($producto['cantidad']); ?></td>
-                            </tr>
-                    </tbody>
+                    <?php while ($producto = mysqli_fetch_assoc($resultDetallesProductos)): ?>
+                        <tr>
+                            <td><?= htmlspecialchars($producto['nombre']); ?></td>
+                            <td><?= number_format($producto['volumen'], 2); ?> m³</td>
+                            <td><?= number_format($producto['peso'], 2); ?> kg</td>
+                            <td><?= htmlspecialchars($producto['cantidad']); ?></td>
+                        </tr>
+                    <?php endwhile; ?>
+                </tbody>
                 </table>
             </div>
             <div class="section">
