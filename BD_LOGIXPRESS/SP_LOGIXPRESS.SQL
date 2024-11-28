@@ -69,7 +69,7 @@ END $$
 DELIMITER $$
 CREATE PROCEDURE SP_asociarDestinosEntrega (
     IN entrega_id INT, -- ID de la entrega ya registrada
-    IN origen VARCHAR(5),
+    IN destino VARCHAR(5),
     OUT mensaje VARCHAR(255)
 )
 BEGIN
@@ -89,7 +89,7 @@ BEGIN
     START TRANSACTION;
         -- Insertar en la tabla `ubi_entrega_llegada`
         INSERT INTO ubi_entrega_llegada (entrega, ubicacion, hraLlegada)
-        VALUES (entrega_id, origen, NULL);
+        VALUES (entrega_id, destino, NULL);
         SET mensaje = "OK";
     COMMIT;
 END $$

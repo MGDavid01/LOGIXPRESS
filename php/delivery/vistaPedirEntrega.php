@@ -27,7 +27,8 @@ function vistaPedirEntrega() {
 
         // Obtener los datos registrados de tipo_carga
         $queryTipo = "SELECT codigo, descripcion
-                        FROM tipo_carga";
+                        FROM tipo_carga
+                        WHERE codigo != 'UNV'";
         $resultTipo = mysqli_query($db, $queryTipo);
 
         $queryPrio = "SELECT codigo, descripcion
