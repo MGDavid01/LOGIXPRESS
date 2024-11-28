@@ -155,6 +155,34 @@
                 }
             }
 
+<<<<<<< HEAD
+=======
+                <!-- Remolques -->
+                <label for="remolque">Remolque (opcional):</label>
+                <select name="remolque" id="remolque">
+                    <option value="">Sin Remolque</option>
+                    <?php
+                    $queryRemolques = "
+                        SELECT r.num, r.numSerie
+                        FROM remolque r
+                        WHERE r.tipoCarga = ?
+                        AND r.capacidadCarga >= ?
+                        AND r.disponibilidad = 'DISPO'";
+                    $stmtRemolques = $db->prepare($queryRemolques);
+                    $stmtRemolques->bind_param('d', $entrega['pesoTotal']);
+                    $stmtRemolques->execute();
+                    $resultRemolques = $stmtRemolques->get_result();
+                    if ($resultRemolques && $resultRemolques->num_rows > 0) {
+                        while ($row = $resultRemolques->fetch_assoc()) {
+                            echo "<option value='{$row['num']}'>Remolque {$row['numSerie']}</option>";
+                        }
+                    } else {
+                        echo "<option disabled>No hay remolques disponibles</option>";
+                    }
+                    ?>
+                </select>
+                <br>
+>>>>>>> 7cd4ba3 (historial)
 
         // Guardar asignación
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['guardarAsignacion'])) {
