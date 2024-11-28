@@ -8,8 +8,6 @@
                 <th>Entrega ID</th>
                 <th>Fecha</th>
                 <th>Peso Total</th>
-                <th>Volumen Total</th>
-                <th>Tipo de Carga</th>
                 <th>Acciones</th>
             </tr>
             <?php
@@ -36,8 +34,6 @@
                     echo "<tr>";
                     echo "<td>{$row['entregaId']}</td>";
                     echo "<td>{$row['fechaRegistro']}</td>";
-                    echo "<td>{$row['pesoTotal']} kg</td>";
-                    echo "<td>{$row['volumenTotal']} m³</td>";
                     echo "<td>{$row['tipoCarga']}</td>";
                     echo "<td>
                         <form method='POST' action=''>
