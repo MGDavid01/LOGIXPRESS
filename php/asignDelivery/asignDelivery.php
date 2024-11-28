@@ -1,4 +1,5 @@
 <?php
+global $db;
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Manejo de diferentes acciones: asignar y guardar asignación
     if (isset($_POST['asignarEntrega'])) {
@@ -69,6 +70,57 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ?>
 
 <link rel="stylesheet" href="css/menuCHD/vistaAsignarEntregas.css">
+<link rel="stylesheet" href="css/menuCHD/detailsDeliveryModal.css">
+<script>
+// Obtener el modal y el botón de cierre
+const modal = document.getElementById('modalDetallesEntrega');
+const span = document.getElementsByClassName('close')[0];
+
+// Cuando el usuario hace clic en <span> (x), cierra el modal
+span.onclick = function() {
+    modal.style.display = 'none';
+}
+
+// Cuando el usuario hace clic en cualquier parte fuera del modal, también lo cierra
+window.onclick = function(event) {
+    if (event.target === modal) {
+        modal.style.display = 'none';
+    }
+}
+
+// Cuando el usuario hace clic en el botón "Ver detalles de la entrega"
+function mostrarDetallesEntrega(entregaId) {
+    // Llamada AJAX para obtener los detalles de la entrega
+    fetch(`php/asignDelivery/detailsDeliveryModal.php?entregaId=${entregaId}`)
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Error en la respuesta del servidor: ' + response.status);
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.success) {
+            document.getElementById('entregaIdModal').textContent = entregaId;
+            document.getElementById('detallesContenido').innerHTML = `
+                <p>Fecha de Registro: ${data.fechaRegistro}</p>
+                <p>Peso Total: ${data.pesoTotal} kg</p>
+                <p>Volumen Total: ${data.volumenTotal} m³</p>
+                <p>Tipo de Carga: ${data.tipoCarga}</p>
+            `;
+        } else {
+            document.getElementById('detallesContenido').innerHTML = `<p>${data.message}</p>`;
+        }
+        // Mostrar el modal
+        modal.style.display = 'block';
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        document.getElementById('detallesContenido').innerHTML = `<p>Error al obtener los detalles de la entrega: ${error.message}</p>`;
+        modal.style.display = 'block';
+    });
+}
+</script>
+
 <div class="tools">
     <!-- Contenedor Tabla -->
     <div class="table-size">
@@ -105,6 +157,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     echo "<td>{$row['fechaRegistro']}</td>";
                     echo "<td>{$row['tipoCarga']}</td>";
                     echo "<td>
+                        <button type='button' onclick='mostrarDetallesEntrega({$row['entregaId']})'>Ver detalles de la entrega</button>
                         <form method='POST' action=''>
                             <input type='hidden' name='entrega' value='{$row['entregaId']}'>
                             <button type='submit' name='asignarEntrega'>Asignar</button>
@@ -119,93 +172,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </table>
     </div>
 
-    <!-- Contenedor Formulario -->
-    <div class="form-resurces">
-        <?php
-        if (!empty($entrega)) {
-            ?>
-            <h3>Asignar Recursos a Entrega <?php echo htmlspecialchars($entregaId); ?></h3>
-            <form method="POST" action="">
-                <input type="hidden" name="entrega" value="<?php echo htmlspecialchars($entregaId); ?>">
-
-                <!-- Empleados -->
-                <label for="empleado">Empleado:</label>
-                <select name="empleado" id="empleado" required>
-                    <?php
-                    $queryEmpleados = "
-                        SELECT num, nombre 
-                        FROM empleado 
-                        WHERE puesto = 'CHF' AND estadoEmpleado = 'ACT'";
-                    $resultEmpleados = $db->query($queryEmpleados);
-                    if ($resultEmpleados && $resultEmpleados->num_rows > 0) {
-                        while ($row = $resultEmpleados->fetch_assoc()) {
-                            echo "<option value='{$row['num']}'>" . htmlspecialchars($row['nombre']) . "</option>";
-                        }
-                    } else {
-                        echo "<option disabled>No hay choferes disponibles</option>";
-                    }
-                    ?>
-                </select>
-                <br>
-
-                <!-- Vehículos -->
-                <label for="vehiculo">Vehículo:</label>
-                <select name="vehiculo" id="vehiculo" required>
-                    <?php
-                    $queryVehiculos = "
-                        SELECT v.num, v.numSerie 
-                        FROM vehiculo v
-                        INNER JOIN cat_vehi cv ON v.categoriavehiculo = cv.codigo
-                        WHERE v.disponibilidad = 'DISPO'
-                        AND cv.tipoCarga = ?
-                        AND v.capacidadCarga >= ?";
-                    $stmtVehiculos = $db->prepare($queryVehiculos);
-                    $stmtVehiculos->bind_param('sd', $entrega['tipoCarga'], $entrega['pesoTotal']);
-                    $stmtVehiculos->execute();
-                    $resultVehiculos = $stmtVehiculos->get_result();
-                    if ($resultVehiculos && $resultVehiculos->num_rows > 0) {
-                        while ($row = $resultVehiculos->fetch_assoc()) {
-                            echo "<option value='{$row['num']}'>Vehículo {$row['numSerie']}</option>";
-                        }
-                    } else {
-                        echo "<option disabled>No hay vehículos disponibles</option>";
-                    }
-                    ?>
-                </select>
-                <br>
-
-                <!-- Remolques -->
-                <label for="remolque">Remolque (opcional):</label>
-                <select name="remolque" id="remolque">
-                    <option value="">Sin Remolque</option>
-                    <?php
-                    $queryRemolques = "
-                        SELECT r.num, r.numSerie
-                        FROM remolque r
-                        WHERE r.tipoCarga = 'UNV'
-                        AND r.capacidadCarga >= ?
-                        AND r.disponibilidad = 'DISPO'";
-                    $stmtRemolques = $db->prepare($queryRemolques);
-                    $stmtRemolques->bind_param('d', $entrega['pesoTotal']);
-                    $stmtRemolques->execute();
-                    $resultRemolques = $stmtRemolques->get_result();
-                    if ($resultRemolques && $resultRemolques->num_rows > 0) {
-                        while ($row = $resultRemolques->fetch_assoc()) {
-                            echo "<option value='{$row['num']}'>Remolque {$row['numSerie']}</option>";
-                        }
-                    } else {
-                        echo "<option disabled>No hay remolques disponibles</option>";
-                    }
-                    ?>
-                </select>
-                <br>
-
-                <button type="submit" name="guardarAsignacion">Guardar</button>
-            </form>
-            <?php
-        } else {
-            echo "<p>No se encontró la entrega seleccionada.</p>";
-        }
-        ?>
+    <!-- Contenedor Modal -->
+    <div id="modalDetallesEntrega" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Detalles de la Entrega <span id="entregaIdModal"></span></h2>
+            <div id="detallesContenido">
+                <!-- Aquí se cargarán los detalles desde la petición AJAX -->
+            </div>
+        </div>
     </div>
 </div>
