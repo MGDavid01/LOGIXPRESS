@@ -309,9 +309,8 @@ include_once('includes/headUsers.php');
                         </table>
                         <?php
                         break;
-                    
-
             default:
+                ?> <link rel="stylesheet" href="css/menuCHD/vistaInicial.css"> <?php
                 vistaInicial();
                 break;
         }
