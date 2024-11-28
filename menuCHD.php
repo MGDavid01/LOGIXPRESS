@@ -262,32 +262,28 @@ include_once('includes/headUsers.php');
                                     e.num AS entregaId,
                                     e.fechaRegistro,
                                     (SELECT em.nombre
-                                     FROM entre_empleado emp
-                                     INNER JOIN empleado em ON emp.empleado = em.num
-                                     WHERE emp.entrega = e.num) AS empleado,
+                                    FROM entre_empleado emp
+                                    INNER JOIN empleado em ON emp.empleado = em.num
+                                    WHERE emp.entrega = e.num) AS empleado,
                                     (SELECT v.numSerie
-                                     FROM entre_vehi_remo ev
-                                     INNER JOIN vehiculo v ON ev.vehiculo = v.num
-                                     WHERE ev.entrega = e.num) AS vehiculo,
+                                    FROM entre_vehi_remo ev
+                                    INNER JOIN vehiculo v ON ev.vehiculo = v.num
+                                    WHERE ev.entrega = e.num) AS vehiculo,
                                     (SELECT r.numSerie
-                                     FROM vehi_remo vr
-                                     INNER JOIN remolque r ON vr.remolque = r.num
-                                     WHERE vr.vehiculo = 
-                                         (SELECT v.num
-                                          FROM entre_vehi_remo ev
-                                          INNER JOIN vehiculo v ON ev.vehiculo = v.num
-                                          WHERE ev.entrega = e.num)) AS remolque,
+                                    FROM entre_vehi_remo ev
+                                    INNER JOIN remolque r ON ev.remolque = r.num
+                                    WHERE ev.entrega = e.num) AS remolque,
                                     (SELECT estado.descripcion
-                                     FROM entre_estado ee
-                                     INNER JOIN estado_entre estado ON ee.estadoEntrega = estado.codigo
-                                     WHERE ee.entrega = e.num
-                                     AND ee.estadoEntrega = 'COMP') AS estado
+                                    FROM entre_estado ee
+                                    INNER JOIN estado_entre estado ON ee.estadoEntrega = estado.codigo
+                                    WHERE ee.entrega = e.num AND ee.estadoEntrega = 'COMP') AS estado
                                 FROM entrega e
                                 WHERE EXISTS (
                                     SELECT 1
                                     FROM entre_estado ee
                                     WHERE ee.entrega = e.num AND ee.estadoEntrega = 'COMP'
                                 );
+
                             ";
                     
                             $result = $db->query($query);
