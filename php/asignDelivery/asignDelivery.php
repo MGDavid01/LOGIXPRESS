@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $stmt1->execute();
 
                 // Si no se seleccionó un remolque, asignar NULL
-                $remolqueId = !empty($remolqueId) ? $remolqueId : 0;
+                $remolqueId = !empty($remolqueId) ? $remolqueId : 1;
 
                 // Asignar vehículo a la entrega, junto con el remolque (incluso si es NULL)
                 $query2 = "INSERT INTO entre_vehi_remo (entrega, vehiculo, remolque) VALUES (?, ?, ?)";

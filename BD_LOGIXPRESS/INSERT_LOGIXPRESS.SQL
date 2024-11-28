@@ -401,8 +401,9 @@ INSERT INTO tipo_remolque (codigo, descripcion) VALUES
 ('TR002', 'Remolque Refrigerado'),
 ('TR003', 'Remolque Plataforma');
 
-INSERT INTO remolque (num, numSerie, capacidadCarga, disponibilidad) VALUES
-(0, 'No Aplica', 0, 'DISPO');
+--Remolque predeterminado
+INSERT INTO remolque (numSerie, capacidadCarga, disponibilidad) VALUES
+('No Aplica', 0, 'DISPO');
 INSERT INTO remolque (numSerie, alto, largo, ancho, capacidadCarga, costoAcumulado, marca, modelo, tipoCarga, tipoRemolque, disponibilidad) VALUES
 -- Flatbed Remolques (General - Remolque Plataforma)
 ('SN12350VOLV', 2.5, 13.6, 2.4, 25000, 1100.0, 'VOL', 'FLAT1', 'GEN', 'TR003', 'DISPO'), -- Flatbed 1
