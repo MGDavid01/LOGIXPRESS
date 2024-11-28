@@ -214,7 +214,6 @@ CREATE TABLE remolque (
     FOREIGN KEY (tipoRemolque) REFERENCES tipo_remolque(codigo),
     FOREIGN KEY (disponibilidad) REFERENCES disponibilidad(codigo)
 );
-ALTER TABLE entre_vehi_remo MODIFY remolque INT NOT NULL DEFAULT 0;
 
 
 CREATE TABLE mantenimiento (
@@ -257,6 +256,7 @@ CREATE TABLE entre_vehi_remo (
     FOREIGN KEY (vehiculo) REFERENCES vehiculo(num),
     FOREIGN KEY (remolque) REFERENCES remolque(num)
 );
+ALTER TABLE entre_vehi_remo MODIFY remolque INT NOT NULL DEFAULT 0;
 
 CREATE TABLE entre_empleado (
     entrega INT,
