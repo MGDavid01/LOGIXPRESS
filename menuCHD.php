@@ -228,96 +228,107 @@ include_once('includes/headUsers.php');
                         <div class="form-resurces">
                             <?php
                             // Si se seleccionó una entrega para asignar
-                            if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['asignarEntrega'])) {
-                                $entregaId = filter_input(INPUT_POST, 'entrega', FILTER_VALIDATE_INT);
-                
-                                // Obtener información de la entrega
-                                $query = "
-                                    SELECT e.pesoTotal, e.volumenTotal, e.tipoCarga
-                                    FROM entrega e
-                                    WHERE e.num = ?
-                                ";
-                                $stmt = $db->prepare($query);
-                                $stmt->bind_param('i', $entregaId);
-                                $stmt->execute();
-                                $result = $stmt->get_result();
-                                $entrega = $result->fetch_assoc();
-                
-                                if ($entrega) {
-                                    ?>
-                                    <h3>Asignar Recursos a Entrega <?php echo $entregaId; ?></h3>
-                                    <form method="POST" action="">
-                                        <input type="hidden" name="entrega" value="<?php echo $entregaId; ?>">
-                
-                                        <label>Empleado:
-                                            <select name="empleado" required>
+                            // Mostrar el formulario para asignar recursos si se selecciona una entrega
+                                if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['asignarEntrega'])) {
+                                    $entregaId = filter_input(INPUT_POST, 'entrega', FILTER_VALIDATE_INT);
+
+                                    // Obtener información de la entrega seleccionada
+                                    $queryEntrega = "
+                                        SELECT e.pesoTotal, e.volumenTotal, e.tipoCarga
+                                        FROM entrega e
+                                        WHERE e.num = ?";
+                                    $stmtEntrega = $db->prepare($queryEntrega);
+                                    $stmtEntrega->bind_param('i', $entregaId);
+                                    $stmtEntrega->execute();
+                                    $resultEntrega = $stmtEntrega->get_result();
+                                    $entrega = $resultEntrega->fetch_assoc();
+
+                                    if ($entrega) {
+                                        ?>
+                                        <h3>Asignar Recursos a Entrega <?php echo $entregaId; ?></h3>
+                                        <form method="POST" action="">
+                                            <input type="hidden" name="entrega" value="<?php echo htmlspecialchars($entregaId); ?>">
+
+                                            <!-- Empleados -->
+                                            <label for="empleado">Empleado:</label>
+                                            <select name="empleado" id="empleado" required>
                                                 <?php
-                                                // Seleccionar empleados activos cuyo puesto sea chofer (CHF)
                                                 $queryEmpleados = "
                                                     SELECT num, nombre 
                                                     FROM empleado 
-                                                    WHERE puesto = 'CHF' AND estadoEmpleado = 'ACT'
-                                                ";
-                                                $result = $db->query($queryEmpleados);
-                                                if ($result && $result->num_rows > 0) {
-                                                    while ($row = $result->fetch_assoc()) {
-                                                        echo "<option value='{$row['num']}'>{$row['nombre']}</option>";
+                                                    WHERE puesto = 'CHF' AND estadoEmpleado = 'ACT'";
+                                                $resultEmpleados = $db->query($queryEmpleados);
+                                                if ($resultEmpleados && $resultEmpleados->num_rows > 0) {
+                                                    while ($row = $resultEmpleados->fetch_assoc()) {
+                                                        echo "<option value='{$row['num']}'>" . htmlspecialchars($row['nombre']) . "</option>";
                                                     }
                                                 } else {
                                                     echo "<option disabled>No hay choferes disponibles</option>";
                                                 }
                                                 ?>
                                             </select>
-                                        </label><br>
+                                            <br>
 
-                                        <label>Vehículo:
-                                            <select name="vehiculo" required>
+                                            <!-- Vehículos -->
+                                            <label for="vehiculo">Vehículo:</label>
+                                            <select name="vehiculo" id="vehiculo" required>
                                                 <?php
-                                                // Seleccionar vehículos compatibles
                                                 $queryVehiculos = "
-                                                    SELECT v.num, v.numSerie
+                                                    SELECT v.num, v.numSerie 
                                                     FROM vehiculo v
+                                                    INNER JOIN cat_vehi cv ON v.categoriavehiculo = cv.codigo
                                                     WHERE v.disponibilidad = 'DISPO'
-                                                      AND v.capacidadCarga >= ?
-                                                      AND v.tipoCarga = ?
-                                                ";
+                                                    AND cv.tipoCarga = ?
+                                                    AND v.capacidadCarga >= ?";
                                                 $stmtVehiculos = $db->prepare($queryVehiculos);
-                                                $stmtVehiculos->bind_param('ds', $entrega['pesoTotal'], $entrega['tipoCarga']);
+                                                $stmtVehiculos->bind_param('sd', $entrega['tipoCarga'], $entrega['pesoTotal']);
                                                 $stmtVehiculos->execute();
                                                 $resultVehiculos = $stmtVehiculos->get_result();
-                                                while ($row = $resultVehiculos->fetch_assoc()) {
-                                                    echo "<option value='{$row['num']}'>Vehículo {$row['numSerie']}</option>";
+                                                if ($resultVehiculos && $resultVehiculos->num_rows > 0) {
+                                                    while ($row = $resultVehiculos->fetch_assoc()) {
+                                                        echo "<option value='{$row['num']}'>Vehículo {$row['numSerie']}</option>";
+                                                    }
+                                                } else {
+                                                    echo "<option disabled>No hay vehículos disponibles</option>";
                                                 }
                                                 ?>
                                             </select>
-                                        </label><br>
-                
-                                        <label>Remolque:
-                                            <select name="remolque" required>
+                                            <br>
+
+                                            <!-- Remolques -->
+                                            <label for="remolque">Remolque (opcional):</label>
+                                            <select name="remolque" id="remolque">
+                                                <option value="">Sin Remolque</option>
                                                 <?php
-                                                // Seleccionar remolques compatibles
                                                 $queryRemolques = "
                                                     SELECT r.num, r.numSerie
                                                     FROM remolque r
-                                                    WHERE r.tipoCarga = ?
-                                                      AND r.capacidadCarga >= ?
-                                                ";
+                                                    WHERE r.tipoCarga = 'UNV'
+                                                    AND r.capacidadCarga >= ?
+                                                    AND r.disponibilidad = 'DISPO'";
                                                 $stmtRemolques = $db->prepare($queryRemolques);
-                                                $stmtRemolques->bind_param('sd', $entrega['tipoCarga'], $entrega['pesoTotal']);
+                                                $stmtRemolques->bind_param('d', $entrega['pesoTotal']);
                                                 $stmtRemolques->execute();
                                                 $resultRemolques = $stmtRemolques->get_result();
-                                                while ($row = $resultRemolques->fetch_assoc()) {
-                                                    echo "<option value='{$row['num']}'>Remolque {$row['numSerie']}</option>";
+                                                if ($resultRemolques && $resultRemolques->num_rows > 0) {
+                                                    while ($row = $resultRemolques->fetch_assoc()) {
+                                                        echo "<option value='{$row['num']}'>Remolque {$row['numSerie']}</option>";
+                                                    }
+                                                } else {
+                                                    echo "<option disabled>No hay remolques disponibles</option>";
                                                 }
                                                 ?>
                                             </select>
-                                        </label><br>
-                
-                                        <button type="submit" name="guardarAsignacion">Guardar</button>
-                                    </form>
-                                    <?php
+                                            <br>
+
+                                            <button type="submit" name="guardarAsignacion">Guardar</button>
+                                        </form>
+                                        <?php
+                                    } else {
+                                        echo "<p>No se encontró la entrega seleccionada.</p>";
+                                    }
                                 }
-                            }
+
                 
                             // Guardar asignación
                             if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['guardarAsignacion'])) {
@@ -325,42 +336,46 @@ include_once('includes/headUsers.php');
                                 $empleadoId = filter_input(INPUT_POST, 'empleado', FILTER_VALIDATE_INT);
                                 $vehiculoId = filter_input(INPUT_POST, 'vehiculo', FILTER_VALIDATE_INT);
                                 $remolqueId = filter_input(INPUT_POST, 'remolque', FILTER_VALIDATE_INT);
-                
-                                if ($entregaId && $empleadoId && $vehiculoId && $remolqueId) {
+                            
+                                // Validar campos obligatorios
+                                if ($entregaId && $empleadoId && $vehiculoId) {
                                     try {
                                         // Iniciar transacción
                                         $db->begin_transaction();
-                
+                            
                                         // Asignar empleado a la entrega
                                         $query1 = "INSERT INTO entre_empleado (entrega, empleado) VALUES (?, ?)";
                                         $stmt1 = $db->prepare($query1);
                                         $stmt1->bind_param('ii', $entregaId, $empleadoId);
                                         $stmt1->execute();
-                
+                            
                                         // Asignar vehículo a la entrega
                                         $query2 = "INSERT INTO entre_vehi (entrega, vehiculo) VALUES (?, ?)";
                                         $stmt2 = $db->prepare($query2);
                                         $stmt2->bind_param('ii', $entregaId, $vehiculoId);
                                         $stmt2->execute();
-                
-                                        // Asignar remolque al vehículo
-                                        $query3 = "INSERT INTO vehi_remo (vehiculo, remolque, fechaAsig) VALUES (?, ?, NOW())";
-                                        $stmt3 = $db->prepare($query3);
-                                        $stmt3->bind_param('ii', $vehiculoId, $remolqueId);
-                                        $stmt3->execute();
-                
+                            
+                                        // Si se seleccionó un remolque, asignarlo al vehículo
+                                        if ($remolqueId) {
+                                            $query3 = "INSERT INTO vehi_remo (vehiculo, remolque, fechaAsig) VALUES (?, ?, NOW())";
+                                            $stmt3 = $db->prepare($query3);
+                                            $stmt3->bind_param('ii', $vehiculoId, $remolqueId);
+                                            $stmt3->execute();
+                                        }
+                            
                                         // Confirmar la transacción
                                         $db->commit();
-                
+                            
                                         echo "<p>Asignación realizada correctamente.</p>";
                                     } catch (Exception $e) {
                                         $db->rollback();
                                         echo "<p>Error al guardar la asignación: {$e->getMessage()}</p>";
                                     }
                                 } else {
-                                    echo "<p>Error: Datos inválidos.</p>";
+                                    echo "<p>Error: Datos inválidos. Por favor, revisa los campos obligatorios.</p>";
                                 }
                             }
+                            
                             ?>
                         </div>
                     </div>
