@@ -1,5 +1,6 @@
 <?php
     session_start();
+
     require ('includes/config/conection.php');
     $db = connectTo2DB();
     if (isset($_GET['status']) && $_GET['status'] === 'error') {
@@ -13,12 +14,13 @@
         $telefono = $_POST['telefono'];
         $email = $_POST['email'];
         $password = $_POST['password'];
+        $hashed_Regpassword = hash('sha256', $_POST['password']);
         
         if ($nombre == '' || $primerApe == '' || $empresa == '' || $telefono == '' || $email == '' || $password == '') {
             echo 'Fill out the entire form';
         } else {
             $query = "INSERT INTO cliente (nomEmpresa, nomPila, primerApe, segundoApe, numTelefono, email, password)
-            VALUES ('$empresa', '$nombre', '$primerApe', '$segundoApe', '$telefono', '$email', '$password')";
+            VALUES ('$empresa', '$nombre', '$primerApe', '$segundoApe', '$telefono', '$email', '$hashed_Regpassword')";
             
             $response = mysqli_query($db, $query);
             
@@ -52,6 +54,7 @@
         </div>
         <div>
             <form action="" method="POST">
+            <h3 class="border" style="font-size: 2rem; margin:0rem;">Create your Client Account</h3>
                 <div class="align-items-form">
                     <div class="row-form">
                         <!-- Formulario 1 -->

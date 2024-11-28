@@ -2,7 +2,9 @@
 session_start();
 require ('includes/config/conection.php');
 $db = connectTo2DB();
-
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 if (isset($_GET['status']) && $_GET['status'] === 'error') {
     echo "<p id='error-login'>Credenciales incorrectas, por favor intente de nuevo</p>";
 }
