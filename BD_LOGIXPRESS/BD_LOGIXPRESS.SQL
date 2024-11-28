@@ -302,15 +302,6 @@ CREATE TABLE ubicacion_ruta (
     FOREIGN KEY (ruta) REFERENCES ruta(num)
 );
 
-CREATE TABLE vehi_remo (
-    vehiculo INT,
-    remolque INT,
-    fechaAsig DATE,
-    PRIMARY KEY (vehiculo, remolque),
-    FOREIGN KEY (vehiculo) REFERENCES vehiculo(num),
-    FOREIGN KEY (remolque) REFERENCES remolque(num)
-);
-
 CREATE TABLE ruta_vehiculo (
     ruta INT,
     vehiculo INT,
