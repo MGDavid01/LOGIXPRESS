@@ -139,19 +139,19 @@ function vistaFormularioProducto($cliente, $producto_id) {
 
             <!-- Campo: Dimensiones y Peso -->
             <div class="form-group">
-                <label for="alto">Height:</label>
+                <label for="alto">Height: (Meters)</label>
                 <input type="number" step="any" id="alto" name="alto" value="<?= htmlspecialchars($producto['alto']) ?>" required>
             </div>
             <div class="form-group">
-                <label for="ancho">Width:</label>
+                <label for="ancho">Width: (Meters)</label>
                 <input type="number" step="any" id="ancho" name="ancho" value="<?= htmlspecialchars($producto['ancho']) ?>" required>
             </div>
             <div class="form-group">
-                <label for="largo">Length:</label>
+                <label for="largo">Length: (Meters)</label>
                 <input type="number" step="any" id="largo" name="largo" value="<?= htmlspecialchars($producto['largo']) ?>" required>
             </div>
             <div class="form-group">
-                <label for="peso">Weight:</label>
+                <label for="peso">Weight: (Kilograms)</label>
                 <input type="number" step="any" id="peso" name="peso" value="<?= htmlspecialchars($producto['peso']) ?>" required>
             </div>
 
@@ -223,19 +223,19 @@ function vistaFormularioNuevoProducto($cliente) {
 
             <!-- Campo: Dimensiones y Peso -->
             <div class="form-group">
-                <label for="alto">Height:</label>
+                <label for="alto">Height: (Meters)</label>
                 <input type="number" step="any" id="alto" name="alto" required>
             </div>
             <div class="form-group">
-                <label for="ancho">Width:</label>
+                <label for="ancho">Width: (Meters)</label>
                 <input type="number" step="any" id="ancho" name="ancho" required>
             </div>
             <div class="form-group">
-                <label for="largo">Length:</label>
+                <label for="largo">Length: (Meters)</label>
                 <input type="number" step="any" id="largo" name="largo" required>
             </div>
             <div class="form-group">
-                <label for="peso">Weight:</label>
+                <label for="peso">Weight: (Kilograms)</label>
                 <input type="number" step="any" id="peso" name="peso" required>
             </div>
 
