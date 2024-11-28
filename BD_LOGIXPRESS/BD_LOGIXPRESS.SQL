@@ -244,13 +244,15 @@ CREATE TABLE entre_tipocarga (
     FOREIGN KEY (tipoCarga) REFERENCES tipo_carga(codigo)
 );
 
-CREATE TABLE entre_vehi (
+CREATE TABLE entre_vehi_remo (
     entrega INT,
     vehiculo INT,
+    remolque INT,
     cargaPorce FLOAT,
     volumenPorce FLOAT,
-    PRIMARY KEY (entrega, vehiculo),
+    PRIMARY KEY (entrega, vehiculo, remolque),
     FOREIGN KEY (entrega) REFERENCES entrega(num),
+    FOREIGN KEY (remolque) REFERENCES remolque(num),
     FOREIGN KEY (vehiculo) REFERENCES vehiculo(num)
 );
 

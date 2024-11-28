@@ -144,8 +144,8 @@ BEGIN
     INTO v_distanciaTotal
     FROM ruta r
     INNER JOIN ruta_vehiculo rv ON r.num = rv.ruta
-    INNER JOIN entre_vehi ev ON rv.vehiculo = ev.vehiculo
-    WHERE ev.entrega = p_entrega_id;
+    INNER JOIN entre_vehi_remo evr ON rv.vehiculo = evr.vehiculo
+    WHERE evr.entrega = p_entrega_id;
 
     -- Como no se calcula la distancia total en otro funcion o SP, esto es una solucion temporal
     IF v_distanciaTotal < 0 THEN
