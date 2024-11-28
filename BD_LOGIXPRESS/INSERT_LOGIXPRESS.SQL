@@ -1,3 +1,4 @@
+-- Active: 1729699153576@@127.0.0.1@3306@LOGIXPRESS
 INSERT INTO cliente (nomEmpresa, nomPila, primerApe, segundoApe, numTelefono, email, password) VALUES
 ('Transporte Seguro S.A.', 'Juan', 'Pérez', 'García', '5551234567', 'juan.perez@ejemplo.com', sha2('contraseña123', 256)),
 ('Logística Global', 'María', 'López', NULL, '5559876543', 'maria.lopez@ejemplo.com', sha2('contraseña123', 256)),
@@ -160,7 +161,7 @@ INSERT INTO cat_vehi (codigo, descripcion, tipoCarga) VALUES
 ('FURGR', 'Furgoneta de Refrigeracion', 'PER'),
 ('CARCG', 'Camión Rígido de Caja Cerrada', 'GEN'),
 ('CARCR', 'Camión Rígido de Caja Cerrada Refrigerada', 'PER'),
-('CARTo', 'Camión Rígido de Tolva', 'GRN'),
+('CARTO', 'Camión Rígido de Tolva', 'GRN'),
 ('CAMRP', 'Camión Rígido de Plataforma', 'GEN'),
 ('CAMAP', 'Tractocamion Articulado', 'UNV');
 
@@ -365,6 +366,10 @@ INSERT INTO tipo_remolque (codigo, descripcion) VALUES
 ('TR001', 'Remolque Estándar'),
 ('TR002', 'Remolque Refrigerado'),
 ('TR003', 'Remolque Plataforma');
+
+INSERT INTO remolque (num, numSerie, capacidadCarga, disponibilidad) VALUES
+(0, 'No Aplica', 0, 'DISPO');
+
 
 INSERT INTO remolque (numSerie, alto, largo, ancho, capacidadCarga, costoAcumulado, marca, modelo, tipoCarga, tipoRemolque, disponibilidad) VALUES
 -- Flatbed Remolques (General - Remolque Plataforma)

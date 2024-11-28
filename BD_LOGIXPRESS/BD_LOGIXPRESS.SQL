@@ -1,4 +1,4 @@
--- Active: 1732599920807@@127.0.0.1@3306@LOGIXPRESS
+-- Active: 1729699153576@@127.0.0.1@3306@LOGIXPRESS
 CREATE TABLE cliente (
     num INT PRIMARY KEY AUTO_INCREMENT,
     nomEmpresa VARCHAR(100) NOT NULL,
@@ -214,6 +214,8 @@ CREATE TABLE remolque (
     FOREIGN KEY (tipoRemolque) REFERENCES tipo_remolque(codigo),
     FOREIGN KEY (disponibilidad) REFERENCES disponibilidad(codigo)
 );
+ALTER TABLE entre_vehi_remo MODIFY remolque INT NOT NULL DEFAULT 0;
+
 
 CREATE TABLE mantenimiento (
     num INT PRIMARY KEY AUTO_INCREMENT,
