@@ -1,4 +1,4 @@
--- Active: 1729699153576@@127.0.0.1@3306@LOGIXPRESS
+-- Active: 1730659136493@@127.0.0.1@3306@logixpress
 INSERT INTO cliente (nomEmpresa, nomPila, primerApe, segundoApe, numTelefono, email, password) VALUES
 ('Transporte Seguro S.A.', 'Juan', 'Pérez', 'García', '5551234567', 'juan.perez@ejemplo.com', sha2('contraseña123', 256)),
 ('Logística Global', 'María', 'López', NULL, '5559876543', 'maria.lopez@ejemplo.com', sha2('contraseña123', 256)),
@@ -340,37 +340,69 @@ INSERT INTO empleado (nombre, primerApe, segundoApe, telefono, email, password, 
 ('Ana', 'Pérez', 'Jiménez', '5554445566', 'ana.pj@example.com', sha2('contraseña123', 256), 'ADM', 'ACT'),
 ('Luis', 'Ramírez', 'González', '5556667788', 'luis.rg@example.com', sha2('contraseña123', 256), 'CHF', 'ACT');
 
+-- Furgonetas de Carga General (FURGG): Vehículos ligeros, versátiles para la distribución urbana.
 INSERT INTO vehiculo (numSerie, gasXKM, capacidadCarga, kilometraje, costoAcumulado, marca, modelo, categoriavehiculo, disponibilidad) VALUES
 ('SNTOY01HIACE001', 0.08, 1000, 50000, 0, 'TOY', 'TOY01', 'FURGG', 'DISPO'), -- Toyota Hiace
 ('SNHON01ACTY001', 0.06, 500, 30000, 0, 'HON', 'HON01', 'FURGG', 'DISPO'), -- Honda Acty
 ('SNFOR01TRANSIT001', 0.09, 1200, 60000, 0, 'FOR', 'FOR01', 'FURGG', 'DISPO'), -- Ford Transit
 ('SNFOR02ETRANSIT001', 0.00, 1100, 20000, 0, 'FOR', 'FOR02', 'FURGG', 'DISPO'), -- Ford E-Transit (Eléctrico)
-('SNCHE01EXPRESS001', 0.10, 1300, 55000, 0, 'CHE', 'CHE01', 'FURGG', 'DISPO'), -- Chevrolet Express Cargo
+('SNCHE01EXPRESS001', 0.10, 1300, 55000, 0, 'CHE', 'CHE01', 'FURGG', 'DISPO'); -- Chevrolet Express Cargo
+
+-- Camiones Rígidos de Carga General (CARCG): Vehículos pesados para distribución urbana y regional.
+INSERT INTO vehiculo (numSerie, gasXKM, capacidadCarga, kilometraje, costoAcumulado, marca, modelo, categoriavehiculo, disponibilidad) VALUES
 ('SNTOY02DYNA001', 0.12, 2000, 70000, 0, 'TOY', 'TOY02', 'CARCG', 'DISPO'), -- Toyota Dyna
 ('SNCHE02NSERIES001', 0.11, 2500, 65000, 0, 'CHE', 'CHE02', 'CARCG', 'DISPO'), -- Chevrolet N-Series
 ('SNVOL01FL001', 0.15, 5000, 80000, 0, 'VOL', 'VOL01', 'CARCG', 'DISPO'), -- Volvo FL
 ('SNMAN01TGL001', 0.14, 4500, 75000, 0, 'MAN', 'MAN01', 'CARCG', 'DISPO'), -- MAN TGL
+('SNINT01CVSERIES001', 0.13, 4000, 60000, 0, 'INT', 'INT01', 'CARCG', 'DISPO'); -- International CV Series
+
+-- Camiones Rígidos con Plataforma (CAMRP): Camiones de plataforma ideales para transportar materiales grandes.
+INSERT INTO vehiculo (numSerie, gasXKM, capacidadCarga, kilometraje, costoAcumulado, marca, modelo, categoriavehiculo, disponibilidad) VALUES
 ('SNTOY03DYNAPLAT001', 0.12, 2200, 40000, 0, 'TOY', 'TOY03', 'CAMRP', 'DISPO'), -- Toyota Dyna Plataforma
 ('SNVOL03FLPLAT001', 0.15, 5200, 60000, 0, 'VOL', 'VOL03', 'CAMRP', 'DISPO'), -- Volvo FL Plataforma
 ('SNMAN03TGLPLAT001', 0.14, 4800, 55000, 0, 'MAN', 'MAN03', 'CAMRP', 'DISPO'), -- MAN TGL Plataforma
 ('SNINT03CVPLAT001', 0.13, 4600, 50000, 0, 'INT', 'INT03', 'CAMRP', 'DISPO'), -- International CV Plataforma
-('SNKEN02T370PLAT001', 0.14, 4700, 45000, 0, 'KEN', 'KEN02', 'CAMRP', 'DISPO'), -- Kenworth T370 Plataforma
-('SNINT01CVSERIES001', 0.13, 4000, 60000, 0, 'INT', 'INT01', 'CARCG', 'DISPO'), -- International CV Series
+('SNKEN02T370PLAT001', 0.14, 4700, 45000, 0, 'KEN', 'KEN02', 'CAMRP', 'DISPO'); -- Kenworth T370 Plataforma
+
+-- Tractocamiones para Largas Distancias (CAMAP): Vehículos de gran capacidad para el transporte de carga pesada y viajes de larga distancia.
+INSERT INTO vehiculo (numSerie, gasXKM, capacidadCarga, kilometraje, costoAcumulado, marca, modelo, categoriavehiculo, disponibilidad) VALUES
 ('SNFRE01CASCADIA001', 0.30, 20000, 120000, 0, 'FRE', 'FRE01', 'CAMAP', 'DISPO'), -- Freightliner Cascadia
 ('SNVOL02FH16001', 0.32, 22000, 110000, 0, 'VOL', 'VOL02', 'CAMAP', 'DISPO'), -- Volvo FH16
 ('SNMAN02TGX001', 0.31, 21000, 115000, 0, 'MAN', 'MAN02', 'CAMAP', 'DISPO'), -- MAN TGX
 ('SNINT02LTSERIES001', 0.29, 20000, 105000, 0, 'INT', 'INT02', 'CAMAP', 'DISPO'), -- International LT Series
 ('SNKEN01T680001', 0.30, 21000, 100000, 0, 'KEN', 'KEN01', 'CAMAP', 'DISPO'); -- Kenworth T680
 
+-- Camión Rígido de Caja Cerrada Refrigerada (Categoría: CARCR)
+INSERT INTO vehiculo (numSerie, gasXKM, capacidadCarga, kilometraje, costoAcumulado, marca, modelo, categoriavehiculo, disponibilidad) VALUES
+('SNTOY02DYNA001', 0.32, 3500, 10000, 0, 'TOY', 'TOY02', 'CARCR', 'DISPO'), -- Toyota Dyna
+('SNVOL01FL001', 0.33, 4000, 12000, 0, 'VOL', 'VOL01', 'CARCR', 'DISPO'), -- Volvo FL
+('SNMAN01TGL001', 0.30, 3800, 8000, 0, 'MAN', 'MAN01', 'CARCR', 'DISPO'), -- MAN TGL
+('SNCHE02NSER001', 0.31, 3700, 9500, 0, 'CHE', 'CHE02', 'CARCR', 'DISPO'), -- Chevrolet N-Series
+('SNTOY02DYNA002', 0.29, 3600, 11000, 0, 'TOY', 'TOY02', 'CARCR', 'DISPO'); -- Toyota Dyna
+
+-- Camión Rígido de Tolva (Categoría: CARTO)
+INSERT INTO vehiculo (numSerie, gasXKM, capacidadCarga, kilometraje, costoAcumulado, marca, modelo, categoriavehiculo, disponibilidad) VALUES
+('SNKEN02T370001', 0.28, 7500, 15000, 0, 'KEN', 'KEN02', 'CARTO', 'DISPO'), -- Kenworth T370
+('SNMAN03TGL001', 0.27, 7200, 14500, 0, 'MAN', 'MAN03', 'CARTO', 'DISPO'), -- MAN TGL Plataforma
+('SNVOL03FL001', 0.30, 7100, 14000, 0, 'VOL', 'VOL03', 'CARTO', 'DISPO'), -- Volvo FL Plataforma
+('SNINT03CV001', 0.29, 7000, 13000, 0, 'INT', 'INT03', 'CARTO', 'DISPO'), -- International CV Plataforma
+('SNCHE02NSER002', 0.28, 7400, 15500, 0, 'CHE', 'CHE02', 'CARTO', 'DISPO'); -- Chevrolet N-Series
+
+-- Furgoneta de Refrigeración (Categoría: FURGR)
+INSERT INTO vehiculo (numSerie, gasXKM, capacidadCarga, kilometraje, costoAcumulado, marca, modelo, categoriavehiculo, disponibilidad) VALUES
+('SNTOY01HIACE001', 0.35, 1500, 5000, 0, 'TOY', 'TOY01', 'FURGR', 'DISPO'), -- Toyota Hiace
+('SNHON01ACTY001', 0.34, 1300, 6000, 0, 'HON', 'HON01', 'FURGR', 'DISPO'), -- Honda Acty
+('SNFOR01TRANSIT001', 0.33, 1700, 7000, 0, 'FOR', 'FOR01', 'FURGR', 'DISPO'), -- Ford Transit
+('SNFOR02ETRANSIT001', 0.32, 1600, 7500, 0, 'FOR', 'FOR02', 'FURGR', 'DISPO'), -- Ford E-Transit
+('SNCHE01EXP001', 0.31, 1550, 8000, 0, 'CHE', 'CHE01', 'FURGR', 'DISPO'); -- Chevrolet Express Cargo
+
 INSERT INTO tipo_remolque (codigo, descripcion) VALUES
-('TR001', 'Remolque Estándar'),
+('TR001', 'Remolque Caja Cerrada'),
 ('TR002', 'Remolque Refrigerado'),
 ('TR003', 'Remolque Plataforma');
 
 INSERT INTO remolque (num, numSerie, capacidadCarga, disponibilidad) VALUES
 (0, 'No Aplica', 0, 'DISPO');
-
-
 INSERT INTO remolque (numSerie, alto, largo, ancho, capacidadCarga, costoAcumulado, marca, modelo, tipoCarga, tipoRemolque, disponibilidad) VALUES
 -- Flatbed Remolques (General - Remolque Plataforma)
 ('SN12350VOLV', 2.5, 13.6, 2.4, 25000, 1100.0, 'VOL', 'FLAT1', 'GEN', 'TR003', 'DISPO'), -- Flatbed 1
