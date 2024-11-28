@@ -252,8 +252,8 @@ CREATE TABLE entre_vehi_remo (
     volumenPorce FLOAT,
     PRIMARY KEY (entrega, vehiculo, remolque),
     FOREIGN KEY (entrega) REFERENCES entrega(num),
-    FOREIGN KEY (remolque) REFERENCES remolque(num),
-    FOREIGN KEY (vehiculo) REFERENCES vehiculo(num)
+    FOREIGN KEY (vehiculo) REFERENCES vehiculo(num),
+    FOREIGN KEY (remolque) REFERENCES remolque(num)
 );
 
 CREATE TABLE entre_empleado (
