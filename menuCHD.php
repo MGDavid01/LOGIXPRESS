@@ -79,7 +79,7 @@ include_once('includes/headUsers.php');
     <link rel="stylesheet" href="css/tables.css">
     <nav class="side-nav">
         <div class="logo-container">
-            <img src="imagenes/LOGIXPRESS_LOGO_F2.png" alt="Logo">
+            <a href="menuCHD.php" id="logo-hover"><img src="imagenes/LOGIXPRESS_LOGO_F2.png" alt="Logo"></a>
         </div>
         <ul>
             <li><a href="?section=asignarEntregas">Assign Deliveries</a></li>
