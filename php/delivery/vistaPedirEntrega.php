@@ -73,7 +73,7 @@ function vistaPedirEntrega() {
                             </select><br><br>
                         </div>
                         <div>
-                            <label for="prioridad">Priority:</label>
+                            <label for="prioridad">Delivery Priority:</label>
                             <select id="prioridad" name="prioridad" required>
                                 <?php
                                     while ($rowPrio = $resultPrioridad->fetch_assoc()) {

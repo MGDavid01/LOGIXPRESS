@@ -48,9 +48,16 @@ form {
 #locations-container {
     display: flex;
     flex-direction: column;
-    gap: 2rem;  
     max-height: 38rem;
     overflow-y: auto;
+}
+
+.location-origin-field {
+    padding-bottom: 1.5rem;
+}
+
+.location-destination-field {
+    padding-bottom: 1.5rem;
 }
 
 #deli-deta-title {
