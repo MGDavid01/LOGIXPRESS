@@ -127,17 +127,16 @@ function actualizarVehiculosDisponibles() {
     }
 }
 </script>
-
 <div class="tools">
     <!-- Contenedor Tabla -->
     <div class="table-size">
-        <h2>Asignar Empleados, Vehículos y Remolques a Entregas</h2>
+        <h2>Assign Employees, Vehicles and Trailers to Deliveries</h2>
         <table style="width: 100%; border-collapse: collapse;">
         <tr>
-            <th>Entrega</th>
-            <th>Fecha</th>
-            <th>Tipo de Carga</th>
-            <th>Acciones</th>
+            <th>Delivery</th>
+            <th>Date</th>
+            <th>Load Type</th>
+            <th>Actions</th>
         </tr>
         <?php
         // Consulta para seleccionar entregas sin empleado, vehículo y remolque asignados
@@ -172,7 +171,7 @@ function actualizarVehiculosDisponibles() {
                 echo "</tr>";
             }
         } else {
-            echo "<tr><td colspan='6'>No hay entregas pendientes sin asignar.</td></tr>";
+            echo "<tr><td colspan='6'>There are no pending unassigned deliveries.</td></tr>";
         }
         ?>
     </table>
@@ -292,8 +291,9 @@ function actualizarVehiculosDisponibles() {
             </form>
             <?php
         } else {
-            echo "<p>No se encontró la entrega seleccionada.</p>";
+            echo "<p style='text-align: center;'>Select a delivery.</p>";
         }
         ?>
     </div>
 </div>
+<p style="text-align: center;"></p>
