@@ -1,0 +1,16 @@
+.content-origin {
+    all: unset;
+    width: 80%; /* Ajusta el ancho al 90% del contenedor padre */
+    margin: auto;
+}
+
+.tables-deliveries {
+    margin: auto;
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+table {
+    width: 100%;
+}

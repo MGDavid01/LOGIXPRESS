@@ -46,6 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['accion']) && $_POST['
     include_once('php/locations/logicaActualizacionUbicacion.php');
 }
 
+
 $section = isset($_GET['section']) ? $_GET['section'] : '';
 include_once('includes/headUsers.php');
 ?>      
