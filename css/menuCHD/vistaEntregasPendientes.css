@@ -2,6 +2,7 @@
     all: unset;
     width: 80%; /* Ajusta el ancho al 90% del contenedor padre */
     margin: auto;
+    overflow-y: auto;
 }
 
 .tables-deliveries {
@@ -10,7 +11,29 @@
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
+
 }
+
+.section{
+    margin: 1rem 0rem 2rem 0rem;
+    padding: 2rem 0rem 2rem 0rem;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
 table {
     width: 100%;
+    margin-bottom: 3rem;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+h3 {
+    text-align: center;
+    margin: 0rem 0rem 2rem 0rem;
 }

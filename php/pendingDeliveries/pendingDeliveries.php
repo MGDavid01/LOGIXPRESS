@@ -41,16 +41,15 @@
                         );
                     ";
 
-
                 $result = $db->query($query);
                 if ($result && $result->num_rows > 0) {
                     while ($row = $result->fetch_assoc()) {
                         echo "<tr>";
                         echo "<td>{$row['entregaId']}</td>";
                         echo "<td>{$row['fechaRegistro']}</td>";
-                        echo "<td>{$row['empleado']}</td>";
-                        echo "<td>{$row['vehiculo']}</td>";
-                        echo "<td>" . ($row['remolque'] ?? 'Sin Asignar') . "</td>";
+                        echo "<td>".($row['empleado'] ?? 'Sin Asignar')."</td>";
+                        echo "<td>".($row['vehiculo'] ?? 'Sin Asignar')."</td>";
+                        echo "<td>".($row['remolque'] ?? 'Sin Asignar')."</td>";
                         echo "<td>{$row['estado']}</td>";
                         echo "<td><a href='?section=entregasPendientes&deliveryDetails={$row['entregaId']}'>See Details and Assing</a></td>";
                         echo "</tr>";
@@ -118,7 +117,7 @@
             return;
         }?>
         <div class="section">
-            <h3>Product Details (Volume and Weight)</h3>
+            <h3 class="border">Product Details (Volume and Weight)</h3>
             <table>
                 <thead>
                     <tr>
@@ -139,9 +138,8 @@
                 <?php endwhile; ?>
             </tbody>
             </table>
-        </div>
-        <div class="section">
-            <h3>Product Summary (Total Quantity, Weight, and Volume)</h3>
+        
+            <h3 class="border">Product Summary (Total Quantity, Weight, and Volume)</h3>
             <table>
                 <thead>
                     <tr>
