@@ -183,7 +183,7 @@ include_once('includes/headUsers.php');
                     <h2>Entregas Pendientes</h2>
                     <table>
                         <tr>
-                            <th>Entrega ID</th>
+                            <th>Entrega</th>
                             <th>Fecha</th>
                             <th>Empleado</th>
                             <th>Vehículo</th>
@@ -248,7 +248,7 @@ include_once('includes/headUsers.php');
                         <h2>Historial de Entregas Realizadas</h2>
                         <table style="width: 100%; border-collapse: collapse;">
                             <tr>
-                                <th>Entrega ID</th>
+                                <th>Entrega</th>
                                 <th>Fecha</th>
                                 <th>Empleado</th>
                                 <th>Vehículo</th>
