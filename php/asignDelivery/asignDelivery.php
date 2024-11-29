@@ -134,7 +134,7 @@ function actualizarVehiculosDisponibles() {
         <h2>Asignar Empleados, Vehículos y Remolques a Entregas</h2>
         <table style="width: 100%; border-collapse: collapse;">
         <tr>
-            <th>Entrega ID</th>
+            <th>Entrega</th>
             <th>Fecha</th>
             <th>Tipo de Carga</th>
             <th>Acciones</th>
