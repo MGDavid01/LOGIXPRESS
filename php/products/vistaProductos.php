@@ -29,7 +29,7 @@ function vistaProductos($cliente) {
                 <h2 style="text-align: center;">Product List</h2>
                 <table>
                     <tr>
-                        <th>ID</th>
+                        <th>Product</th>
                         <th>Product Name</th>
                         <?php if (isset($_GET['tool']) && $_GET['tool'] == 'editProduct'): ?>
                             <th>Action</th>
@@ -40,7 +40,7 @@ function vistaProductos($cliente) {
                             <td><?= htmlspecialchars($row['num']) ?></td>
                             <td><?= htmlspecialchars($row['nombre']) ?></td>
                             <?php if (isset($_GET['tool']) && $_GET['tool'] == 'editProduct'): ?>
-                                <td><a href="?section=products&tool=editProduct&product=<?= $row['num'] ?>">Edit</a></td>
+                                <td><a class="btn-green" href="?section=products&tool=editProduct&product=<?= $row['num'] ?>">Edit</a></td>
                             <?php endif; ?>
                         </tr>
                     <?php endforeach; ?>
@@ -48,9 +48,9 @@ function vistaProductos($cliente) {
             </div>
             <div class="info-products">
                 <?php if (isset($_GET['section'], $_GET['tool']) && $_GET['section'] === "products" && $_GET['tool'] === 'editProduct' && isset($_GET['product'])): ?>
-                    <?php vistaFormularioProducto($cliente, $_GET['product']); ?>
+                    <?php vistaEditProducto($cliente, $_GET['product']); ?>
                 <?php elseif (isset($_GET['section'], $_GET['tool']) && $_GET['section'] === "products" && $_GET['tool'] === 'addProduct'): ?>
-                    <?php vistaFormularioNuevoProducto($cliente); ?>
+                    <?php vistaAddProduct($cliente); ?>
                 <?php else: ?>
                     <p style="font-size:2rem;">Select a product to edit or add a new product.</p>
                 <?php endif; ?>
@@ -60,7 +60,7 @@ function vistaProductos($cliente) {
     <?php
 }
 
-function vistaFormularioProducto($cliente, $producto_id) {
+function vistaEditProducto($cliente, $producto_id) {
     global $db;
 
     // Consulta los detalles del producto
@@ -162,7 +162,7 @@ function vistaFormularioProducto($cliente, $producto_id) {
     <?php
 }
 
-function vistaFormularioNuevoProducto($cliente) {
+function vistaAddProduct($cliente) {
     global $db;
 
     // Consultar etiquetados y categorías para llenar el formulario
@@ -183,7 +183,7 @@ function vistaFormularioNuevoProducto($cliente) {
         <form action="" method="POST">
             <!-- Campo: Nombre del Producto -->
             <div class="form-group">
-                <label for="nombre">Product:</label>
+                <label for="nombre">Product Name:</label>
                 <input type="text" id="nombre" name="nombre" required>
             </div>
 

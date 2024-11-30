@@ -1,4 +1,5 @@
 <?php
+$prod = $_POST['producto_id'];
 $nombreProd = $_POST['nombre'];
 $descripcionProd = $_POST['descripcion'];
 $categoriaProd = $_POST['categoria'];
@@ -10,10 +11,9 @@ $pesoProd = $_POST['peso'];
 
 // Preparar el mensaje de salida del procedimiento almacenado
 $mensaje = "";
-$clienteProd = $_SESSION['user_id'];
 // Llamar al procedimiento almacenado para insertar el producto
-$queryCallSP = "CALL SP_registrarAsociarProducto('$nombreProd', '$descripcionProd', '$categoriaProd', 
-'$etiquetadoProd', $altoProd, $anchoProd, $largoProd, $pesoProd, $clienteProd, @mensaje)";
+$queryCallSP = "CALL SP_actualizarProducto($prod, '$nombreProd', '$descripcionProd', '$categoriaProd', 
+'$etiquetadoProd', $altoProd, $anchoProd, $largoProd, $pesoProd, @mensaje)";
 
 $resultCallSP = mysqli_query($db, $queryCallSP);
 
@@ -24,9 +24,9 @@ if ($resultCallSP) {
     $rowMessage = mysqli_fetch_assoc($resultMessage);
     $mensaje = $rowMessage['mensaje'];
 
-    if ($mensaje == "Producto asociado exitosamente.") {
+    if ($mensaje == "Producto actualizado exitosamente.") {
         // Redirigir o mostrar mensaje de éxito
-        header("Location: ?section=products&tool=addProduct&status=addedProduct");
+        header("Location: ?section=products&tool=editProduct&product=$prod&status=productUpdated");
         exit;
     } else {
         // Mostrar mensaje de error devuelto por el procedimiento almacenado
@@ -34,7 +34,7 @@ if ($resultCallSP) {
     }
 } else {
     // Mostrar el error de MySQL
-    echo "Error al ejecutar el procedimiento almacenado: " . mysqli_error($db);
+    echo "Error al ejecutar la accion: " . mysqli_error($db);
 }
 ?>
 ?>

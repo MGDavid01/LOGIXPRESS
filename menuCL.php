@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['accion']) && $_POST['
 } else if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['accion']) && $_POST['accion'] === 'addProduct') {
         include_once('php/products/logicaInsertarProducto.php');
 } else if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['accion']) && $_POST['accion'] === 'updateProduct') {
-        include_once('php/delivery/logicaActualizarProducto.php');
+        include_once('php/products/logicaActualizarProducto.php');
 } else if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['accion']) && $_POST['accion'] === 'addLocation') {
         include_once('php/locations/logicaInsercionUbicacion.php');
 } else if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['accion']) && $_POST['accion'] === 'updateLocation') {

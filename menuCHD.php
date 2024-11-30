@@ -71,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['asignar'])) {
         echo "<p>Error en los datos proporcionados para asignar.</p>";
     }
 }
-$deliveryDetailsCHD = isset($_GET['deliveryDetails']) ? $_GET['deliveryDetails'] : '';
+
 include_once('includes/headUsers.php');
 ?>
     <link rel="stylesheet" href="css/menuCHD/menuCHD.css">
@@ -176,7 +176,10 @@ include_once('includes/headUsers.php');
                 include_once('php/asignDelivery/asignDelivery.php');
                 break;
             case 'entregasPendientes':
-                ?><link rel="stylesheet" href="css/menuCHD/vistaEntregasPendientes.css"><?php
+                ?>  <link rel="stylesheet" href="css/menuCHD/vistaEntregasPendientes.css">
+                    <link rel="stylesheet" href="css/menuCHD/modalInfoDelivery.css">
+                    <script src="js/detailsDeliveryModal.js"></script>
+                <?php
                 include_once('php/pendingDeliveries/pendingDeliveries.php');
                 break;
             case 'historialEntregas':

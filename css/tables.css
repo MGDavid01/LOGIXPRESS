@@ -9,35 +9,55 @@ table {
     border: 1px solid #ddd; /* Borde gris claro */
     border-radius: 8px; /* Bordes redondeados */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para dar profundidad */
-    font-family: Arial, sans-serif; /* Fuente legible */
+
 }
 
 th, td {
-    padding: 10px; /* Espaciado interno en las celdas */
-    text-align: left; /* Alineación a la izquierda */
-    border: 1px solid #ddd; /* Borde claro entre celdas */
+    padding: 0.5rem; /* Espaciado interno en las celdas */
+    border: 0.01rem solid #ddd; /* Borde claro entre celdas */
     text-align: center;
-    word-wrap: break-word; /* Permitir el ajuste de palabras largas */
-    white-space: normal; /* Permitir saltos de línea si el contenido es largo */
 }
 
 th {
     background-color: #27434e; /* Color de fondo azul oscuro */
     color: white; /* Color de texto blanco */
-    text-transform: uppercase; /* Texto en mayúsculas */
 }
 
 tr:nth-child(even) {
-    background-color: #f9f9f9; /* Fondo gris claro para filas pares */
+    background-color: #eef4ff;
 }
 
 tr:nth-child(odd) {
-    background-color: #ffffff; /* Fondo blanco para filas impares */
+    background-color: #ffffff;
 }
 
-table a {
+.btn-green {
+    color: rgb(255, 255, 255);
+    background-color: rgb(74, 190, 99);
+    padding: 0.5rem 1rem 0.5rem 1rem;
     text-decoration: none;
-    color: black;
     font-weight: bold;
     font-style: italic;
+    border-radius: 8px; /* Bordes redondeados */
+    cursor: pointer;             /* Cursor en forma de mano */
+    transition: background-color 0.3s ease-in-out; /* Efecto al pasar el cursor */
+}
+
+button {
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: none;
+}
+
+.btn-red {
+    color: rgb(255, 255, 255);
+    background-color: rgb(190, 74, 74);
+    padding: 0.5rem 1rem 0.5rem 1rem;
+    text-decoration: none;
+    font-weight: bold;
+    font-style: italic;
+    border-radius: 8px; /* Bordes redondeados */
+    cursor: pointer;             /* Cursor en forma de mano */
+    transition: background-color 0.3s ease-in-out; /* Efecto al pasar el cursor */
 }

@@ -1,32 +1,40 @@
-// Obtener el modal y el botón de cerrar
-var modal = document.getElementById("modalDetallesEntrega");
-var span = document.getElementsByClassName("close")[0];
+// Función para abrir el modal y cargar los detalles de la entrega
+function mostrarModal(entregaId) {
+    const modal = document.getElementById('modalDetallesEntrega');
+    const detallesContenido = document.getElementById('detallesContenido');
+    const entregaIdModal = document.getElementById('entregaIdModal');
 
-// Cuando el usuario hace clic en el botón "Ver detalles de la entrega"
-function mostrarDetallesEntrega(entregaId) {
+    // Restablece el contenido del modal antes de realizar la petición AJAX
+    detallesContenido.innerHTML = '<p>Cargando detalles...</p>';
+
     // Mostrar el modal
-    modal.style.display = "block";
+    modal.style.display = 'block';
+    document.body.style.overflow = 'hidden'; // Evita que la página se desplace
 
-    // Cargar detalles de la entrega mediante AJAX
-    var xhr = new XMLHttpRequest();
-    xhr.open("GET", "detalles_entrega.php?entrega=" + entregaId, true);
-    xhr.onload = function () {
-        if (this.status == 200) {
-            document.getElementById("entregaIdModal").innerText = entregaId;
-            document.getElementById("detallesContenido").innerHTML = this.responseText;
-        }
-    };
-    xhr.send();
+    // Llamada AJAX para obtener los detalles de la entrega
+    fetch(`php/pendingDeliveries/detallesEntrega.php?entregaId=${entregaId}`)
+        .then(response => response.text())
+        .then(data => {
+            entregaIdModal.textContent = entregaId;
+            detallesContenido.innerHTML = data; // Actualiza el contenido del modal con los datos recibidos
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            detallesContenido.innerHTML = '<p>Error al obtener los detalles de la entrega.</p>';
+        });
 }
 
-// Cuando el usuario hace clic en el botón de cerrar
-span.onclick = function() {
-    modal.style.display = "none";
+// Función para cerrar el modal
+function cerrarModal() {
+    const modal = document.getElementById('modalDetallesEntrega');
+    modal.style.display = 'none';
+    document.body.style.overflow = 'auto'; // Permite nuevamente que la página se desplace
 }
 
-// Cuando el usuario hace clic fuera del modal, cerrarlo
-window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
+// Cuando el usuario hace clic en cualquier parte fuera del modal, también lo cierra
+window.onclick = function (event) {
+    const modal = document.getElementById('modalDetallesEntrega');
+    if (event.target === modal) {
+        cerrarModal();
     }
 }

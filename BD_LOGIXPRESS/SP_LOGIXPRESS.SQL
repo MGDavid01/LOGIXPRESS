@@ -2,6 +2,49 @@
         CLIENTE
 **********************/
 DELIMITER $$
+CREATE PROCEDURE SP_actualizarProducto(
+    IN Eprod VARCHAR(5),
+    IN Enombre VARCHAR(100),
+    IN Edescripcion VARCHAR(100),
+    IN Ecategoria VARCHAR(5),
+    IN Eetiquetado VARCHAR(5),
+    IN Ealto FLOAT,
+    IN Eancho FLOAT,
+    IN Elargo FLOAT,
+    IN Epeso FLOAT,
+    OUT mensaje VARCHAR(255)
+)
+BEGIN
+    DECLARE error_msg TEXT;
+    DECLARE error_code INT;
+
+    -- Manejo de errores
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        GET DIAGNOSTICS CONDITION 1
+            error_code = MYSQL_ERRNO,
+            error_msg = MESSAGE_TEXT;
+        ROLLBACK;
+        SET mensaje = CONCAT("Error al asociar producto: ", error_code, " - ", error_msg);
+    END;
+    START TRANSACTION;
+        UPDATE producto
+        SET 
+            nombre = Enombre,
+            descripcion = Edescripcion,
+            categoria = Ecategoria,
+            etiquetado = Eetiquetado,
+            alto = Ealto,
+            ancho = Eancho,
+            largo = Elargo,
+            peso = Epeso
+        WHERE 
+            num = Eprod;
+    COMMIT;
+    SET mensaje = "Producto actualizado exitosamente.";
+END $$
+/*************************************************************/
+DELIMITER $$
 CREATE PROCEDURE SP_registrarEntregaBase (
     IN fechaEntregaE DATE,
     IN horaInicioE TIME,
