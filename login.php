@@ -5,8 +5,9 @@ $db = connectTo2DB();
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
+$errorCredentials = false;
 if (isset($_GET['status']) && $_GET['status'] === 'error') {
-    echo "<p id='error-login'>Credenciales incorrectas, por favor intente de nuevo</p>";
+    $errorCredentials = true;
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -75,34 +76,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>Login LOGIXPRESS</title>
 </head>
 <body>
-    <section>
-        <div class="legend-form">
-            <div id="back-index">
-                <a id="href-back" href="/LOGIXPRESS/index.php">Home</a>
-                <p>></p>
-                <h2>Login</h2>
-            </div>
+    <div id="img-bg">
+        <form action="" method="POST">
+        <div id="back-index">
+            <a id="href-back" href="/LOGIXPRESS/index.php">Home</a>
+        </div>
             <h3>LOGIXPRESS</h3>
-            <h3 class="border">Login Credentials</h3>
-        </div>
-        <div class="elements-form">
-            <form action="" method="POST">
-                <div class="align-items-form">
-                    <div class="input-form">
-                        <input type="text" name="email" id="email" placeholder="Email">
-                    </div>
-                    <div class="input-form">
-                        <input type="password" name="password" id="password" placeholder="Password">
-                    </div>
-                    <div class="button-form">
-                        <button style="font-size: 1.5rem" type="submit">Log In</button>
-                    </div>
-                    <div class="input-form">
-                        <a id="to-login" href="/LOGIXPRESS/register.php">Don't have an account?</a>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </section>
+            <h3 class="border">Login</h3>
+            <div id="error-login">
+                <?php 
+                if($errorCredentials) {
+                    echo "<p>Credenciales incorrectas, por favor intente de nuevo</p>";
+                    echo "<script>document.getElementById('error-login').style.display = 'block';</script>";
+                }
+                ?>
+            </div><br>
+            <div class="input-form">
+                <input type="text" name="email" id="email" placeholder="Email" required>
+            </div>
+            <div class="input-form">
+                <input type="password" name="password" id="password" placeholder="Password" required>
+            </div>
+            <div class="button-form">
+                <button type="submit">Log In</button>
+            </div>
+            <a id="to-login" href="/LOGIXPRESS/register.php">Don't have an account?</a>
+        </form>
+    </div> 
 </body>
 </html>

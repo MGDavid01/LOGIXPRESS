@@ -3,131 +3,179 @@ html {
 }
 
 body {
-    font-family: Arial, sans-serif;
-    background-color: #ffffff;
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa;
     margin: 0;
     width: 100vw;
     height: 100vh;
-}
-
-#error-login {
-    margin-top: 0;
-    font-family: Arial, sans-serif;
-    background-color:  #d80000;
-    color: white;
-    text-align: center;
-    padding: 1rem;
-}
-
-section {
-    padding-top: 2rem;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
     align-items: center;
-    align-content: center;
-}
-
-.legend-form {
-    display:flex;
-    flex-direction: column;
     justify-content: center;
-    text-align: center;
 }
-
-.align-items-form {
+#img-bg {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-image: url('/LOGIXPRESS/imagenes/imagenLogin.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     display: flex;
-    flex-direction: column;
+    align-items: center;
     justify-content: center;
-    
+    overflow: hidden; /* Para evitar que pseudo-elementos sobresalgan */
+}
+
+#img-bg::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: inherit; /* Usa la misma imagen de fondo */
+    background-size: inherit;
+    background-position: inherit;
+    filter: blur(0.1rem); /* Desenfoque del fondo */
+    z-index: 1;
+}
+
+#img-bg::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.226); /* Capa oscura superpuesta */
+    z-index: 2;
 }
 
 form {
+    position: relative;
+    z-index: 3; /* Para mantener el formulario por encima de las capas desenfocadas y oscuras */
+    width: 100%;
+    max-width: 400px;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 3rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.274);
     display: flex;
     flex-direction: column;
+    align-items: center;
+    margin-left: 45%;
 }
 
-h2 {
-    font-size: 2rem;
-}
 
-h3 {
-    font-size: 1.5rem;
+h2, h3 {
+    font-size: 2.4rem;
+    color: #343a40;
+    margin-bottom: 2rem;
 }
 
 .input-form {
     display: flex;
     flex-direction: column;
-    align-content: center;
     align-items: center;
-}
-
-.button-form {
-    display: flex;
-    align-content: center;
-    justify-content: center;
+    width: 100%;
 }
 
 input {
-    padding: 1rem;
-    margin-bottom: 1.5rem;
-    border: 1px solid #ccc;
-    border-radius: 0.5rem;
+    width: 100%;
+    padding: 1.2rem;
+    margin-bottom: 2rem;
+    border: 1px solid #ddd;
+    border-radius: 0.8rem;
     font-size: 1.6rem;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+input:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    outline: none;
+}
+
+.button-form {
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
 
 button {
-    width: 50%;
-    padding: 15px;
+    width: 100%;
+    padding: 1.5rem;
     background-color: #007bff;
-    color: white;
+    color: #fff;
     border: none;
-    border-radius: 4px;
+    border-radius: 0.8rem;
+    font-size: 1.6rem;
+    font-weight: bold;
     cursor: pointer;
-    font-size: 1.2rem;
+    transition: background-color 0.3s, transform 0.1s;
 }
 
 button:hover {
     background-color: #0056b3;
+    transform: scale(1.03);
 }
 
 #to-login {
     padding-top: 1.5rem;
     text-decoration: none;
-    font-size: 16px;
-    color: black;
+    font-size: 1.6rem;
+    color: #007bff;
     display: flex;
     justify-content: center;
+    margin-top: 1rem;
+}
+
+#to-login:hover {
+    text-decoration: underline;
+}
+#back-index {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 1rem;
+    border-radius: 0.5rem;
+}
+
+#back-index a {
+    text-decoration: none;
+    font-size: 2rem;
+    color: #ffffff;
+}
+
+#error-login {
+    display: none; /* Ocultar inicialmente */
+    margin-top: 0;
+    font-family: Arial, sans-serif;
+    background-color: #d80000;
+    color: #ffffff;
+    text-align: center;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+}
+
+p {
+    font-size: 1.8rem;
+    font-family: Arial, sans-serif;
+    color: #ffffff;
+    font-weight: bold;
+    margin-bottom: 1rem;
 }
 
 .border {
     text-align: center;
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     padding-bottom: 1rem;
     padding-top: 1rem;
     border-top: 1px solid #ccc;
     border-bottom: 1px solid #ccc;
-}
-
-#back-index {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    gap: 1rem;
-}
-
-#href-back {
-    text-decoration: none;
-    font-size: 2rem;
-    font-family: Arial, sans-serif;
-    color: black;
-    font-weight: bold;
-}
-
-p {
-    font-size: 2rem;
-    font-family: Arial, sans-serif;
-    color: black;
-    font-weight: bold;
+    margin-bottom: 2rem;
+    width: 100%;
 }
