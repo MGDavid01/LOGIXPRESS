@@ -1,0 +1,44 @@
+.content-origin {
+    all: unset;
+    width: 80%; /* Ajusta el ancho al 90% del contenedor padre */
+    margin: auto;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.title-mainte {
+    margin-bottom: 2rem;
+}
+
+.content-card {
+    display: flex;
+    justify-content: center;
+    gap: 25%;
+}
+
+.card {
+    width: 20rem;
+    height: 26rem; /* Aumenté un poco la altura para incluir espacio para la imagen y el título */
+    background-color: #ffffff;
+    border-radius: 1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    cursor: pointer;
+    padding: 1rem;
+}
+
+.content-img {
+    width: 80%; /* La imagen ocupará el 80% del ancho del contenedor */
+    height: auto; /* Ajustar altura automáticamente para mantener proporciones */
+}
+
+.content-img img {
+    width: 90%; /* Ajustar el ancho de la imagen para que ocupe todo el contenedor */
+    height: auto; /* Mantener la proporción de la imagen */
+    object-fit: contain; /* Asegurarse de que la imagen se mantenga contenida sin deformarse */
+}
