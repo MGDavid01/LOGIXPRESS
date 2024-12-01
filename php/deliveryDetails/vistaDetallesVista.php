@@ -33,7 +33,7 @@
                     echo "<tr>
                         <td>{$row['num']}</td>
                         <td>{$row['estado']}</td>
-                        <td><a class='btn-green' href='?section=deliverDetails&entrega_id=".$row['num']."'>See Details</a></td>
+                        <td><a class='btn-green'style='font-size:1.2rem;' href='?section=deliverDetails&entrega_id=".$row['num']."'>See Details</a></td>
                     </tr>";
                 }
                 echo '</table>';

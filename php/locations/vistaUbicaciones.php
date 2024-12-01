@@ -43,7 +43,7 @@ function vistaUbicaciones($cliente) {
                             <td><?= htmlspecialchars($row['ubicacion']) ?></td>
                             <td><?= htmlspecialchars($row['nombreUbicacion']) ?></td>
                             <?php if (isset($_GET['tool']) && $_GET['tool'] === 'edit'): ?>
-                                <td><a href="?section=locations&tool=edit&location=<?= $row['ubicacion'] ?>">Edit</a></td>
+                                <td><a class="btn-ora" style='font-size:1.2rem;' href="?section=locations&tool=edit&location=<?= $row['ubicacion'] ?>">Edit</a></td>
                             <?php endif; ?>
                         </tr>
                     <?php endforeach; ?>

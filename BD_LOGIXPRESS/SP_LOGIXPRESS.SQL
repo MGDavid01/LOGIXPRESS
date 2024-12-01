@@ -683,3 +683,45 @@ BEGIN
         AND v.tipoCarga = tipoCargaEntrega -- El tipo de carga debe coincidir con el de la entrega
     ORDER BY v.capacidadCarga ASC;
 END $$
+/*************************************************************/
+DELIMITER $$
+CREATE PROCEDURE SP_asignarRecursosEntrega (
+    IN p_entregaId INT,
+    IN p_empleadoId INT,
+    IN p_vehiculoId INT,
+    IN p_remolqueId INT,
+    OUT p_mensaje TEXT
+)
+BEGIN
+    DECLARE error_msg TEXT;
+    DECLARE error_code INT;
+
+    -- Manejo de errores
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        GET DIAGNOSTICS CONDITION 1
+            error_code = MYSQL_ERRNO,
+            error_msg = MESSAGE_TEXT;
+        ROLLBACK;
+        SET p_mensaje = CONCAT("Error en la asignacion de recursos: ", error_code, " - ", error_msg);
+    END;
+    -- Asignar un valor predeterminado al parámetro p_remolqueId si es NULL
+    IF p_remolqueId IS NULL THEN
+        SET p_remolqueId = 1;
+    END IF;
+
+    -- Iniciar transacción
+    START TRANSACTION;
+    
+    -- Asignar empleado a la entrega
+    INSERT INTO entre_empleado (entrega, empleado) 
+    VALUES (p_entregaId, p_empleadoId);
+    
+    -- Asignar vehículo a la entrega, junto con el remolque (incluso si es NULL)
+    INSERT INTO entre_vehi_remo (entrega, vehiculo, remolque) 
+    VALUES (p_entregaId, p_vehiculoId, p_remolqueId);
+    
+    -- Confirmar la transacción
+    COMMIT;
+    SET p_mensaje = 'OK.';
+END$$ 

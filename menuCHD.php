@@ -21,9 +21,60 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         session_destroy();
         header("Location: index.php");
         exit();
+    } else if (isset($_POST['accion']) && $_POST['accion'] === 'asignarRecursos') {
+        $entregaId = filter_input(INPUT_POST, 'entrega', FILTER_VALIDATE_INT);
+        $empleadoId = filter_input(INPUT_POST, 'empleado', FILTER_VALIDATE_INT);
+        $vehiculoId = filter_input(INPUT_POST, 'vehiculo', FILTER_VALIDATE_INT);
+        $remolqueId = filter_input(INPUT_POST, 'remolque', FILTER_VALIDATE_INT);
+        if (isset($remolqueId) || $remolqueId = "") {
+            $remolqueId = 1;
+        }
+        // Mostrar mensajes de depuración para verificar los valores recibidos
+        if ($entregaId === false || $entregaId === null) {
+            echo "<p>Error: El valor de 'entrega' no es válido o no se recibió.</p>";
+        }
+        if ($empleadoId === false || $empleadoId === null) {
+            echo "<p>Error: El valor de 'empleado' no es válido o no se recibió.</p>";
+        }
+        if ($vehiculoId === false || $vehiculoId === null) {
+            echo "<p>Error: El valor de 'vehículo' no es válido o no se recibió.</p>";
+        }
+
+        // Validar campos obligatorios
+        if ($entregaId && $empleadoId && $vehiculoId) {
+            try {
+                // Preparar la llamada al procedimiento almacenado
+                $stmt = $db->prepare("CALL SP_asignarRecursosEntrega(?, ?, ?, ?, @mensaje)");
+                if ($stmt) {
+                    // Si no se seleccionó un remolque, asignar NULL (o en este caso valor por defecto 1)
+                    
+                    $stmt->bind_param("iiii", $entregaId, $empleadoId, $vehiculoId, $remolqueId);
+
+                    if ($stmt->execute()) {
+                        // Obtener el valor del mensaje de salida
+                        $result = $db->query("SELECT @mensaje AS mensaje");
+                        $row = $result->fetch_assoc();
+                            echo "<p>" . htmlspecialchars($row['mensaje']) . "</p>";
+                        if ($row['mensaje'] === "OK.") {
+                            
+                        } else {
+                            echo "<p>Error inesperado al recuperar el mensaje de salida.</p>";
+                        }
+                    } else {
+                        echo "<p>Error al ejecutar la petición: " . $stmt->error . "</p>";
+                    }
+                    $stmt->close();
+                } else {
+                    echo "<p>Error al preparar la petición: " . $db->error . "</p>";
+                }
+            } catch (Exception $e) {
+                echo "<p>Error al asignar la entrega: " . htmlspecialchars($e->getMessage()) . "</p>";
+            }
+        } else {
+            echo "<p>Error: Datos inválidos. Por favor, revisa los campos obligatorios.</p>";
+        }
     }
 }
-
 // Actualizar disponibilidad del vehículo
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['updateDisponibilidad'])) {
     $id = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT);
@@ -49,29 +100,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['updateDisponibilidad'
     }
 }
 
-// Asignar entregas
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['asignar'])) {
-    $entregaId = filter_input(INPUT_POST, 'entrega', FILTER_VALIDATE_INT);
-    $empleadoId = filter_input(INPUT_POST, 'empleado', FILTER_VALIDATE_INT);
-    $vehiculoId = filter_input(INPUT_POST, 'vehiculo', FILTER_VALIDATE_INT);
-
-    if ($entregaId && $empleadoId && $vehiculoId) {
-        $query1 = "INSERT INTO entre_empleado (entrega, empleado) VALUES (?, ?)";
-        $stmt1 = $db->prepare($query1);
-        $stmt1->bind_param('ii', $entregaId, $empleadoId);
-        $stmt1->execute();
-
-        $query2 = "INSERT INTO entre_vehi_remo (entrega, vehiculo) VALUES (?, ?)";
-        $stmt2 = $db->prepare($query2);
-        $stmt2->bind_param('ii', $entregaId, $vehiculoId);
-        $stmt2->execute();
-
-        echo "<p>Asignación realizada correctamente.</p>";
-    } else {
-        echo "<p>Error en los datos proporcionados para asignar.</p>";
-    }
-}
-
 include_once('includes/headUsers.php');
 ?>
     <link rel="stylesheet" href="css/menuCHD/menuCHD.css">
@@ -82,7 +110,6 @@ include_once('includes/headUsers.php');
             <a href="menuCHD.php" id="logo-hover"><img src="imagenes/LOGIXPRESS_LOGO_F2.png" alt="Logo"></a>
         </div>
         <ul>
-            <li><a href="?section=asignarEntregas">Assign Deliveries</a></li>
             <li><a href="?section=entregasPendientes">Pending Deliveries</a></li>
             <li><a href="?section=historialEntregas">Delivery History</a></li>
             <li><a href="?section=vehiculosMantenimiento">Send to Maintenance</a></li>
@@ -172,15 +199,13 @@ include_once('includes/headUsers.php');
                     }
                 }
                 break;
-            case 'asignarEntregas':
-                include_once('php/asignDelivery/asignDelivery.php');
-                break;
             case 'entregasPendientes':
                 ?>  <link rel="stylesheet" href="css/menuCHD/vistaEntregasPendientes.css">
                     <link rel="stylesheet" href="css/menuCHD/modalInfoDelivery.css">
                     <script src="js/detailsDeliveryModal.js"></script>
+                    <script src="js/formularioAsignarRecursos.js"></script>
                 <?php
-                include_once('php/pendingDeliveries/pendingDeliveries.php');
+                include_once('php/pendingDeliveries/vistaEntregasPendientes.php');
                 break;
             case 'historialEntregas':
                 ?>

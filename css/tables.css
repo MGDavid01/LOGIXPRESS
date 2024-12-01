@@ -50,6 +50,18 @@ button {
     background: none;
 }
 
+.btn-ora {
+    color: rgb(255, 255, 255);
+    background-color: #ff9800;
+    padding: 0.5rem 1rem 0.5rem 1rem;
+    text-decoration: none;
+    font-weight: bold;
+    font-style: italic;
+    border-radius: 8px; /* Bordes redondeados */
+    cursor: pointer;             /* Cursor en forma de mano */
+    transition: background-color 0.3s ease-in-out; /* Efecto al pasar el cursor */
+}
+
 .btn-red {
     color: rgb(255, 255, 255);
     background-color: rgb(190, 74, 74);

@@ -12,7 +12,7 @@ function mostrarModal(entregaId) {
     document.body.style.overflow = 'hidden'; // Evita que la página se desplace
 
     // Llamada AJAX para obtener los detalles de la entrega
-    fetch(`php/pendingDeliveries/detallesEntrega.php?entregaId=${entregaId}`)
+    fetch(`php/pendingDeliveries/vistaModalDetallesEntrega.php?entregaId=${entregaId}`)
         .then(response => response.text())
         .then(data => {
             entregaIdModal.textContent = entregaId;

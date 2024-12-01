@@ -14,7 +14,7 @@ $db = connectTo2DB();
 $entregaId = filter_input(INPUT_GET, 'entregaId', FILTER_VALIDATE_INT);
 
 if (!$entregaId) {
-    echo '<p style="font-size:2rem;">Error: ID de entrega inválido.</p>';
+    echo '<p style="font-size:2rem;">Error: Entrega no localizado.</p>';
     exit;
 }
 
@@ -116,7 +116,7 @@ while ($ubicacion = $resultUbicacionesDestino->fetch_assoc()) {
     <div class="entrega-detalle">
         <!-- Encabezado Principal -->
         <div class="encabezado-entrega">
-            <h1>ID de Entrega: #<?= htmlspecialchars($entregaId); ?></h1>
+            <h1>Entrega: #<?= htmlspecialchars($entregaId); ?></h1>
             <span class="estado-entrega <?= strtolower($detalleEntrega['estado'] ?? 'desconocido'); ?>">
                 <?= htmlspecialchars($detalleEntrega['estado'] ?? 'Desconocido'); ?>
             </span>
@@ -141,7 +141,7 @@ while ($ubicacion = $resultUbicacionesDestino->fetch_assoc()) {
             <ul>
                 <?php if (!empty($ubicacionesDestino)): ?>
                     <?php foreach ($ubicacionesDestino as $ubicacion): ?>
-                        <li><?= htmlspecialchars($ubicacion); ?></li><br>
+                        <li><?= htmlspecialchars($ubicacion); ?></li>
                     <?php endforeach; ?>
                 <?php else: ?>
                     <li>Sin definir</li>
@@ -187,37 +187,10 @@ while ($ubicacion = $resultUbicacionesDestino->fetch_assoc()) {
     </div>
 
     <!-- Botón para Asignación de Recursos -->
+    <!-- Agregar botón para Asignar Recursos -->
     <div class="asignacion-recursos">
-        <button class="btn-asignar" onclick="mostrarModalAsignacion(<?= $entregaId; ?>)">Asignar Recursos</button>
-    </div>
-</div>
-
-<!-- Modal para Asignación de Recursos -->
-<div id="modalAsignacionRecursos" class="modal">
-    <div class="modal-content">
-        <span class="close" onclick="cerrarModalAsignacion()">&times;</span>
-        <h2>Asignación de Recursos para Entrega #<?= htmlspecialchars($entregaId); ?></h2>
-        <form id="formAsignacionRecursos">
-            <label for="empleado">Empleado:</label>
-            <select name="empleado" id="empleado" required>
-                <option value="">Seleccione un empleado</option>
-                <!-- Opciones de empleados obtenidos de la base de datos -->
-            </select>
-
-            <label for="vehiculo">Vehículo:</label>
-            <select name="vehiculo" id="vehiculo" required>
-                <option value="">Seleccione un vehículo</option>
-                <!-- Opciones de vehículos obtenidos de la base de datos -->
-            </select>
-
-            <label for="remolque">Remolque (opcional):</label>
-            <select name="remolque" id="remolque">
-                <option value="">Sin Remolque</option>
-                <!-- Opciones de remolques obtenidos de la base de datos -->
-            </select>
-
-            <button type="submit" class="btn-submit">Guardar Asignación</button>
-        </form>
+       
+        <button class="btn-guardar" onclick="mostrarModalAsignacion(<?= $detalleEntrega['entregaId']; ?>)">Asignar Recursos</button>
     </div>
 </div>
 

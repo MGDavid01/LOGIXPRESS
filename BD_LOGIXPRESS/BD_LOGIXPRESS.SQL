@@ -256,7 +256,6 @@ CREATE TABLE entre_vehi_remo (
     FOREIGN KEY (vehiculo) REFERENCES vehiculo(num),
     FOREIGN KEY (remolque) REFERENCES remolque(num)
 );
-ALTER TABLE entre_vehi_remo MODIFY remolque INT NOT NULL DEFAULT 0;
 
 CREATE TABLE entre_empleado (
     entrega INT,
