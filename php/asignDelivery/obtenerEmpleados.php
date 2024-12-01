@@ -7,7 +7,7 @@ header('Content-Type: application/json');
 // Consulta para obtener empleados disponibles
 $queryEmpleados = "SELECT num AS id, CONCAT(nombre, ' ', primerApe, ' ', segundoApe) AS nombre
                 FROM empleado
-                WHERE puesto = 'CHF'";
+                WHERE puesto = 'CHF' AND estadoEmpleado = 'ACT'";
 $result = $db->query($queryEmpleados);
 
 $empleados = [];
