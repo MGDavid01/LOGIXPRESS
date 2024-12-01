@@ -72,3 +72,27 @@ BEGIN
     SET costoAcumulado = IFNULL(costoAcumulado, 0) + NEW.costo
     WHERE num = NEW.remolque;
 END$$
+ /*************************************************************/
+DELIMITER $$
+CREATE TRIGGER TR_cambiarEstadosVehiculoRemolqueEntrega
+AFTER INSERT ON entre_vehi_remo
+FOR EACH ROW
+BEGIN
+    -- Actualizar la disponibilidad del vehículo a RESER (reservado)
+    UPDATE vehiculo
+    SET disponibilidad = 'RESER'
+    WHERE num = NEW.vehiculo;
+
+    -- Actualizar la disponibilidad del remolque a RESER (reservado) si remolque no es 0 (que representa que no hay remolque)
+    IF NEW.remolque IS NOT NULL AND NEW.remolque != 1 THEN
+        UPDATE remolque
+        SET disponibilidad = 'RESER'
+        WHERE num = NEW.remolque;
+    END IF;
+
+    -- Insertar un nuevo estado para la entrega indicando que está ATEN (en atención)
+    INSERT INTO entre_estado (entrega, estadoEntrega, fechaCambio)
+    VALUES (NEW.entrega, 'ATEN', NOW());
+END$$
+
+DELIMITER ;

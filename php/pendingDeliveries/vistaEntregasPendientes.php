@@ -14,32 +14,31 @@
                 <?php
                 // Consulta actualizada con `entre_estado` como tabla principal
                 $query = "
-                        SELECT 
-                            e.num AS entregaId,
-                            e.fechaRegistro,
-                            (SELECT em.nombre
-                            FROM entre_empleado emp
-                            INNER JOIN empleado em ON emp.empleado = em.num
-                            WHERE emp.entrega = e.num) AS empleado,
-                            (SELECT v.numSerie
-                            FROM entre_vehi_remo ev
-                            INNER JOIN vehiculo v ON ev.vehiculo = v.num
-                            WHERE ev.entrega = e.num) AS vehiculo,
-                            (SELECT r.numSerie
-                            FROM entre_vehi_remo ev
-                            INNER JOIN remolque r ON ev.remolque = r.num
-                            WHERE ev.entrega = e.num) AS remolque,
-                            (SELECT estado.descripcion
-                            FROM entre_estado ee
-                            INNER JOIN estado_entre estado ON ee.estadoEntrega = estado.codigo
-                            WHERE ee.entrega = e.num AND ee.estadoEntrega = 'PROG') AS estado
-                        FROM entrega e
-                        WHERE EXISTS (
-                            SELECT 1
-                            FROM entre_estado ee
-                            WHERE ee.entrega = e.num AND ee.estadoEntrega = 'PROG'
-                        );
-                    ";
+                    SELECT 
+                        e.num AS entregaId,
+                        e.fechaRegistro,
+                        em.nombre AS empleado,
+                        v.numSerie AS vehiculo,
+                        r.numSerie AS remolque,
+                        estado.descripcion AS estado
+                    FROM entrega e
+                    LEFT JOIN entre_empleado emp ON emp.entrega = e.num
+                    LEFT JOIN empleado em ON emp.empleado = em.num
+                    LEFT JOIN entre_vehi_remo ev ON ev.entrega = e.num
+                    LEFT JOIN vehiculo v ON ev.vehiculo = v.num
+                    LEFT JOIN remolque r ON ev.remolque = r.num
+                    LEFT JOIN (
+                        SELECT ee1.entrega, ee1.estadoEntrega
+                        FROM entre_estado ee1
+                        WHERE ee1.fechaCambio = (
+                            SELECT MAX(ee2.fechaCambio)
+                            FROM entre_estado ee2
+                            WHERE ee2.entrega = ee1.entrega
+                        )
+                    ) AS ult_estado ON ult_estado.entrega = e.num
+                    LEFT JOIN estado_entre estado ON ult_estado.estadoEntrega = estado.codigo
+                    WHERE ult_estado.estadoEntrega = 'PROG';
+                ";
 
                 $result = $db->query($query);
                 if ($result && $result->num_rows > 0) {

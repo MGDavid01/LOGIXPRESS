@@ -19,6 +19,7 @@ INSERT INTO cliente (nomEmpresa, nomPila, primerApe, segundoApe, numTelefono, em
 
 INSERT INTO estado_entre (codigo, descripcion) VALUES
 ('PROG', 'Programada'),
+('ATEN', 'Peticion Atendida'),
 ('ENPR', 'En Proceso'),
 ('COMP', 'Completada'),
 ('CANC', 'Cancelada');
