@@ -5,6 +5,7 @@ if (session_status() === PHP_SESSION_NONE) {
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL); 
+
 if (!isset($_SESSION['user_id']) || !isset($_SESSION['puesto']) || $_SESSION['puesto'] !== 'CHF') {
     echo "Empleado no autenticado o sin permisos.";
     exit();
@@ -45,13 +46,11 @@ function vistaEntregasPendientes() {
                LIMIT 1) = 'PROG'
     ";
 
-    // Preparar y ejecutar la consulta
     $stmt = $db->prepare($query);
     $stmt->bind_param('i', $empleadoId);
     $stmt->execute();
     $result = $stmt->get_result();
 
-    // Recorrer los resultados
     while ($row = $result->fetch_assoc()) {
         $entregas[] = $row;
     }
@@ -67,7 +66,6 @@ function vistaEntregasPendientes() {
             </tr>";
         
         foreach ($entregas as $row) {
-            //$_SESSION['entrega'] = $row['num'];
             echo "<tr>
                     <td>" . htmlspecialchars($row['num']) . "</td>
                     <td>" . htmlspecialchars($row['fechaRegistro']) . "</td>
@@ -84,6 +82,8 @@ function vistaEntregasPendientes() {
 
 // Renderizar la página principal
 $section = isset($_GET['section']) ? htmlspecialchars($_GET['section']) : '';
+$entrega = isset($_GET['entrega']) ? intval($_GET['entrega']) : null;
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -115,6 +115,10 @@ $section = isset($_GET['section']) ? htmlspecialchars($_GET['section']) : '';
             vistaEntregasPendientes();
             break;
         case 'routeDelivery':
+            if (!$entrega) {
+                echo "Entrega no definida.";
+                exit();
+            }
             require_once('mapas/mapa.php');
             break;
         default:

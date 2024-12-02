@@ -1,10 +1,38 @@
 <?php
-require_once('includes/config/conection.php');
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+require_once(__DIR__ . '/../includes/config/conection.php');
 
 // Verificar conexión
 $db = connectTo2DB();
 if (!$db) {
     die("Error en la conexión a la base de datos.");
+}
+
+// Validar parámetros
+if (!isset($_SESSION['user_id']) || !isset($_GET['entrega'])) {
+    die("No se ha definido el ID de entrega o el usuario no está autenticado.");
+}
+
+$empleado_id = intval($_SESSION['user_id']);
+$entrega_id = intval($_GET['entrega']);
+
+// Validar que la entrega pertenece al empleado logueado
+$queryValidar = "
+    SELECT entrega 
+    FROM entre_empleado
+    WHERE entrega = ? AND empleado = ?
+    LIMIT 1
+";
+$stmt = $db->prepare($queryValidar);
+$stmt->bind_param('ii', $entrega_id, $empleado_id);
+$stmt->execute();
+$resultValidar = $stmt->get_result();
+
+if ($resultValidar->num_rows === 0) {
+    die("No tiene permisos para ver esta entrega.");
 }
 
 // Función para completar direcciones
@@ -18,7 +46,7 @@ function completarDireccion($ubicacion) {
 
 // Función para obtener coordenadas desde OpenCage Geocoder
 function obtenerCoordenadas($direccion) {
-    $apiKey = 'a57ab80f0d8d456396660e4cb8856ec7'; // Reemplaza con tu clave API de OpenCage
+    $apiKey = 'a57ab80f0d8d456396660e4cb8856ec7';
     $url = "https://api.opencagedata.com/geocode/v1/json?q=" . urlencode($direccion) . "&key=$apiKey";
 
     $response = @file_get_contents($url);
@@ -34,128 +62,62 @@ function obtenerCoordenadas($direccion) {
             'lat' => $data['results'][0]['geometry']['lat'],
             'lng' => $data['results'][0]['geometry']['lng']
         ];
-    } else {
-        echo "Sin resultados para la dirección: $direccion<br>";
     }
 
     return null;
 }
 
-// Función para obtener puntos de origen y destino
+// Función para obtener puntos de entrega
 function obtenerPuntosEntrega($entrega_id) {
     global $db;
-    // Consultar el punto de origen
-    $queryOrigen = "
-        SELECT u.codigo, u.nombreCalle, u.numCalle, u.colonia, u.codigoPostal
-        FROM ubi_entrega_salida us
-        INNER JOIN ubicacion u ON us.ubicacion = u.codigo
-        WHERE us.entrega = $entrega_id
-    ";
-    $resultOrigen = $db->query($queryOrigen);
-    if (!$resultOrigen || $resultOrigen->num_rows == 0) {
-        die("No se encontró un punto de origen.");
-    }
-    $origen = $resultOrigen->fetch_assoc();
-    $origen['coordenadas'] = obtenerCoordenadas(completarDireccion($origen));
 
-    // Consultar los puntos de destino
-    $queryDestinos = "
-        SELECT u.codigo, u.nombreCalle, u.numCalle, u.colonia, u.codigoPostal
-        FROM ubi_entrega_llegada ul
-        INNER JOIN ubicacion u ON ul.ubicacion = u.codigo
-        WHERE ul.entrega = $entrega_id
+    // Consultar punto de salida
+    $querySalida = "
+        SELECT u.num, u.nombreCalle, u.numCalle, u.colonia, u.codigoPostal
+        FROM ubi_entrega_salida us
+        INNER JOIN ubicacion u ON us.ubicacion = u.num
+        WHERE us.entrega = ?
     ";
-    $resultDestinos = $db->query($queryDestinos);
-    if (!$resultDestinos) {
-        die("Error en la consulta de puntos de destino: " . $db->error);
+    $stmt = $db->prepare($querySalida);
+    $stmt->bind_param('i', $entrega_id);
+    $stmt->execute();
+    $resultSalida = $stmt->get_result();
+
+    if ($resultSalida->num_rows == 0) {
+        die("No se encontró un punto de salida.");
     }
-    $destinos = [];
-    while ($row = $resultDestinos->fetch_assoc()) {
+    $salida = $resultSalida->fetch_assoc();
+    $salida['coordenadas'] = obtenerCoordenadas(completarDireccion($salida));
+
+    // Consultar puntos de llegada
+    $queryLlegadas = "
+        SELECT u.num, u.nombreCalle, u.numCalle, u.colonia, u.codigoPostal
+        FROM ubi_entrega_llegada ul
+        INNER JOIN ubicacion u ON ul.ubicacion = u.num
+        WHERE ul.entrega = ?
+    ";
+    $stmt = $db->prepare($queryLlegadas);
+    $stmt->bind_param('i', $entrega_id);
+    $stmt->execute();
+    $resultLlegadas = $stmt->get_result();
+
+    $llegadas = [];
+    while ($row = $resultLlegadas->fetch_assoc()) {
         $row['coordenadas'] = obtenerCoordenadas(completarDireccion($row));
         if ($row['coordenadas']) {
-            $destinos[] = $row;
+            $llegadas[] = $row;
         }
     }
 
     return [
-        'origen' => $origen,
-        'destinos' => $destinos
+        'salida' => $salida,
+        'llegadas' => $llegadas
     ];
 }
 
-// Función para calcular la distancia entre dos puntos
-function calcularDistancia($coord1, $coord2) {
-    $R = 6371; // Radio de la Tierra en km
-    $lat1 = deg2rad($coord1['lat']);
-    $lon1 = deg2rad($coord1['lng']);
-    $lat2 = deg2rad($coord2['lat']);
-    $lon2 = deg2rad($coord2['lng']);
-    $dlat = $lat2 - $lat1;
-    $dlon = $lon2 - $lon1;
-
-    $a = sin($dlat / 2) * sin($dlat / 2) + cos($lat1) * cos($lat2) * sin($dlon / 2) * sin($dlon / 2);
-    $c = 2 * atan2(sqrt($a), sqrt(1 - $a));
-    return $R * $c; // Distancia en km
-}
-
-// Función para calcular la ruta óptima
-function calcularRuta($origen, &$destinos) {
-    $rutaDescripcion = [$origen['codigo']];
-    $distanciaTotal = 0;
-    $rutasCalculadas = [];
-
-    while (!empty($destinos)) {
-        $distancias = [];
-        foreach ($destinos as $index => $destino) {
-            $distancias[$index] = calcularDistancia($origen['coordenadas'], $destino['coordenadas']);
-        }
-        asort($distancias);
-        $masCercanoIndex = array_key_first($distancias);
-        $masCercano = $destinos[$masCercanoIndex];
-
-        $distanciaTotal += $distancias[$masCercanoIndex];
-        $rutasCalculadas[] = [
-            'inicio' => $origen,
-            'fin' => $masCercano,
-            'distancia' => $distancias[$masCercanoIndex]
-        ];
-
-        $rutaDescripcion[] = $masCercano['codigo'];
-        $origen = $masCercano;
-        unset($destinos[$masCercanoIndex]);
-    }
-
-    return [
-        'descripcion' => implode(' -> ', $rutaDescripcion),
-        'distanciaTotal' => $distanciaTotal,
-        'rutasCalculadas' => $rutasCalculadas
-    ];
-}
-
-
-
-$puntos = obtenerPuntosEntrega($_SESSION['entrega']);
-$ruta = calcularRuta($puntos['origen'], $puntos['destinos']);
-
-// Insertar la ruta en la base de datos con mysqli
-$queryInsertRuta = $db->prepare("
-    INSERT INTO ruta (descripcion, distanciaTotal, tiempoEstimado)
-    VALUES (?, ?, ?)
-");
-$tiempoEstimado = ($ruta['distanciaTotal'] / 60) * 60; // Estimado en minutos
-$queryInsertRuta->bind_param(
-    'sdd', 
-    $ruta['descripcion'], 
-    $ruta['distanciaTotal'], 
-    $tiempoEstimado
-);
-$queryInsertRuta->execute();
-
-// Obtener el ID de la ruta insertada
-$rutaId = $db->insert_id;
-
-function obtenerDistanciaYTiempo($waypoints) {
-    $apiKey = '482c7aa9-7008-4be2-ab73-f76ee2d2b5fa'; // Tu clave API de GraphHopper
+// Función para calcular ruta desde la API de GraphHopper
+function obtenerRutaDesdeAPI($waypoints) {
+    $apiKey = '482c7aa9-7008-4be2-ab73-f76ee2d2b5fa'; // Reemplaza con tu clave API de GraphHopper
     $points = implode('&point=', array_map(fn($wp) => "{$wp['lat']},{$wp['lng']}", $waypoints));
     $url = "https://graphhopper.com/api/1/route?key=$apiKey&point=$points&vehicle=car&type=json&points_encoded=false";
 
@@ -166,11 +128,7 @@ function obtenerDistanciaYTiempo($waypoints) {
         return null;
     }
 
-    // Inspecciona la respuesta completa
     $data = json_decode($response, true);
-    echo "<pre>";
-    print_r($data);
-    echo "</pre>";
 
     if (isset($data['paths'][0])) {
         return [
@@ -180,11 +138,69 @@ function obtenerDistanciaYTiempo($waypoints) {
         ];
     }
 
-    echo "No se encontraron rutas válidas<br>";
     return null;
 }
 
+// Obtener puntos de entrega
+$puntos = obtenerPuntosEntrega($entrega_id);
 
+// Preparar waypoints para la API
+$waypoints = array_merge(
+    [['lat' => $puntos['salida']['coordenadas']['lat'], 'lng' => $puntos['salida']['coordenadas']['lng']]],
+    array_map(fn($llegada) => ['lat' => $llegada['coordenadas']['lat'], 'lng' => $llegada['coordenadas']['lng']], $puntos['llegadas'])
+);
+
+// Obtener datos de la ruta desde GraphHopper
+$rutaInfo = obtenerRutaDesdeAPI($waypoints);
+
+if (!$rutaInfo) {
+    die("No se pudo obtener la ruta desde la API.");
+}
+
+// Distancia total en kilómetros y tiempo total en minutos
+$distanciaTotal = $rutaInfo['distancia']; // En kilómetros
+$tiempoTotal = $rutaInfo['tiempo']; // En minutos
+
+// Convertir el tiempo estimado a formato H:i:s
+$tiempoTotal = intval($tiempoTotal); // Convertir el tiempo total a entero
+
+$tiempoFormato = sprintf(
+    '%02d:%02d:%02d',
+    floor($tiempoTotal / 60), // Horas
+    $tiempoTotal % 60,        // Minutos
+    0                         // Segundos
+);
+
+
+
+
+// Guardar la ruta en la base de datos
+function guardarRuta($descripcion, $distancia, $tiempo) {
+    global $db;
+
+    $query = "
+        INSERT INTO ruta (descripcion, distanciaTotal, tiempoEstimado)
+        VALUES (?, ?, ?)
+    ";
+    $stmt = $db->prepare($query);
+    $stmt->bind_param('sds', $descripcion, $distancia, $tiempo);
+    $stmt->execute();
+
+    return $db->insert_id;
+}
+
+// Generar descripción con los códigos de las ubicaciones
+$descripcionRuta = implode(' -> ', array_merge(
+    [$puntos['salida']['num']],
+    array_map(fn($llegada) => $llegada['num'], $puntos['llegadas'])
+));
+
+// Guardar la ruta
+$rutaId = guardarRuta($descripcionRuta, $distanciaTotal, $tiempoFormato);
+
+echo "Ruta guardada con éxito. ID de la ruta: $rutaId<br>";
+echo "Distancia total: {$distanciaTotal} km<br>";
+echo "Tiempo estimado: {$tiempoFormato}<br>";
 ?>
 
 <!DOCTYPE html>
@@ -199,43 +215,29 @@ function obtenerDistanciaYTiempo($waypoints) {
 <body>
     <div id="map" style="height: 600px;"></div>
     <script>
-        const map = L.map('map').setView([<?= $puntos['origen']['coordenadas']['lat'] ?>, <?= $puntos['origen']['coordenadas']['lng'] ?>], 13);
+        const map = L.map('map').setView([<?= $puntos['salida']['coordenadas']['lat'] ?>, <?= $puntos['salida']['coordenadas']['lng'] ?>], 13);
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19
         }).addTo(map);
 
-        const waypoints = [];
-        const apiKey = '482c7aa9-7008-4be2-ab73-f76ee2d2b5fa'; // Reemplaza con tu clave API de GraphHopper
-
-        // Agregar el origen como primer punto
-        waypoints.push([<?= $puntos['origen']['coordenadas']['lat'] ?>, <?= $puntos['origen']['coordenadas']['lng'] ?>]);
-        L.marker([<?= $puntos['origen']['coordenadas']['lat'] ?>, <?= $puntos['origen']['coordenadas']['lng'] ?>])
+        L.marker([<?= $puntos['salida']['coordenadas']['lat'] ?>, <?= $puntos['salida']['coordenadas']['lng'] ?>])
             .addTo(map)
-            .bindPopup('Origen: <?= completarDireccion($puntos['origen']) ?>');
+            .bindPopup('Punto de Salida')
+            .openPopup();
 
-        // Agregar puntos de destino
-        <?php foreach ($ruta['rutasCalculadas'] as $segmento): ?>
-        waypoints.push([<?= $segmento['fin']['coordenadas']['lat'] ?>, <?= $segmento['fin']['coordenadas']['lng'] ?>]);
-        L.marker([<?= $segmento['fin']['coordenadas']['lat'] ?>, <?= $segmento['fin']['coordenadas']['lng'] ?>])
+        <?php foreach ($puntos['llegadas'] as $llegada): ?>
+        L.marker([<?= $llegada['coordenadas']['lat'] ?>, <?= $llegada['coordenadas']['lng'] ?>])
             .addTo(map)
-            .bindPopup('Destino: <?= $segmento['fin']['codigo'] ?>');
+            .bindPopup('Punto de Llegada: <?= $llegada['num'] ?>');
         <?php endforeach; ?>
 
-        // Generar la ruta con GraphHopper
-        const routeUrl = `https://graphhopper.com/api/1/route?key=${apiKey}&point=${waypoints.map(p => p.join(',')).join('&point=')}&vehicle=car&type=json&points_encoded=false`;
+        const routeGeoJson = <?= json_encode($rutaInfo['geoJson']) ?>;
 
-        fetch(routeUrl)
-            .then(response => response.json())
-            .then(data => {
-                if (data.paths && data.paths.length > 0) {
-                    const geoJson = data.paths[0].points;
-                    L.geoJSON(geoJson).addTo(map);
-                } else {
-                    console.error('No se encontraron rutas válidas:', data);
-                }
-            })
-            .catch(error => console.error('Error al obtener la ruta:', error));
+        L.geoJSON(routeGeoJson).addTo(map);
+
+        const info = `Distancia total: <?= $distanciaTotal ?> km<br>Tiempo estimado: <?= $tiempoFormato ?>`;
+        L.control.attribution({ position: 'topright' }).addTo(map).setPrefix(info);
     </script>
 </body>
 </html>
