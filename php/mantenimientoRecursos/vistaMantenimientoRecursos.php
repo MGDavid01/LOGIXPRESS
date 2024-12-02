@@ -11,10 +11,14 @@
                     include_once('herramientaUniversalMantenimiento.php');
                     break;
                 default:
+                    echo '<div class="title-mainte">';
+                    if ($mantenimientoTool == 'vehiculos') {
+                        echo '<h1>Vehicles Available for Maintenance</h1>';
+                    } else {
+                        echo '<h1>Trailers Available for Maintenance</h1>';
+                    }
+                    echo '</div>';
                     ?>
-                    <div class="title-mainte">
-                        <h1>Vehicle<br>Maintenance</h1>
-                    </div>
                     <div class="content-card">
                         <button id="vehiculos" onclick="mostrarRecurso('mandar')">
                             <div class="card">
@@ -41,30 +45,41 @@
             break;
 
         case 'remolques':
-            // Obtener los remolques desde la base de datos
-            $queryRemolques = "SELECT * FROM remolque WHERE disponibilidad = 'DISPO'";
-            $resultRemolques = mysqli_query($db, $queryRemolques);
-            
-            echo '<button onclick="removeParam()" class="btn-back">Regresar</button>';
-            echo '<h1>Remolques Disponibles para Mantenimiento</h1>';
-            echo '<div class="cards-container">';
-            
-            while ($remolque = mysqli_fetch_assoc($resultRemolques)) {
-                ?>
-                <div class="card">
-                    <div class="content-img">
-                        <img src="imagenes/remolque.png" alt="Remolque">
+            $herramienta = filter_input(INPUT_GET, 'herramienta');
+            switch ($herramienta) {
+                case 'mandar':
+                    include_once('herramientaUniversalMantenimiento.php');
+                    break;
+                case 'registrar':
+                    include_once('herramientaUniversalMantenimiento.php');
+                    break;
+                default:
+                    ?>
+                    <div class="title-mainte">
+                        <h1>Vehicle<br>Maintenance</h1>
                     </div>
-                    <div class="card-details">
-                        <h3>Serial Number: <?= htmlspecialchars($remolque['numSerie']); ?></h3>
-                        <p>Capacidad de Carga: <?= htmlspecialchars($remolque['capacidadCarga']); ?> kg</p>
-                        <button onclick="enviarMantenimiento('<?= $remolque['num'] ?>')" class="btn-send-maintenance">Enviar a Mantenimiento</button>
+                    <div class="content-card">
+                        <button id="vehiculos" onclick="mostrarRecurso('mandar')">
+                            <div class="card">
+                                <div class="content-img">
+                                    <img src="imagenes/mandar.png" alt="Mandar">
+                                </div>
+                                <h2>Send to Maintenance</h2>
+                            </div>
+                        </button>
+                        <button id="remolques" onclick="mostrarRecurso('registrar')">
+                            <div class="card">
+                                <div class="content-img">
+                                    <img src="imagenes/registrar.png" alt="Registrar">
+                                </div>
+                                <h2>Register Maintenance</h2>
+                            </div>
+                        </button>
                     </div>
-                </div>
-                <?php
+                    <button onclick="removerMantenimiento()" class="btn-back">Go Back</button>
+                    <?php
+                    break;
             }
-            
-            echo '</div>';
             break;
 
         default:

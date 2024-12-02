@@ -1,7 +1,7 @@
-// Función para enviar un vehículo a mantenimiento
-function enviarAMantenimiento(vehiculoId) {
+// Función para enviar un recurso (vehículo o remolque) a mantenimiento
+function enviarAMantenimiento(recursoId, tipoRecurso) {
     // Confirmación para evitar clics accidentales
-    if (!confirm("¿Estás seguro de que deseas enviar este vehículo a mantenimiento?")) {
+    if (!confirm("¿Estás seguro de que deseas enviar este recurso a mantenimiento?")) {
         return;
     }
 
@@ -11,7 +11,8 @@ function enviarAMantenimiento(vehiculoId) {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            vehiculoId: vehiculoId
+            recursoId: recursoId,
+            tipoRecurso: tipoRecurso // 'vehiculo' o 'remolque'
         })
     })
     .then(response => {
@@ -23,7 +24,11 @@ function enviarAMantenimiento(vehiculoId) {
     .then(data => {
         if (data.success) {
             // Redirigir usando JavaScript después de una respuesta exitosa
-            window.location.href = 'menuCHD.php?section=mantenimiento&mantenimiento=vehiculos&herramienta=mandar&status=success';
+            if (tipoRecurso === 'vehiculo') {
+                window.location.href = 'menuCHD.php?section=mantenimiento&mantenimiento=vehiculos&herramienta=mandar&status=success';
+            } else if (tipoRecurso === 'remolque') {
+                window.location.href = 'menuCHD.php?section=mantenimiento&mantenimiento=remolques&herramienta=mandar&status=success';
+            }
         } else {
             alert('Error: ' + data.message);
         }
@@ -34,17 +39,19 @@ function enviarAMantenimiento(vehiculoId) {
     });
 }
 
-function registrarMantenimiento(vehiculoId) {
+function registrarMantenimiento(recursoId, tipoRecurso) {
+    const modal = document.getElementById('modalMantenimiento');
+    modal.style.display = 'block';
+
+    // Establecer el ID y tipo en los campos ocultos del formulario
+    document.getElementById('recursoId').value = recursoId;
+    document.getElementById('tipoRecurso').value = tipoRecurso;
+
     // Confirmación para evitar clics accidentales
-    if (!confirm("¿Estás seguro que este es el vehículo que se le dio mantenimiento?")) {
+    if (!confirm("¿Estás seguro que deseas registrar este recurso como mantenido?")) {
+        cerrarModal();
         return;
     }
-
-    // Establece el valor del vehículo en el formulario del modal
-    document.getElementById('vehiculoId').value = vehiculoId;
-
-    // Muestra el modal
-    document.getElementById('modalMantenimiento').style.display = 'block';
 }
 
 // Función para cerrar el modal

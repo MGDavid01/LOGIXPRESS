@@ -5,22 +5,32 @@ header('Content-Type: application/json');
 
 // Obtener los datos de la solicitud POST
 $input = json_decode(file_get_contents('php://input'), true);
-$vehiculoId = $input['vehiculoId'];
+$recursoId = $input['recursoId'];
+$tipoRecurso = $input['tipoRecurso']; // Puede ser 'vehiculo' o 'remolque'
 
-// Validar que se haya proporcionado el ID del vehículo
-if (!$vehiculoId) {
-    echo json_encode(['success' => false, 'message' => 'No se proporcionó un ID de vehículo.']);
+// Validar que se haya proporcionado el ID del recurso y el tipo de recurso
+if (!$recursoId || !$tipoRecurso) {
+    echo json_encode(['success' => false, 'message' => 'No se proporcionó un ID de recurso o el tipo de recurso.']);
     exit;
 }
 
-// Marcar el vehículo como en mantenimiento en la base de datos
-$query = "UPDATE vehiculo SET disponibilidad = 'MANTE' WHERE num = ?";
+// Determinar la tabla y el campo a actualizar según el tipo de recurso
+if ($tipoRecurso === 'vehiculo') {
+    $query = "UPDATE vehiculo SET disponibilidad = 'MANTE' WHERE num = ?";
+} elseif ($tipoRecurso === 'remolque') {
+    $query = "UPDATE remolque SET disponibilidad = 'MANTE' WHERE num = ?";
+} else {
+    echo json_encode(['success' => false, 'message' => 'Tipo de recurso no válido.']);
+    exit;
+}
+
+// Preparar y ejecutar la consulta
 $stmt = $db->prepare($query);
-$stmt->bind_param('i', $vehiculoId);
+$stmt->bind_param('i', $recursoId);
 
 if ($stmt->execute()) {
     echo json_encode(['success' => true]);
 } else {
-    echo json_encode(['success' => false, 'message' => 'No se pudo actualizar el estado del vehículo.']);
+    echo json_encode(['success' => false, 'message' => 'No se pudo actualizar el estado del recurso.']);
 }
 ?>

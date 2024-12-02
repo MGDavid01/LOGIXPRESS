@@ -4,24 +4,39 @@ $db = connectTo2DB();
 // Validar que la solicitud sea POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // Obtener los datos del formulario POST
-    $vehiculoId = filter_input(INPUT_POST, 'vehiculoId', FILTER_VALIDATE_INT);
+    $recursoId = filter_input(INPUT_POST, 'recursoId', FILTER_VALIDATE_INT);
+    $tipoRecurso = filter_input(INPUT_POST, 'tipoRecurso', FILTER_SANITIZE_STRING);
     $costoMantenimiento = filter_input(INPUT_POST, 'costoMantenimiento', FILTER_VALIDATE_FLOAT);
     $descripcionMantenimiento = filter_input(INPUT_POST, 'descripcionMantenimiento', FILTER_SANITIZE_STRING);
 
-    // Validar que se haya proporcionado el ID del vehículo
-    if (!$vehiculoId) {
-        echo json_encode(['success' => false, 'message' => 'No se proporcionó un ID.']);
+    // Validar que se haya proporcionado el ID del recurso y el tipo de recurso
+    if (!$recursoId || !$tipoRecurso) {
+        echo json_encode(['success' => false, 'message' => 'No se proporcionó un ID o el tipo de recurso.']);
         exit;
     }
 
-    // Realizar la inserción en la tabla de mantenimiento
-    $query = "INSERT INTO mantenimiento (fechas, costo, descripcion, vehiculo) VALUES (NOW(), ?, ?, ?)";
+    // Preparar la consulta de inserción en la tabla mantenimiento según el tipo de recurso
+    if ($tipoRecurso === 'vehiculo') {
+        $query = "INSERT INTO mantenimiento (fechas, costo, descripcion, vehiculo) VALUES (NOW(), ?, ?, ?)";
+    } elseif ($tipoRecurso === 'remolque') {
+        $query = "INSERT INTO mantenimiento (fechas, costo, descripcion, remolque) VALUES (NOW(), ?, ?, ?)";
+    } else {
+        echo json_encode(['success' => false, 'message' => 'Tipo de recurso desconocido.']);
+        exit;
+    }
+
+    // Preparar y ejecutar la consulta
     $stmt = $db->prepare($query);
     if ($stmt) {
         // Vincular los parámetros de la consulta
-        $stmt->bind_param('dsi', $costoMantenimiento, $descripcionMantenimiento, $vehiculoId);
+        $stmt->bind_param('dsi', $costoMantenimiento, $descripcionMantenimiento, $recursoId);
         if ($stmt->execute()) {
-            header('Location: ../../menuCHD.php?section=mantenimiento&mantenimiento=vehiculos&herramienta=registrar&status=success');
+            // Redirigir al menú de mantenimiento dependiendo del tipo de recurso
+            if ($tipoRecurso === 'vehiculo') {
+                header('Location: ../../menuCHD.php?section=mantenimiento&mantenimiento=vehiculos&herramienta=registrar&status=success');
+            } elseif ($tipoRecurso === 'remolque') {
+                header('Location: ../../menuCHD.php?section=mantenimiento&mantenimiento=remolques&herramienta=registrar&status=success');
+            }
             exit;
         } else {
             echo json_encode(['success' => false, 'message' => 'No se pudo registrar el mantenimiento: ' . $stmt->error]);
@@ -33,5 +48,4 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 } else {
     echo json_encode(['success' => false, 'message' => 'Solicitud inválida.']);
 }
-
 ?>
