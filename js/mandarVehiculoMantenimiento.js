@@ -5,7 +5,7 @@ function enviarAMantenimiento(vehiculoId) {
         return;
     }
 
-    fetch('php/mantenimientoRecursos/logicaEnviarMantenimiento.php', {
+    fetch('php/mantenimientoRecursos/logicaMandarMantenimiento.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -22,14 +22,8 @@ function enviarAMantenimiento(vehiculoId) {
     })
     .then(data => {
         if (data.success) {
-            alert('El vehículo ha sido enviado a mantenimiento.');
-
-            // Obtener el elemento por ID y asegurarse de que no sea null antes de manipularlo
-            const card = document.getElementById(`card-${vehiculoId}`);
-            if (card) {
-                card.classList.add('mantenimiento');
-                // Aquí podrías hacer alguna animación o efecto visual para indicar el cambio
-            }
+            // Redirigir usando JavaScript después de una respuesta exitosa
+            window.location.href = 'menuCHD.php?section=mantenimiento&mantenimiento=vehiculos&herramienta=mandar&status=success';
         } else {
             alert('Error: ' + data.message);
         }
@@ -38,4 +32,22 @@ function enviarAMantenimiento(vehiculoId) {
         console.error('Error:', error);
         alert('Ocurrió un error al procesar la solicitud.');
     });
+}
+
+function registrarMantenimiento(vehiculoId) {
+    // Confirmación para evitar clics accidentales
+    if (!confirm("¿Estás seguro que este es el vehículo que se le dio mantenimiento?")) {
+        return;
+    }
+
+    // Establece el valor del vehículo en el formulario del modal
+    document.getElementById('vehiculoId').value = vehiculoId;
+
+    // Muestra el modal
+    document.getElementById('modalMantenimiento').style.display = 'block';
+}
+
+// Función para cerrar el modal
+function cerrarModal() {
+    document.getElementById('modalMantenimiento').style.display = 'none';
 }

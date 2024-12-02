@@ -62,7 +62,7 @@ include_once('includes/headUsers.php');
         <ul>
             <li><a href="?section=entregasPendientes">Pending Deliveries</a></li>
             <li><a href="?section=historialEntregas">Delivery History</a></li>
-            <li><a href="?section=vehiculosMantenimiento">Maintenance Management</a></li>
+            <li><a href="?section=mantenimiento">Maintenance Management</a></li>
         </ul>
         <!-- Botón de Logout -->
         <form action="" method="post">
@@ -74,7 +74,7 @@ include_once('includes/headUsers.php');
         $section = $_GET['section'] ?? null;
 
         switch ($section) {
-            case 'vehiculosMantenimiento':
+            case 'mantenimiento':
                 ?> <link rel="stylesheet" href="css/menuCHD/vistaMantenimientoRecursos.css">
                     <script src="js/recargarPaginaParametroMantenimiento.js"></script>
                     <script src="js/filtrosMantenimientoVehiculos.js"></script>

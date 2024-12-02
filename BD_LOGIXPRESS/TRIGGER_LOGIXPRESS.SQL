@@ -94,5 +94,24 @@ BEGIN
     INSERT INTO entre_estado (entrega, estadoEntrega, fechaCambio)
     VALUES (NEW.entrega, 'ATEN', NOW());
 END$$
+ /*************************************************************/
+DELIMITER $$
+CREATE TRIGGER TR_cambiarEstadosVehiculoRemolqueMantenimiento
+AFTER INSERT ON mantenimiento
+FOR EACH ROW
+BEGIN
+     -- Cambiar estado del vehículo si fue incluido en el mantenimiento
+    IF NEW.vehiculo IS NOT NULL THEN
+        UPDATE vehiculo
+        SET disponibilidad = 'DISPO'
+        WHERE num = NEW.vehiculo;
+    END IF;
 
-DELIMITER ;
+    -- Cambiar estado del remolque si fue incluido en el mantenimiento
+    IF NEW.remolque IS NOT NULL THEN
+        UPDATE remolque
+        SET disponibilidad = 'DISPO'
+        WHERE num = NEW.remolque;
+    END IF;
+END$$
+ /*************************************************************/

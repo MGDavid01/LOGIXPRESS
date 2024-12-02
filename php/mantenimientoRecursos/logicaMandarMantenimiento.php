@@ -1,7 +1,6 @@
 <?php
 require ('../../includes/config/conection.php');
 $db = connectTo2DB();
-
 header('Content-Type: application/json');
 
 // Obtener los datos de la solicitud POST

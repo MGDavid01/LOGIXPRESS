@@ -9,13 +9,14 @@
 }
 
 .title-mainte {
-    margin-bottom: 2rem;
+    text-align: center;
+    margin-bottom: 1rem;
 }
 
 .content-card {
     display: flex;
     justify-content: center;
-    gap: 25%;
+    
 }
 
 .card {
@@ -47,4 +48,21 @@
     width: 90%; /* Ajustar el ancho de la imagen para que ocupe todo el contenedor */
     height: auto; /* Mantener la proporción de la imagen */
     object-fit: contain; /* Asegurarse de que la imagen se mantenga contenida sin deformarse */
+}
+
+.btn-back {
+    width: 15%;
+    align-self: center;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 0.5rem;
+    padding: 1rem 2rem;
+    font-size: 1.6rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-back:hover {
+    background-color: #0056b3;
 }
