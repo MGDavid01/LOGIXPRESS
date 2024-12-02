@@ -77,8 +77,10 @@ include_once('includes/headUsers.php');
             case 'vehiculosMantenimiento':
                 ?> <link rel="stylesheet" href="css/menuCHD/vistaMantenimientoRecursos.css">
                     <script src="js/recargarPaginaParametroMantenimiento.js"></script>
+                    <script src="js/filtrosMantenimientoVehiculos.js"></script>
+                    <script src="js/mandarVehiculoMantenimiento.js"></script>
                 <?php
-                include_once('php/manteniminetoRecursos/vistaMantenimientoRecursos.php');
+                include_once('php/mantenimientoRecursos/vistaMantenimientoRecursos.php');
                 break;
             case 'entregasPendientes':
                 ?>  <link rel="stylesheet" href="css/menuCHD/vistaEntregasPendientes.css">

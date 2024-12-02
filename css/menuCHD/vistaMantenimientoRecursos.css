@@ -30,6 +30,12 @@
     justify-content: space-around;
     cursor: pointer;
     padding: 1rem;
+    margin: 1rem;
+    transition: transform 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-1rem);
 }
 
 .content-img {
