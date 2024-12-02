@@ -13,15 +13,7 @@
                         INNER JOIN marca ma ON v.marca = ma.codigo
                         INNER JOIN modelo mo ON v.modelo = mo.codigo
                         WHERE v.disponibilidad = 'DISPO'
-                        ORDER BY FIELD(v.categoriaVehiculo, 
-                            'FURGG', 
-                            'FURGR', 
-                            'CARTO', 
-                            'CARCG', 
-                            'CARCR', 
-                            'CAMRP', 
-                            'CAMAP'
-                        )";
+                        ";
     
             $resultVehiculos = mysqli_query($db, $queryVehiculos);
         } else {
@@ -37,15 +29,7 @@
                         INNER JOIN marca ma ON v.marca = ma.codigo
                         INNER JOIN modelo mo ON v.modelo = mo.codigo
                         WHERE v.disponibilidad = 'MANTE'
-                        ORDER BY FIELD(v.categoriaVehiculo, 
-                            'FURGG', 
-                            'FURGR', 
-                            'CARTO', 
-                            'CARCG', 
-                            'CARCR', 
-                            'CAMRP', 
-                            'CAMAP'
-                        )";
+                        ";
             $resultVehiculos = mysqli_query($db, $queryVehiculos);
         }
         // Obtener Categorías, Marcas y Modelos para los Filtros
@@ -70,15 +54,7 @@
                               INNER JOIN marca ma ON r.marca = ma.codigo
                               INNER JOIN modelo mo ON r.modelo = mo.codigo
                               WHERE r.disponibilidad = 'DISPO'
-                              ORDER BY FIELD(r.tipoRemolque, 
-                                  'FURGG', 
-                                  'FURGR', 
-                                  'CARTO', 
-                                  'CARCG', 
-                                  'CARCR', 
-                                  'CAMRP', 
-                                  'CAMAP'
-                              )";
+                              ";
         
             $resultoRemolques = mysqli_query($db, $queryRemolque);
         } else {
@@ -93,15 +69,7 @@
                               INNER JOIN marca ma ON r.marca = ma.codigo
                               INNER JOIN modelo mo ON r.modelo = mo.codigo
                               WHERE r.disponibilidad = 'MANTE'
-                              ORDER BY FIELD(r.tipoRemolque, 
-                                  'FURGG', 
-                                  'FURGR', 
-                                  'CARTO', 
-                                  'CARCG', 
-                                  'CARCR', 
-                                  'CAMRP', 
-                                  'CAMAP'
-                              )";
+                              ";
         
             $resultoRemolques = mysqli_query($db, $queryRemolque);
         }

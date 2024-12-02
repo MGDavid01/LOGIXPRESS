@@ -11,14 +11,9 @@
                     include_once('herramientaUniversalMantenimiento.php');
                     break;
                 default:
-                    echo '<div class="title-mainte">';
-                    if ($mantenimientoTool == 'vehiculos') {
-                        echo '<h1>Vehicles Available for Maintenance</h1>';
-                    } else {
-                        echo '<h1>Trailers Available for Maintenance</h1>';
-                    }
-                    echo '</div>';
                     ?>
+                    <div class="title-mainte">
+                        <h1>Vehicles Maintenance Management</h1>
                     <div class="content-card">
                         <button id="vehiculos" onclick="mostrarRecurso('mandar')">
                             <div class="card">
@@ -41,7 +36,6 @@
                     <?php
                     break;
             }
-            
             break;
 
         case 'remolques':
@@ -56,7 +50,7 @@
                 default:
                     ?>
                     <div class="title-mainte">
-                        <h1>Vehicle<br>Maintenance</h1>
+                        <h1>Trailers Maintenance Management</h1>
                     </div>
                     <div class="content-card">
                         <button id="vehiculos" onclick="mostrarRecurso('mandar')">

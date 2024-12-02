@@ -21,6 +21,10 @@
     margin-left: 2rem;
 }
 
+.status button {
+    width: 15%;
+}
+
 .filters-title-back{
     display: flex;
     flex-direction: column;

@@ -13,7 +13,7 @@ table {
 }
 
 th, td {
-    padding: 0.5rem; /* Espaciado interno en las celdas */
+    padding: 0.9rem; /* Espaciado interno en las celdas */
     border: 0.01rem solid #ddd; /* Borde claro entre celdas */
     text-align: center;
 }
