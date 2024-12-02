@@ -1,4 +1,4 @@
--- Active: 1730659136493@@127.0.0.1@3306@logixpress
+-- Active: 1729699153576@@127.0.0.1@3306@LOGIXPRESS
 INSERT INTO cliente (nomEmpresa, nomPila, primerApe, segundoApe, numTelefono, email, password) VALUES
 ('Transporte Seguro S.A.', 'Juan', 'Pérez', 'García', '5551234567', 'juan.perez@ejemplo.com', sha2('contraseña123', 256)),
 ('Logística Global', 'María', 'López', NULL, '5559876543', 'maria.lopez@ejemplo.com', sha2('contraseña123', 256)),
