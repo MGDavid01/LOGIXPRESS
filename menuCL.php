@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['accion']) && $_POST['
     header("Location: index.php");
     exit;
 }else if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['accion']) && $_POST['accion'] === 'registerDelivery') {
-    include_once('php/delivery/logicaInsercionEntrega.php');
+    include_once('php/delivery/logicaRegistroEntrega.php');
 } else if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['accion']) && $_POST['accion'] === 'addProduct') {
         include_once('php/products/logicaInsertarProducto.php');
 } else if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['accion']) && $_POST['accion'] === 'updateProduct') {
@@ -50,8 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['accion']) && $_POST['
 $section = isset($_GET['section']) ? $_GET['section'] : '';
 include_once('includes/headUsers.php');
 ?>      
-        <script src="js/agregarEliminarProductos.js"></script>
-        <script src="js/agregarEliminarUbicaciones.js"></script>
+
         <link rel="stylesheet" href="css/menuCL/menuCL.css">
         <link rel="stylesheet" href="css/forms.css">
         <link rel="stylesheet" href="css/tables.css">
@@ -69,14 +68,16 @@ include_once('includes/headUsers.php');
             </ul>
             <!-- Botón de Logout -->
             <form action="" style="all:unset; width:100%; text-align:center; " method="post" >
-                <button  type="submit" name="accion" value="logout">Log out</button>
+                <button type="submit" name="accion" value="logout">Log out</button>
             </form>
         </nav>
         <div class="content-origin">
         <?php
             switch ($section) {
                 case 'delivery':
-                    ?><link rel="stylesheet" href="css/menuCL/vistaFormularioEntrega.css"><?php
+                    ?>  <link rel="stylesheet" href="css/menuCL/vistaFormularioEntrega.css">
+                        <script src="js/logicaPedirEntregaElementos.js"></script>
+                    <?php
                     vistaPedirEntrega();
                     break;
                 case 'deliverDetails':

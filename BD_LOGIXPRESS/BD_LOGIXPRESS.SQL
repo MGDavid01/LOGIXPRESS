@@ -158,7 +158,6 @@ CREATE TABLE entrega (
     subtotal FLOAT,
     IVA FLOAT,
     precio FLOAT,
-    tipoCarga VARCHAR(5),
     cliente INT,
     prioridad VARCHAR(5),
     FOREIGN KEY (cliente) REFERENCES cliente(num),

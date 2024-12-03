@@ -49,7 +49,6 @@ CREATE PROCEDURE SP_registrarEntregaBase (
     IN fechaEntregaE DATE,
     IN horaInicioE TIME,
     IN horaFinE TIME,
-    IN tipoCargaE VARCHAR(5),
     IN cliente_id INT,
     IN prioridadE VARCHAR(5),
     OUT entrega_id INT, -- Devuelve el ID de la entrega creada
@@ -72,8 +71,8 @@ BEGIN
 
     START TRANSACTION;
         -- Insertar en la tabla `entrega`
-        INSERT INTO entrega (fechaEntrega, horaInicio, horaFin, tipoCarga, cliente, prioridad)
-        VALUES (fechaEntregaE, horaInicioE, horaFinE, tipoCargaE, cliente_id, prioridadE);
+        INSERT INTO entrega (fechaEntrega, horaInicio, horaFin, cliente, prioridad)
+        VALUES (fechaEntregaE, horaInicioE, horaFinE, cliente_id, prioridadE);
 
         -- Obtener el ID de la entrega recién insertada
         SET entrega_id = LAST_INSERT_ID();
@@ -134,6 +133,35 @@ BEGIN
         INSERT INTO ubi_entrega_llegada (entrega, ubicacion, hraLlegada)
         VALUES (entrega_id, destino, NULL);
         SET mensaje = "OK";
+    COMMIT;
+END $$
+/*************************************************************/
+DELIMITER $$
+CREATE PROCEDURE SP_asociarTiposdeCargaEntrega (
+    IN entregaE INT, -- ID de la entrega ya registrada
+    IN tipoCargaE VARCHAR(5),
+    IN instruccionesE VARCHAR(1250),
+    OUT mensaje VARCHAR(255)
+)
+BEGIN
+    DECLARE error_msg TEXT;
+    DECLARE error_code INT;
+
+    -- Manejo de errores
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        GET DIAGNOSTICS CONDITION 1
+            error_code = MYSQL_ERRNO,
+            error_msg = MESSAGE_TEXT;
+        ROLLBACK;
+        SET mensaje = CONCAT("Error al asociar origen: ", error_code, " - ", error_msg);
+    END;
+
+    START TRANSACTION;
+        -- Insertar en la tabla `ubi_entrega_salida`
+        INSERT INTO entre_tipocarga (entrega, tipoCarga, instrucciones)
+        VALUES (entregaE, tipoCargaE, instruccionesE);
+    SET mensaje = "OK";
     COMMIT;
 END $$
 /*************************************************************/
@@ -663,6 +691,7 @@ END $$
 /************************
         CHECADOR
 ************************/
+/*Es incorrecto*/
 DELIMITER $$
 CREATE PROCEDURE obtenerVehiculosLibres(
     IN pesoTotal FLOAT, 
