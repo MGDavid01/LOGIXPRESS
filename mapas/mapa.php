@@ -218,44 +218,44 @@ if ($rutaExistente) {
     guardarRuta($descripcionRuta, $distanciaTotal, $tiempoFormato, $geoJson);
 }
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
-    <link rel="stylesheet" href="css/mapaInfo.css">
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <title>Mapa de Rutas</title>
-</head>
-<body>
-    <!-- Mapa -->
-    <div id="map"></div>
-
-    <!-- Información -->
-    <div class="info-container">
-        <div class="info-header">Detalles Ruta De La Entrega</div>
-
-        <!-- Información General -->
-        <div class="info-section">
-            <h4>Información General</h4>
-            <p><span class="info-highlight">Distancia Total:</span> <?= $distanciaTotal ?> km</p>
-            <p><span class="info-highlight">Tiempo Estimado:</span> <?= $tiempoFormato ?></p>
+    <div class="info-mapa-mapa">
+        <!-- Información -->
+        <div class="info-container">
+            <div class="info-header">Detalles Ruta De La Entrega</div>
+        <table class="info-table">
+            <thead>
+                <tr>
+                    <th>Información General</th>
+                    <th>Punto de Origen</th>
+                    <th>Puntos de Destino</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <p class="info-highlight">Distancia Total: <br><?= $distanciaTotal ?> km</p>
+                        <p class="info-highlight">Tiempo Estimado: <br><?= $tiempoFormato ?></p>
+                    </td>
+                    <td>
+                        <p class="info-highlight"><?= completarDireccion($puntos['salida']) ?></p>
+                    </td>
+                    <td>
+                        <?php foreach ($puntos['llegadas'] as $llegada): ?>
+                            <p class="info-highlight"><?= completarDireccion($llegada) ?></p>
+                        <?php endforeach; ?>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
         </div>
+        <!-- Mapa -->
+        <div id="map">
 
-        <!-- Punto de Origen -->
-        <div class="info-section">
-            <h4>Punto de Origen</h4>
-            <p><span class="info-highlight">Dirección:</span> <?= completarDireccion($puntos['salida']) ?></p>
-        </div>
-
-        <!-- Puntos de Destino -->
-        <div class="info-section">
-            <h4>Puntos de Destino</h4>
-            <?php foreach ($puntos['llegadas'] as $llegada): ?>
-                <p><span class="info-highlight">Dirección:</span> <?= completarDireccion($llegada) ?></p>
-            <?php endforeach; ?>
         </div>
     </div>
 
@@ -307,6 +307,3 @@ if ($rutaExistente) {
         }).addTo(map);
         <?php endif; ?>
     </script>
-</body>
-</html>
-
