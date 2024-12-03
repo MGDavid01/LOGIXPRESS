@@ -43,7 +43,7 @@ function vistaEntregasPendientes() {
                FROM entre_estado en
                WHERE en.entrega = e.num
                ORDER BY en.fechaCambio DESC
-               LIMIT 1) = 'PROG'
+               LIMIT 1) = 'ATEN'
     ";
 
     $stmt = $db->prepare($query);
