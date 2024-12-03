@@ -137,7 +137,8 @@ CREATE TABLE ruta (
     num INT PRIMARY KEY AUTO_INCREMENT,
     descripcion VARCHAR(255) NOT NULL,
     distanciaTotal FLOAT,
-    tiempoEstimado TIME
+    tiempoEstimado TIME,
+    geoJson LONGTEXT
 );
 
 CREATE TABLE entrega (

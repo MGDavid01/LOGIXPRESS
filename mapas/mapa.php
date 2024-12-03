@@ -50,6 +50,7 @@ function obtenerCoordenadas($direccion) {
     $url = "https://api.opencagedata.com/geocode/v1/json?q=" . urlencode($direccion) . "&key=$apiKey";
 
     $response = @file_get_contents($url);
+
     if ($response === FALSE) {
         echo "Error al contactar la API para la dirección: $direccion<br>";
         return null;
@@ -115,6 +116,28 @@ function obtenerPuntosEntrega($entrega_id) {
     ];
 }
 
+// Función para verificar si ya existe una ruta
+function verificarRutaExistente($descripcion) {
+    global $db;
+
+    $query = "
+        SELECT num, distanciaTotal, tiempoEstimado, geoJson
+        FROM ruta
+        WHERE descripcion = ?
+        LIMIT 1
+    ";
+    $stmt = $db->prepare($query);
+    $stmt->bind_param('s', $descripcion);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        return $result->fetch_assoc(); // Ruta encontrada
+    }
+
+    return null; // No existe la ruta
+}
+
 // Función para calcular ruta desde la API de GraphHopper
 function obtenerRutaDesdeAPI($waypoints) {
     $apiKey = '482c7aa9-7008-4be2-ab73-f76ee2d2b5fa'; // Reemplaza con tu clave API de GraphHopper
@@ -124,7 +147,7 @@ function obtenerRutaDesdeAPI($waypoints) {
     $response = @file_get_contents($url);
 
     if ($response === FALSE) {
-        echo "Error al contactar la API de GraphHopper<br>";
+        echo "Error al contactar la API para la ruta<br>";
         return null;
     }
 
@@ -141,53 +164,23 @@ function obtenerRutaDesdeAPI($waypoints) {
     return null;
 }
 
-// Obtener puntos de entrega
-$puntos = obtenerPuntosEntrega($entrega_id);
-
-// Preparar waypoints para la API
-$waypoints = array_merge(
-    [['lat' => $puntos['salida']['coordenadas']['lat'], 'lng' => $puntos['salida']['coordenadas']['lng']]],
-    array_map(fn($llegada) => ['lat' => $llegada['coordenadas']['lat'], 'lng' => $llegada['coordenadas']['lng']], $puntos['llegadas'])
-);
-
-// Obtener datos de la ruta desde GraphHopper
-$rutaInfo = obtenerRutaDesdeAPI($waypoints);
-
-if (!$rutaInfo) {
-    die("No se pudo obtener la ruta desde la API.");
-}
-
-// Distancia total en kilómetros y tiempo total en minutos
-$distanciaTotal = $rutaInfo['distancia']; // En kilómetros
-$tiempoTotal = $rutaInfo['tiempo']; // En minutos
-
-// Convertir el tiempo estimado a formato H:i:s
-$tiempoTotal = intval($tiempoTotal); // Convertir el tiempo total a entero
-
-$tiempoFormato = sprintf(
-    '%02d:%02d:%02d',
-    floor($tiempoTotal / 60), // Horas
-    $tiempoTotal % 60,        // Minutos
-    0                         // Segundos
-);
-
-
-
-
-// Guardar la ruta en la base de datos
-function guardarRuta($descripcion, $distancia, $tiempo) {
+// Función para guardar una nueva ruta en la base de datos
+function guardarRuta($descripcion, $distancia, $tiempo, $geoJson) {
     global $db;
 
     $query = "
-        INSERT INTO ruta (descripcion, distanciaTotal, tiempoEstimado)
-        VALUES (?, ?, ?)
+        INSERT INTO ruta (descripcion, distanciaTotal, tiempoEstimado, geoJson)
+        VALUES (?, ?, ?, ?)
     ";
     $stmt = $db->prepare($query);
-    $stmt->bind_param('sds', $descripcion, $distancia, $tiempo);
+    $stmt->bind_param('sdss', $descripcion, $distancia, $tiempo, $geoJson);
     $stmt->execute();
 
     return $db->insert_id;
 }
+
+// Obtener puntos de entrega
+$puntos = obtenerPuntosEntrega($entrega_id);
 
 // Generar descripción con los códigos de las ubicaciones
 $descripcionRuta = implode(' -> ', array_merge(
@@ -195,12 +188,35 @@ $descripcionRuta = implode(' -> ', array_merge(
     array_map(fn($llegada) => $llegada['num'], $puntos['llegadas'])
 ));
 
-// Guardar la ruta
-$rutaId = guardarRuta($descripcionRuta, $distanciaTotal, $tiempoFormato);
+// Verificar si ya existe la ruta
+$rutaExistente = verificarRutaExistente($descripcionRuta);
 
-echo "Ruta guardada con éxito. ID de la ruta: $rutaId<br>";
-echo "Distancia total: {$distanciaTotal} km<br>";
-echo "Tiempo estimado: {$tiempoFormato}<br>";
+if ($rutaExistente) {
+    $distanciaTotal = $rutaExistente['distanciaTotal'];
+    $tiempoFormato = $rutaExistente['tiempoEstimado'];
+    $geoJson = $rutaExistente['geoJson'];
+} else {
+    $waypoints = array_merge(
+        [['lat' => $puntos['salida']['coordenadas']['lat'], 'lng' => $puntos['salida']['coordenadas']['lng']]],
+        array_map(fn($llegada) => $llegada['coordenadas'], $puntos['llegadas'])
+    );
+
+    $rutaInfo = obtenerRutaDesdeAPI($waypoints);
+    $distanciaTotal = $rutaInfo['distancia'];
+
+    // Solución al problema del float
+    $tiempoTotal = round($rutaInfo['tiempo']); // Redondear a minutos
+
+    $tiempoFormato = sprintf(
+        '%02d:%02d:%02d',
+        floor($tiempoTotal / 60), // Horas completas
+        $tiempoTotal % 60,        // Minutos restantes
+        0                         // Segundos siempre 0
+    );
+
+    $geoJson = json_encode($rutaInfo['geoJson']);
+    guardarRuta($descripcionRuta, $distanciaTotal, $tiempoFormato, $geoJson);
+}
 ?>
 
 <!DOCTYPE html>
@@ -209,35 +225,88 @@ echo "Tiempo estimado: {$tiempoFormato}<br>";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
+    <link rel="stylesheet" href="css/mapaInfo.css">
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    <title>Mapa de Entregas</title>
+    <title>Mapa de Rutas</title>
 </head>
 <body>
-    <div id="map" style="height: 600px;"></div>
+    <!-- Mapa -->
+    <div id="map"></div>
+
+    <!-- Información -->
+    <div class="info-container">
+        <div class="info-header">Detalles Ruta De La Entrega</div>
+
+        <!-- Información General -->
+        <div class="info-section">
+            <h4>Información General</h4>
+            <p><span class="info-highlight">Distancia Total:</span> <?= $distanciaTotal ?> km</p>
+            <p><span class="info-highlight">Tiempo Estimado:</span> <?= $tiempoFormato ?></p>
+        </div>
+
+        <!-- Punto de Origen -->
+        <div class="info-section">
+            <h4>Punto de Origen</h4>
+            <p><span class="info-highlight">Dirección:</span> <?= completarDireccion($puntos['salida']) ?></p>
+        </div>
+
+        <!-- Puntos de Destino -->
+        <div class="info-section">
+            <h4>Puntos de Destino</h4>
+            <?php foreach ($puntos['llegadas'] as $llegada): ?>
+                <p><span class="info-highlight">Dirección:</span> <?= completarDireccion($llegada) ?></p>
+            <?php endforeach; ?>
+        </div>
+    </div>
+
     <script>
+        // Inicializar el mapa
         const map = L.map('map').setView([<?= $puntos['salida']['coordenadas']['lat'] ?>, <?= $puntos['salida']['coordenadas']['lng'] ?>], 13);
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19
         }).addTo(map);
 
-        L.marker([<?= $puntos['salida']['coordenadas']['lat'] ?>, <?= $puntos['salida']['coordenadas']['lng'] ?>])
+        // Ícono personalizado para el punto de origen
+        const origenIcon = L.icon({
+            iconUrl: 'imagenes/OrigenIcon.png', // URL del ícono
+            iconSize: [32, 32], // Tamaño del ícono
+            iconAnchor: [16, 32], // Punto de anclaje del ícono
+            popupAnchor: [0, -32] // Punto de anclaje del popup
+        });
+
+        // Ícono personalizado para los puntos de destino
+        const destinoIcon = L.icon({
+            iconUrl: 'imagenes/DestinoIcon.png', // URL del ícono
+            iconSize: [32, 32], 
+            iconAnchor: [16, 32],
+            popupAnchor: [0, -32]
+        });
+
+        // Agregar marcador para el punto de salida
+        L.marker([<?= $puntos['salida']['coordenadas']['lat'] ?>, <?= $puntos['salida']['coordenadas']['lng'] ?>], { icon: origenIcon })
             .addTo(map)
             .bindPopup('Punto de Salida')
             .openPopup();
 
+        // Agregar marcadores para los puntos de llegada
         <?php foreach ($puntos['llegadas'] as $llegada): ?>
-        L.marker([<?= $llegada['coordenadas']['lat'] ?>, <?= $llegada['coordenadas']['lng'] ?>])
+        L.marker([<?= $llegada['coordenadas']['lat'] ?>, <?= $llegada['coordenadas']['lng'] ?>], { icon: destinoIcon })
             .addTo(map)
             .bindPopup('Punto de Llegada: <?= $llegada['num'] ?>');
         <?php endforeach; ?>
 
-        const routeGeoJson = <?= json_encode($rutaInfo['geoJson']) ?>;
-
-        L.geoJSON(routeGeoJson).addTo(map);
-
-        const info = `Distancia total: <?= $distanciaTotal ?> km<br>Tiempo estimado: <?= $tiempoFormato ?>`;
-        L.control.attribution({ position: 'topright' }).addTo(map).setPrefix(info);
+        // Dibujar la ruta si hay GeoJSON
+        <?php if (!empty($geoJson)): ?>
+        const routeGeoJson = <?= $geoJson ?>;
+        L.geoJSON(routeGeoJson, {
+            style: {
+                color: '#007bff', // Color de la línea de la ruta
+                weight: 4
+            }
+        }).addTo(map);
+        <?php endif; ?>
     </script>
 </body>
 </html>
+
