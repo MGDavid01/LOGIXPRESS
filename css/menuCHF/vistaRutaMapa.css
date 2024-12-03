@@ -33,6 +33,10 @@
     width: 100%;
 }
 
+table td{
+    overflow-y: auto;
+}
+
 .info-container {
     display: flex;
     flex-direction: column;

@@ -246,7 +246,7 @@ if ($rutaExistente) {
                     </td>
                     <td>
                         <?php foreach ($puntos['llegadas'] as $llegada): ?>
-                            <p class="info-highlight"><?= completarDireccion($llegada) ?></p>
+                            <p class="info-highlight"> - <?= completarDireccion($llegada) ?></p>
                         <?php endforeach; ?>
                     </td>
                 </tr>
