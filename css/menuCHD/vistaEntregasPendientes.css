@@ -7,7 +7,7 @@
 
 .tables-deliveries {
     margin: auto;
-    width: 90%;
+    width: 95%;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -15,6 +15,9 @@
 }
 
 .section{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     margin: 1rem 0rem 2rem 0rem;
     padding: 2rem 0rem 2rem 0rem;
     background-color: #ffffff;
@@ -24,7 +27,7 @@
 }
 
 table {
-    width: 100%;
+    width: 90%;
     margin-bottom: 3rem;
 }
 

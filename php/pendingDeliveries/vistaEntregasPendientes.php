@@ -59,9 +59,6 @@
                 ?>
             </table>
     </div>
-    <div class="sector">
-        
-    </div>
 </div>
 <!-- Modal para Detalles de Entrega -->
 <div id="modalDetallesEntrega" class="modal">

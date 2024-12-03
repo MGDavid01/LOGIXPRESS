@@ -1,9 +1,263 @@
 .content-origin {
     all: unset;
     width: 80%; /* Ajusta el ancho al 90% del contenedor padre */
-    margin: auto;
+    max-height: 100vh;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
+    justify-content: start;
     align-items: center;
+}
+
+.buscador-historial {
+    color: #000000;
+    position: sticky;
+    padding-top: 2rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgb(255, 255, 255);
+    border-radius: 1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.sortable-table {
+    margin-top: 3rem;
+    width: 60%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+#searchInput {
+    margin-bottom: 2rem;
+    padding: 10px;
+    width: 60%;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+table, th, td {
+    border: 1px solid #e0e0e0;
+}
+
+th, td {
+    padding: 15px;
+    text-align: center;
+}
+
+th {
+    background-color: #007bff;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.no-pointer {
+    background-color: #007bff;
+    color: #ffffff;
+    cursor:default;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tr:hover {
+    background-color: #f1f1f1;
+}
+
+.btn {
+    text-decoration: none;
+    color: #fff;
+    background-color: #28a745;
+    padding: 8px 12px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+.btn:hover {
+    background-color: #218838;
+}
+
+/* CSS para presentación de datos estilo factura (invoice) con diseño de dos columnas */
+
+.invoice-container {
+    max-width: 90%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    font-family: 'Arial', sans-serif;
+}
+
+.invoice-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.invoice-header h1 {
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.invoice-header p {
+    font-size: 1rem;
+    color: #777;
+}
+
+.invoice-content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+
+.invoice-section {
+    flex: 1 1 calc(50% - 20px);
+    margin-bottom: 1rem;
+    padding: 15px;
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.invoice-section h2 {
+    font-size: 1.75rem;
+    color: #444;
+    margin-bottom: 10px;
+    border-bottom: 2px solid #e0e0e0;
+    padding-bottom: 5px;
+}
+
+.invoice-table {
+    width: 100%;
+    margin-bottom: 20px;
+    border-collapse: collapse;
+}
+
+.invoice-table th, .invoice-table td {
+    border: 1px solid #ccc;
+    padding: 12px;
+    text-align: left;
+    font-size: 1rem;
+    color: #333;
+}
+
+.invoice-table th {
+    background-color: #f0f0f0;
+    font-weight: bold;
+    cursor: default;
+}
+
+.invoice-table tr:nth-child(even) {
+    background-color: #ffffff;
+}
+
+.invoice-table tr:hover {
+    background-color: #f5f5f5;
+}
+
+.invoice-footer {
+    text-align: right;
+    margin-top: 40px;
+    font-size: 1.2rem;
+    color: #444;
+    font-weight: bold;
+}
+
+/* Alinear modal en el centro de la pantalla */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    align-items: start;
+    justify-content: center;
+    overflow-y: auto;
+}
+
+.modal-content {
+    background-color: #fff;
+    padding: 40px;
+    border: none;
+    width: 90%;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.close {
+    color: #aaa;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: #333;
+    text-decoration: none;
+}
+
+.invoice-summary {
+    background-color: #f0f0f0;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+.invoice-summary h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.invoice-summary p {
+    font-size: 1.1rem;
+    color: #555;
+    margin: 5px 0;
+    line-height: 1.6;
+}
+
+@media screen and (max-width: 768px) {
+    .invoice-container {
+        padding: 10px;
+    }
+    
+    .invoice-header h1 {
+        font-size: 2rem;
+    }
+    
+    .invoice-section h2 {
+        font-size: 1.5rem;
+    }
+    
+    .invoice-table th, .invoice-table td {
+        padding: 8px;
+        font-size: 0.9rem;
+    }
+
+    .invoice-content {
+        flex-direction: column;
+    }
+
+    .invoice-section {
+        flex: 1 1 100%;
+    }
 }
