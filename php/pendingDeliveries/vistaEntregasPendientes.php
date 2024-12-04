@@ -9,7 +9,7 @@ x`
                 // Recargar la página para actualizar el listado (vehículo/remolque eliminado)
                 window.addEventListener('load', () => {
                     // Redirigir eliminando el parámetro `status` de la URL
-                    setTimeout(() => {
+                    set meout(() => {
                         const url = new URL(window.location.href);
                         url.searchParams.delete('status');
                         window.history.replaceState({}, document.title, url.toString());
@@ -29,15 +29,15 @@ x`
         }
         ?>
     <div class="section">
-        <h2>Entregas Pendientes</h2>
+        <h2>Pending Deliveries</h2>
             <table>
                 <tr>
-                    <th>Entrega</th>
-                    <th>Fecha</th>
+                    <th>Delivery</th>
+                    <th>Date</th>
                     <th>Empleado</th>
-                    <th>Vehículo</th>
-                    <th>Remolque</th>
-                    <th>Estado</th>
+                    <th>Employee</th>
+                    <th>Trailer</th>
+                    <th>Status</th>
                     <th>Actions</th>
                 </tr>
                 <?php
@@ -103,32 +103,32 @@ x`
 <div id="modalAsignacionRecursos" class="modal">
     <div class="modal-content">
         <span class="close" onclick="cerrarModalAsignacion()">&times;</span>
-        <h2>Asignar Recursos a Entrega <span id="entregaIdAsignacion"></span></h2>
+        <h2>Assign Resources to Delivery<span id="entregaIdAsignacion"></span></h2>
         <form method="POST">
-            <label for="empleado">Empleado:</label>
+            <label for="empleado">Employee:</label>
             <select name="empleado" id="empleado" required>
 
             </select>
 
-            <label for="categoriaVehiculo">Categoría del Vehículo:</label>
+            <label for="categoriaVehiculo">Vehicle Category:</label>
             <select name="categoriaVehiculo" id="categoriaVehiculo" required>
 
             </select>
 
-            <label for="vehiculo">Vehículo:</label>
+            <label for="vehiculo">Vehicle:</label>
             <select name="vehiculo" id="vehiculo" required>
 
             </select>
 
             <!-- Campo Remolque, inicialmente oculto -->
             <div id="remolqueField" style="display: none;">
-                <label for="remolque">Remolque:</label>
+                <label for="remolque">Trailer:</label>
                 <select name="remolque" id="remolque">
                     
                 </select>
             </div>
             <input type="hidden" name="entrega" id="entregaHidden">
-            <button type="submit" name="accion" value="asignarRecursos" class="btn-guardar">Guardar</button>
+            <button type="submit" name="accion" value="asignarRecursos" class="btn-guardar">Save</button>
         </form>
     </div>
 </div>

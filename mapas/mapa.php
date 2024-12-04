@@ -226,20 +226,20 @@ if ($rutaExistente) {
     <div class="info-mapa-mapa">
         <!-- Información -->
         <div class="info-container">
-            <div class="info-header">Detalles Ruta De La Entrega</div>
+            <div class="info-header">Delivery Route Details</div>
         <table class="info-table">
             <thead>
                 <tr>
-                    <th>Información General</th>
-                    <th>Punto de Origen</th>
-                    <th>Puntos de Destino</th>
+                    <th>General Information</th>
+                    <th>Origin Point</th>
+                    <th>Destination Points</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td>
-                        <p class="info-highlight">Distancia Total: <br><?= $distanciaTotal ?> km</p>
-                        <p class="info-highlight">Tiempo Estimado: <br><?= $tiempoFormato ?></p>
+                        <p class="info-highlight">Total Distance: <br><?= $distanciaTotal ?> km</p>
+                        <p class="info-highlight">Estimated Time: <br><?= $tiempoFormato ?></p>
                     </td>
                     <td>
                         <p class="info-highlight"><?= completarDireccion($puntos['salida']) ?></p>

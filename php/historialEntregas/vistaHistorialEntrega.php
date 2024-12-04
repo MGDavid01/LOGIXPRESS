@@ -80,18 +80,18 @@ while ($row = mysqli_fetch_assoc($resultCategorias)) {
         }
     </script>
     <div class="buscador-historial">
-        <h2>Historial de Entregas</h2>
+        <h2>Delivery History</h2>
         <input type="text" id="searchInput" onkeyup="filterTable()" placeholder="Buscar por fecha de entrega o cliente">
     </div>
     <?php if (!empty($entregas)): ?>
         <table class="sortable-table">
             <thead>
                 <tr>
-                    <th onclick="sortTable(0)">Entrega</th>
-                    <th onclick="sortTable(1)">Fecha de Entrega</th>
-                    <th onclick="sortTable(2)">Estado</th>
-                    <th onclick="sortTable(3)">Cliente</th>
-                    <th class="no-pointer">Acciones</th>
+                    <th onclick="sortTable(0)">Delivery</th>
+                    <th onclick="sortTable(1)">Delivery Date</th>
+                    <th onclick="sortTable(2)">Status</th>
+                    <th onclick="sortTable(3)">Client</th>
+                    <th class="no-pointer">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -101,18 +101,18 @@ while ($row = mysqli_fetch_assoc($resultCategorias)) {
                         <td><?php echo htmlspecialchars($entrega['fechaEntrega']); ?></td>
                         <td><?php echo htmlspecialchars($entrega['descripcion']); ?></td>
                         <td><?php echo htmlspecialchars($entrega['nomEmpresa']); ?></td>
-                        <td><button class="btn" onclick="openModal(<?php echo $entrega['num']; ?>)">Ver Detalles</button></td>
+                        <td><button class="btn" onclick="openModal(<?php echo $entrega['num']; ?>)">See Details</button></td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
         </table>
     <?php else: ?>
-        <p>No hay entregas disponibles para mostrar.</p>
+        <p>There are no deliveries available to display.</p>
     <?php endif; ?>
     <!-- Modal para mostrar los detalles de la entrega -->
     <div id="detalleModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
-            <div id="modalContent">Cargando detalles...</div>
+            <div id="modalContent">Loading details...</div>
         </div>
     </div>
