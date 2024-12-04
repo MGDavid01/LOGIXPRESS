@@ -17,40 +17,69 @@ if (isset($_GET['num'])) {
 }
 
 // Consulta unificada para obtener todos los detalles relevantes de una entrega específica
-$query = "SELECT e.num, e.fechaEntrega, ee.descripcion AS estado, c.nomEmpresa AS cliente_nombre, 
-                 v.numSerie AS vehiculo, r.numSerie AS remolque, u.nombreUbicacion AS origen, 
-                 p.descripcion AS prioridad, et.instrucciones, e.fechaRegistro AS fechaCreacion, 
-                 GROUP_CONCAT(DISTINCT u_ruta.nombreUbicacion ORDER BY u_ruta.num SEPARATOR ', ') AS ruta, 
-                 GROUP_CONCAT(DISTINCT emp.nombre ORDER BY emp.num SEPARATOR ', ') AS empleados,
-                 GROUP_CONCAT(DISTINCT p_emp.descripcion ORDER BY p_emp.codigo SEPARATOR ', ') AS roles,
-                 GROUP_CONCAT(DISTINCT veh_recurso.numSerie ORDER BY veh_recurso.num SEPARATOR ', ') AS vehiculos_recurso,
-                 SUM(etr.distanciaTotal) AS total_distance,
-                 GROUP_CONCAT(DISTINCT tc.descripcion ORDER BY tc.codigo SEPARATOR ', ') AS tipos_carga
-          FROM entrega e
-          INNER JOIN cliente c ON e.cliente = c.num
-          LEFT JOIN vehiculo v ON e.num = v.num
-          LEFT JOIN remolque r ON e.num = r.num
-          LEFT JOIN ubi_entrega_llegada eu ON e.num = eu.entrega
-          LEFT JOIN ubicacion u ON eu.ubicacion = u.num
-          LEFT JOIN entre_estado enes ON e.num = enes.entrega
-          LEFT JOIN estado_entre ee ON enes.estadoEntrega = ee.codigo
-          LEFT JOIN ubi_entrega_llegada eu_ruta ON eu_ruta.entrega = e.num
-          LEFT JOIN ubicacion u_ruta ON eu_ruta.ubicacion = u_ruta.num
-          LEFT JOIN entre_empleado er ON e.num = er.entrega
-          LEFT JOIN empleado emp ON er.empleado = emp.num
-          LEFT JOIN puesto p_emp ON emp.puesto = p_emp.codigo
-          LEFT JOIN vehiculo veh_recurso ON er.empleado = veh_recurso.num
-          LEFT JOIN prioridad p ON e.prioridad = p.codigo
-          LEFT JOIN entre_tipocarga et ON e.num = et.entrega
-          LEFT JOIN tipo_carga tc ON et.tipoCarga = tc.codigo
-          LEFT JOIN ruta etr ON e.num = etr.num
-          WHERE e.num = ?
-          AND enes.fechaCambio = (
-              SELECT MAX(fechaCambio)
-              FROM entre_estado
-              WHERE entrega = e.num
-          )
-          GROUP BY e.num";
+$query = "SELECT e.num, e.fechaEntrega, ee.descripcion AS estado, c.nomEmpresa AS cliente_nombre,
+           u.nombreUbicacion AS origen, p.descripcion AS prioridad, et.instrucciones, 
+           e.fechaRegistro AS fechaCreacion, 
+           (
+               SELECT GROUP_CONCAT(DISTINCT u_llegada.nombreUbicacion ORDER BY sal_entrega.entrega SEPARATOR ', ')
+               FROM ubi_entrega_llegada lle_entrega
+               LEFT JOIN ubicacion u_llegada ON lle_entrega.ubicacion = u_llegada.num
+               LEFT JOIN ubi_entrega_salida sal_entrega ON sal_entrega.ubicacion = u_llegada.num
+               WHERE lle_entrega.entrega = e.num
+           ) AS ruta,
+           (
+               SELECT GROUP_CONCAT(DISTINCT p_emp.descripcion ORDER BY p_emp.codigo SEPARATOR ', ')
+               FROM entre_empleado er_empleado
+               LEFT JOIN empleado emp ON er_empleado.empleado = emp.num
+               LEFT JOIN puesto p_emp ON emp.puesto = p_emp.codigo
+               WHERE er_empleado.entrega = e.num
+           ) AS roles,
+           (
+               SELECT GROUP_CONCAT(DISTINCT CONCAT(emp.nombre, ' ' , emp.primerApe, ' ' , emp.segundoApe) ORDER BY emp.num SEPARATOR ', ')
+               FROM entre_empleado er_empleado
+               LEFT JOIN empleado emp ON er_empleado.empleado = emp.num
+               WHERE er_empleado.entrega = e.num
+           ) AS empleados,
+           (
+               SELECT GROUP_CONCAT(DISTINCT v.numSerie ORDER BY v.num SEPARATOR ', ')
+               FROM entre_vehi_remo evr_vehi
+               LEFT JOIN vehiculo v ON evr_vehi.vehiculo = v.num
+               WHERE evr_vehi.entrega = e.num
+           ) AS vehiculos_recurso,
+           (
+               SELECT GROUP_CONCAT(DISTINCT r.numSerie ORDER BY r.num SEPARATOR ', ')
+               FROM entre_vehi_remo evr_remo
+               LEFT JOIN remolque r ON evr_remo.remolque = r.num
+               WHERE evr_remo.entrega = e.num
+           ) AS remolques_recurso,
+           (
+               SELECT SUM(etr.distanciaTotal)
+               FROM ruta etr
+               WHERE etr.num = e.num
+           ) AS total_distance,
+           (
+               SELECT GROUP_CONCAT(DISTINCT tc.descripcion ORDER BY tc.codigo SEPARATOR ', ')
+               FROM entre_tipocarga etc
+               LEFT JOIN tipo_carga tc ON etc.tipoCarga = tc.codigo
+               WHERE etc.entrega = e.num
+           ) AS tipos_carga
+    FROM entrega e
+    INNER JOIN cliente c ON e.cliente = c.num
+    LEFT JOIN ubi_entrega_llegada eu ON e.num = eu.entrega
+    LEFT JOIN ubicacion u ON eu.ubicacion = u.num
+    LEFT JOIN entre_estado enes ON e.num = enes.entrega
+    LEFT JOIN estado_entre ee ON enes.estadoEntrega = ee.codigo
+    LEFT JOIN prioridad p ON e.prioridad = p.codigo
+    LEFT JOIN entre_tipocarga et ON e.num = et.entrega
+    WHERE e.num = ?
+    AND enes.fechaCambio = (
+        SELECT MAX(fechaCambio)
+        FROM entre_estado
+        WHERE entrega = e.num
+    )
+    GROUP BY e.num;
+";
+
 
 $stmt = $db->prepare($query);
 $stmt->bind_param('i', $num_entrega);
@@ -78,10 +107,14 @@ if ($result->num_rows > 0) {
     echo "</div>";
 
     echo "<div class='invoice-section'>";
-    echo "<h2>Vehicle and Trailer Information</h2>";
+    echo "<h2>Resources Used</h2>";
     echo "<table class='invoice-table'>";
-    echo "<tr><th>Vehicle</th><td>" . (!empty($entrega['vehiculo']) ? htmlspecialchars($entrega['vehiculo']) : "Not defined") . "</td></tr>";
-    echo "<tr><th>Trailer</th><td>" . (($entrega['remolque'] != 'No Aplica') ? htmlspecialchars($entrega['remolque']) : "Not applicable") . "</td></tr>";
+    echo "<tr><th>Drivers</th><td>" . (!empty($entrega['empleados']) ? htmlspecialchars($entrega['empleados']) : "Not defined") . "</td></tr>";
+    echo "<tr><th>Vehicles</th><td>" . (!empty($entrega['vehiculos_recurso']) ? htmlspecialchars($entrega['vehiculos_recurso']) : "Not defined") . "</td></tr>";
+    echo "<tr><th>Trailers</th><td>" . 
+     ((!empty($entrega['remolques_recurso']) && $entrega['remolques_recurso'] != 'No Aplica') ? 
+     htmlspecialchars($entrega['remolques_recurso']) : "Not defined") . 
+     "</td></tr>";
     echo "</table>";
     echo "</div>";
 
@@ -102,19 +135,6 @@ if ($result->num_rows > 0) {
     echo "<tr><th>Destination Locations</th><td>" . (!empty($entrega['ruta']) ? htmlspecialchars($entrega['ruta']) : "Not defined") . "</td></tr>";
     echo "<tr><th>Total Distance</th><td>" . (!empty($entrega['total_distance']) ? htmlspecialchars($entrega['total_distance']) . " km" : "Not defined") . "</td></tr>";
     echo "</table>";
-    echo "</div>";
-
-    // Segunda columna continua
-    echo "<div class='invoice-section'>";
-    echo "<h2>Resources Used</h2>";
-    echo "<table class='invoice-table'>";
-    echo "<tr><th>Driver</th><td>" . (!empty($entrega['empleados']) ? htmlspecialchars($entrega['empleados']) : "Not defined") . "</td></tr>";
-    echo "<tr><th>Vehicles Used</th><td>" . (!empty($entrega['vehiculos_recurso']) ? htmlspecialchars($entrega['vehiculos_recurso']) : "Not defined") . "</td></tr>";
-    echo "</table>";
-    echo "</div>";
-    echo "</div>"; // Cierre de invoice-content
-    echo "<div class='invoice-footer'>";
-    echo "<p>This is the whole report!</p>";
     echo "</div>";
 
     echo "</div>";

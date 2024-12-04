@@ -65,7 +65,7 @@ async function obtenerRecursos(entregaId) {
                     let remolquesSelect = document.getElementById('remolque');
                     remolquesSelect.innerHTML = '<option value="">Seleccione un remolque</option>';
                     dataRemolques.remolques.forEach(remolque => {
-                        remolquesSelect.innerHTML += `<option value="${remolque.id}">${remolque.numSerie}</option>`;
+                        remolquesSelect.innerHTML += `<option value="${remolque.num}">${remolque.numSerie}</option>`;
                     });
 
                 } else {

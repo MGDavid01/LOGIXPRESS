@@ -234,14 +234,15 @@ include_once('includes/headUsers.php');
         switch ($section) {
             case 'gestion':
                 ?>  <link rel="stylesheet" href="css/menuADM/gestionRecursos/vistaGestionRecursos.css">
+                    <script src="js/adminJS/manejoURL.js"></script>
                 <?php
                 include_once('php/gestionRecursos/vistaGestionRecursos.php');
                 break;
-            case 'vehiculos':
+            case 'tarifas':
                 ?>  <link rel="stylesheet" href="css/menuADM/vistaHerramientaVehiculos.css">
                 <?php
                 break;
-            case 'remolques':
+            case 'reportes':
                 ?>  <link rel="stylesheet" href="css/menuADM/vistaHerramientaRemolques.css">
                 <?php
                 break;

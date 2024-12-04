@@ -37,12 +37,12 @@ $remolquesDisponibles = [];
 // Crear una consulta para buscar remolques dependiendo de los tipos de carga
 if (in_array('GEN', $tiposCarga)) {
     // Buscar remolques que soporten carga general
-    $query = "SELECT num AS id, numSerie FROM remolque WHERE tipoCarga = 'GEN' AND disponibilidad = 'DISPO'";
+    $query = "SELECT num, numSerie FROM remolque WHERE tipoCarga = 'GEN' AND disponibilidad = 'DISPO'";
     $result = $db->query($query);
     if ($result) {
         while ($row = $result->fetch_assoc()) {
             $remolquesDisponibles[] = [
-                'id' => $row['id'],
+                'num' => $row['num'],
                 'numSerie' => $row['numSerie']
             ];
         }
@@ -51,12 +51,12 @@ if (in_array('GEN', $tiposCarga)) {
 
 if (in_array('GRN', $tiposCarga)) {
     // Buscar remolques que soporten carga a granel
-    $query = "SELECT num AS id, numSerie FROM remolque WHERE tipoCarga = 'GRN' AND disponibilidad = 'DISPO'";
+    $query = "SELECT num, numSerie FROM remolque WHERE tipoCarga = 'GRN' AND disponibilidad = 'DISPO'";
     $result = $db->query($query);
     if ($result) {
         while ($row = $result->fetch_assoc()) {
             $remolquesDisponibles[] = [
-                'id' => $row['id'],
+                'num' => $row['num'],
                 'numSerie' => $row['numSerie']
             ];
         }
@@ -65,12 +65,12 @@ if (in_array('GRN', $tiposCarga)) {
 
 if (in_array('PER', $tiposCarga)) {
     // Buscar remolques que soporten carga perecedera
-    $query = "SELECT num AS id, numSerie FROM remolque WHERE tipoCarga = 'PER' AND disponibilidad = 'DISPO'";
+    $query = "SELECT num, numSerie FROM remolque WHERE tipoCarga = 'PER' AND disponibilidad = 'DISPO'";
     $result = $db->query($query);
     if ($result) {
         while ($row = $result->fetch_assoc()) {
             $remolquesDisponibles[] = [
-                'id' => $row['id'],
+                'num' => $row['num'],
                 'numSerie' => $row['numSerie']
             ];
         }

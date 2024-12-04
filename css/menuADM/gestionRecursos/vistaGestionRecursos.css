@@ -4,6 +4,7 @@
     max-height: 100vh;
     overflow-y: auto;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
 }
@@ -23,6 +24,7 @@
     justify-content: center;
     width: 30rem;
     height: 15rem;
+    max-height: 15rem;
     min-height: max-content;
     background: #fff;
     border-radius: 8px;
@@ -42,7 +44,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 10px;
+}
+
+.image-container img{
+    width: 70%;
+    height: auto;
+    padding: 1rem;
 }
 
 .card i {
@@ -67,4 +74,27 @@
 }
 .card button:hover {
     background-color: #0056b3;
+}
+
+.btn-back {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 25%;
+    border: none;
+    margin-top: 2rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-back button{
+    width: 100%;
+    font-weight: bold;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
 }

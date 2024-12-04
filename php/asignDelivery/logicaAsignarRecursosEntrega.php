@@ -3,9 +3,6 @@ $entregaId = filter_input(INPUT_POST, 'entrega', FILTER_VALIDATE_INT);
 $empleadoId = filter_input(INPUT_POST, 'empleado', FILTER_VALIDATE_INT);
 $vehiculoId = filter_input(INPUT_POST, 'vehiculo', FILTER_VALIDATE_INT);
 $remolqueId = filter_input(INPUT_POST, 'remolque', FILTER_VALIDATE_INT);
-if (isset($remolqueId) || $remolqueId = "") {
-    $remolqueId = 1;
-}
 // Mostrar mensajes de depuración para verificar los valores recibidos
 if ($entregaId === false || $entregaId === null) {
     echo "<p>Error: El valor de 'entrega' no es válido o no se recibió.</p>";
@@ -16,9 +13,12 @@ if ($empleadoId === false || $empleadoId === null) {
 if ($vehiculoId === false || $vehiculoId === null) {
     echo "<p>Error: El valor de 'vehículo' no es válido o no se recibió.</p>";
 }
+if ($remolqueId === false || $remolqueId === null) {
+    $remolqueId = 1;
+}
 
 // Validar campos obligatorios
-if ($entregaId && $empleadoId && $vehiculoId) {
+if ($entregaId && $empleadoId && $vehiculoId && $remolqueId) {
     try {
         // Preparar la llamada al procedimiento almacenado
         $stmt = $db->prepare("CALL SP_asignarRecursosEntrega(?, ?, ?, ?, @mensaje)");

@@ -78,24 +78,24 @@
         <form method="POST">
             <label for="empleado">Empleado:</label>
             <select name="empleado" id="empleado" required>
-                <option value="">Seleccione un empleado</option>
+
             </select>
 
             <label for="categoriaVehiculo">Categoría del Vehículo:</label>
             <select name="categoriaVehiculo" id="categoriaVehiculo" required>
-                <option value="">Seleccione una categoría</option>
+
             </select>
 
             <label for="vehiculo">Vehículo:</label>
             <select name="vehiculo" id="vehiculo" required>
-                <option value="">Seleccione un vehículo</option>
+
             </select>
 
             <!-- Campo Remolque, inicialmente oculto -->
             <div id="remolqueField" style="display: none;">
                 <label for="remolque">Remolque:</label>
                 <select name="remolque" id="remolque">
-                    <option value="">Seleccione un remolque</option>
+                    
                 </select>
             </div>
             <input type="hidden" name="entrega" id="entregaHidden">
