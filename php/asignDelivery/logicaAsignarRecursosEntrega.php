@@ -33,7 +33,8 @@ if ($entregaId && $empleadoId && $vehiculoId && $remolqueId) {
                 $row = $result->fetch_assoc();
                     echo "<p>" . htmlspecialchars($row['mensaje']) . "</p>";
                 if ($row['mensaje'] === "OK.") {
-                    
+                    header('Location: menuCHD.php?section=entregasPendientes&status=success');
+                    exit;
                 } else {
                     echo "<p>Error inesperado al recuperar el mensaje de salida.</p>";
                 }

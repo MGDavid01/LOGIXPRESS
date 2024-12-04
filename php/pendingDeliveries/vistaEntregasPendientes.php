@@ -1,4 +1,33 @@
+
+
 <div class="tables-deliveries">
+<?php
+        $status = filter_input(INPUT_GET, 'status');
+        if ($status == 'success') {
+            ?>
+            <script>
+                // Recargar la página para actualizar el listado (vehículo/remolque eliminado)
+                window.addEventListener('load', () => {
+                    // Redirigir eliminando el parámetro `status` de la URL
+                    setTimeout(() => {
+                        const url = new URL(window.location.href);
+                        url.searchParams.delete('status');
+                        window.history.replaceState({}, document.title, url.toString());
+                        // Mostrar el mensaje después de que la URL esté limpia
+                        document.getElementById('successMessage').innerText = 'Registration Successful';
+                    }, 500); // Esperar 500ms para recargar y eliminar el parámetro
+                });
+            </script>
+            <?php
+        
+        ?>
+        <!-- Mensaje HTML que se mostrará después de la actualización -->
+        <h2 id="successMessage"></h2>
+        <?php
+        }else{
+            ?><h2></h2><?php
+        }
+        ?>
     <div class="section">
         <h2>Entregas Pendientes</h2>
             <table>
