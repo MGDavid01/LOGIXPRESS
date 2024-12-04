@@ -114,7 +114,7 @@ while ($ubicacion = $resultUbicacionesDestino->fetch_assoc()) {
 // Consulta para obtener todos los tipos de carga de la entrega
 $queryTiposCarga = "
     SELECT tc.descripcion AS tipoCarga
-    FROM entre_tipoCarga et
+    FROM entre_tipocarga et
     INNER JOIN tipo_carga tc ON et.tipoCarga = tc.codigo
     WHERE et.entrega = ?";
 
