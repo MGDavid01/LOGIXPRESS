@@ -1,0 +1,8 @@
+.content-crud {
+    display: flex;
+    align-items: start;
+    justify-content: start;
+    width: 90%;
+    max-height: 80%;
+    gap: 3%;
+}
