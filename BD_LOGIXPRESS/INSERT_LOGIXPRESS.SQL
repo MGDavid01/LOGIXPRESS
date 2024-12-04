@@ -1,4 +1,4 @@
--- Active: 1729699153576@@127.0.0.1@3306@LOGIXPRESS
+-- Active: 1732599920807@@127.0.0.1@3306@LOGIXPRESS
 INSERT INTO cliente (nomEmpresa, nomPila, primerApe, segundoApe, numTelefono, email, password) VALUES
 ('Transporte Seguro S.A.', 'Juan', 'Pérez', 'García', '5551234567', 'juan.perez@ejemplo.com', sha2('contraseña123', 256)),
 ('Logística Global', 'María', 'López', NULL, '5559876543', 'maria.lopez@ejemplo.com', sha2('contraseña123', 256)),
@@ -469,3 +469,22 @@ INSERT INTO cliente_ubi (cliente, ubicacion, fechaRegistro) VALUES
 (1,4, CURRENT_DATE),
 (1,3, CURRENT_DATE),
 (1,6, CURRENT_DATE);
+
+
+INSERT INTO empleado (nombre, primerApe, segundoApe, telefono, email, password, puesto, estadoEmpleado) VALUES
+('María', 'Pérez', 'Hernández', '5551234567', 'maria.ph@example.com', sha2('123', 256), 'CHF', 'ACT'),
+('Carlos', 'Sánchez', 'López', '5559876543', 'carlos.sl@example.com', sha2('123', 256), 'CHF', 'ACT'),
+('Ana', 'Martínez', 'García', '5551112233', 'ana.mg@example.com', sha2('123', 256), 'CHF', 'ACT'),
+('Jorge', 'Ruiz', 'Torres', '5555555555', 'jorge.rt@example.com', sha2('123', 256), 'CHF', 'ACT'),
+('Laura', 'Castro', 'Ortiz', '5557778899', 'laura.co@example.com', sha2('123', 256), 'CHF', 'ACT'),
+('Sofía', 'Gómez', 'Flores', '5552223344', 'sofia.gf@example.com', sha2('123', 256), 'CHF', 'ACT'),
+('Diego', 'Morales', 'Vargas', '5558889999', 'diego.mv@example.com', sha2('123', 256), 'CHF', 'ACT'),
+('Paola', 'Ríos', 'Velázquez', '5554445566', 'paola.rv@example.com', sha2('123', 256), 'CHF', 'ACT'),
+('Antonio', 'López', 'Ramírez', '5556667788', 'antonio.lr@example.com', sha2('123', 256), 'CHF', 'ACT'),
+('Gabriela', 'Hernández', 'Gómez', '5553334455', 'gabriela.hg@example.com', sha2('123', 256), 'CHF', 'ACT'),
+('Ricardo', 'Fernández', 'Pérez', '5559991111', 'ricardo.fp@example.com', sha2('123', 256), 'CHF', 'ACT'),
+('Valeria', 'Medina', 'Santos', '5551212121', 'valeria.ms@example.com', sha2('123', 256), 'CHF', 'ACT'),
+('Esteban', 'Vargas', 'Mendoza', '5551313131', 'esteban.vm@example.com', sha2('123', 256), 'CHF', 'ACT'),
+('Lucía', 'Cruz', 'Álvarez', '5551414141', 'lucia.ca@example.com', sha2('123', 256), 'CHF', 'ACT'),
+('Pedro', 'Navarro', 'Blanco', '5551515151', 'pedro.nb@example.com', sha2('123', 256), 'CHF', 'ACT');
+
