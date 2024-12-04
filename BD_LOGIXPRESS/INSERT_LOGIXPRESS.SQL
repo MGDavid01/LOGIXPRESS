@@ -509,3 +509,55 @@ INSERT INTO ubicacion (nombreUbicacion, nombreCalle, numCalle, colonia, codigoPo
 ('Depósito Parque Industrial', 'Avenida De Los Maestros', '4040', 'Parque Industrial Pacífico', '22643'),
 ('Centro Logístico Pacifico', 'Boulevard Insurgentes', '4141', 'Río Tijuana', '22226'),
 ('Sucursal Insurgentes Norte', 'Boulevard Cucapah', '4242', 'Mariano Matamoros Norte', '22234');
+
+
+INSERT INTO cliente_ubi (cliente, ubicacion, fechaRegistro) VALUES
+(1, 1, '2024-12-01'), -- Cliente 1 ligado a la ubicación 1
+(2, 2, '2024-12-01'), -- Cliente 2 ligado a la ubicación 2
+(3, 3, '2024-12-01'), -- Cliente 3 ligado a la ubicación 3
+(4, 4, '2024-12-01'), -- Cliente 4 ligado a la ubicación 4
+(5, 5, '2024-12-01'), -- Cliente 5 ligado a la ubicación 5
+(6, 6, '2024-12-01'), -- Cliente 6 ligado a la ubicación 6
+(7, 7, '2024-12-01'), -- Cliente 7 ligado a la ubicación 7
+(8, 8, '2024-12-01'), -- Cliente 8 ligado a la ubicación 8
+(9, 9, '2024-12-01'), -- Cliente 9 ligado a la ubicación 9
+(10, 10, '2024-12-01'), -- Cliente 10 ligado a la ubicación 10
+(11, 11, '2024-12-01'), -- Cliente 11 ligado a la ubicación 11
+(12, 12, '2024-12-01'), -- Cliente 12 ligado a la ubicación 12
+(13, 13, '2024-12-01'), -- Cliente 13 ligado a la ubicación 13
+(14, 14, '2024-12-01'), -- Cliente 14 ligado a la ubicación 14
+(15, 15, '2024-12-01'), -- Cliente 15 ligado a la ubicación 15
+(16, 16, '2024-12-01'); -- Cliente 16 ligado a la ubicación 16
+
+
+INSERT INTO ubicacion (nombreUbicacion, nombreCalle, numCalle, colonia, codigoPostal) VALUES
+('Centro de Acopio Tijuana', 'Boulevard Federico Benítez', '2323', 'Los Álamos', '22226'),
+('Sucursal La Gloria', 'Carretera Libre Tijuana-Ensenada', '2424', 'La Gloria', '22600'),
+('Centro de Operaciones Frontera', 'Avenida Internacional', '2525', 'Zona Norte', '22010'),
+('Punto de Entrega Las Américas', 'Boulevard Las Américas', '2626', 'Otay Galerías', '22457'),
+('Almacén Lomas Verdes', 'Calle Principal', '2727', 'Lomas Verdes', '22615'),
+('Centro de Distribución Valle Sur', 'Boulevard Casa Blanca', '2828', 'El Lago', '22210'),
+('Terminal de Carga Sur', 'Boulevard Fundadores', '2929', 'Buena Vista', '22000'),
+('Cliente Industrial Omega', 'Calle 16 de Septiembre', '3030', 'El Refugio', '22115'),
+('Proveedor Logístico Delta', 'Boulevard Rosas Magallón', '3131', 'Los Altos', '22134'),
+('Plataforma de Envíos Oriente', 'Carretera Federal 2D', '3232', 'Valle Verde', '22226'),
+('Oficinas Zona Norte', 'Avenida Constitución', '3333', 'Zona Centro', '22000'),
+('Sucursal Jardines de la Mesa', 'Boulevard Díaz Ordaz', '3434', 'Jardines de la Mesa', '22115'),
+('Centro de Almacenaje San Antonio', 'Carretera Escénica', '3535', 'San Antonio del Mar', '22565'),
+('Estación de Transferencia Las Palmas', 'Callejón Palmas', '3636', 'Las Palmas', '22430'),
+('Cliente Comercial Sigma', 'Avenida Ermita Sur', '3737', 'El Rubí', '22116'),
+('Proveedor General Beta', 'Calle Ocampo', '3838', 'Zona Centro', '22000'),
+('Punto de Recolección Plaza Otay', 'Boulevard Industrial', '3939', 'Otay Centenario', '22457'),
+('Depósito Parque Industrial', 'Avenida De Los Maestros', '4040', 'Parque Industrial Pacífico', '22643'),
+('Centro Logístico Pacifico', 'Boulevard Insurgentes', '4141', 'Río Tijuana', '22226'),
+('Sucursal Insurgentes Norte', 'Boulevard Cucapah', '4242', 'Mariano Matamoros Norte', '22234');
+
+
+INSERT INTO cliente_ubi (cliente, ubicacion, fechaRegistro) VALUES
+(1, 41, '2024-12-01'), (1, 42, '2024-12-02'), (1, 43, '2024-12-03'),
+(2, 44, '2024-12-01'), (2, 45, '2024-12-02'), (2, 46, '2024-12-03'),
+(3, 47, '2024-12-01'), (3, 48, '2024-12-02'), (3, 49, '2024-12-03'),
+(4, 50, '2024-12-01'), (4, 51, '2024-12-02'), (4, 52, '2024-12-03'),
+(5, 53, '2024-12-01'), (5, 54, '2024-12-02'), (5, 55, '2024-12-03'),
+(6, 56, '2024-12-01'), (6, 57, '2024-12-02'), (6, 58, '2024-12-03'),
+(7, 59, '2024-12-01'), (7, 60, '2024-12-02');
