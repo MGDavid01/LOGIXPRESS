@@ -45,6 +45,11 @@
     font-size: 1.6rem;
 }
 
+.card ul {
+    list-style: circle;
+    padding: 0.5rem 0rem 0.5rem 2rem;
+}
+
 .detalles-producto table {
     width: 100%;
     border-collapse: collapse;

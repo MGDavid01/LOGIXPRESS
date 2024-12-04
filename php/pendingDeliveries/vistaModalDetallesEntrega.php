@@ -14,7 +14,7 @@ $db = connectTo2DB();
 $entregaId = filter_input(INPUT_GET, 'entregaId', FILTER_VALIDATE_INT);
 
 if (!$entregaId) {
-    echo '<p style="font-size:2rem;">Error: Entrega no localizado.</p>';
+    echo '<p style="font-size:2rem;">Error: Entrega no localizada.</p>';
     exit;
 }
 
@@ -26,7 +26,6 @@ $queryEntrega = "
            CONCAT(e.horaInicio, ' - ', e.horaFin) AS ventanaHorario, 
            p.descripcion AS prioridad, 
            es.descripcion AS estado,
-           tc.descripcion AS tipoCarga,
            c.nomEmpresa AS cliente,
            ubS.nombreUbicacion AS ubicacionSalida,
            pr.nombre AS productoNombre,
@@ -42,7 +41,6 @@ $queryEntrega = "
     INNER JOIN entre_estado en ON en.entrega = e.num
     INNER JOIN estado_entre es ON en.estadoEntrega = es.codigo
     INNER JOIN cliente c ON e.cliente = c.num
-    INNER JOIN tipo_carga tc ON e.tipoCarga = tc.codigo
     INNER JOIN ubi_entrega_salida ues ON ues.entrega = e.num
     INNER JOIN ubicacion ubS ON ues.ubicacion = ubS.num
     INNER JOIN entre_producto ep ON e.num = ep.entrega
@@ -112,91 +110,118 @@ $ubicacionesDestino = [];
 while ($ubicacion = $resultUbicacionesDestino->fetch_assoc()) {
     $ubicacionesDestino[] = $ubicacion['ubicacionDestino']; // Solo el valor de la ubicación
 }
+
+// Consulta para obtener todos los tipos de carga de la entrega
+$queryTiposCarga = "
+    SELECT tc.descripcion AS tipoCarga
+    FROM entre_tipoCarga et
+    INNER JOIN tipo_carga tc ON et.tipoCarga = tc.codigo
+    WHERE et.entrega = ?";
+
+$stmtTiposCarga = $db->prepare($queryTiposCarga);
+$stmtTiposCarga->bind_param('i', $entregaId);
+$stmtTiposCarga->execute();
+$resultTiposCarga = $stmtTiposCarga->get_result();
+
+// Almacenar los tipos de carga en un array
+$tiposCarga = [];
+while ($tipoCarga = $resultTiposCarga->fetch_assoc()) {
+    $tiposCarga[] = $tipoCarga['tipoCarga'];
+}
 ?>
-    <div class="entrega-detalle">
-        <!-- Encabezado Principal -->
-        <div class="encabezado-entrega">
-            <h1>Entrega: #<?= htmlspecialchars($entregaId); ?></h1>
-            <span class="estado-entrega <?= strtolower($detalleEntrega['estado'] ?? 'desconocido'); ?>">
-                <?= htmlspecialchars($detalleEntrega['estado'] ?? 'Desconocido'); ?>
-            </span>
-        </div>
 
-        <!-- Información General de la Entrega -->
-        <div class="card">
-            <h3>Información General</h3>
-            <p><strong>Cliente:</strong> <?= htmlspecialchars($detalleEntrega['cliente'] ?? 'Sin definir'); ?></p>
-            <p><strong>Fecha de Pedido:</strong> <?= htmlspecialchars($detalleEntrega['fechaRegistro'] ?? 'Sin definir'); ?></p>
-            <p><strong>Fecha de Entrega:</strong> <?= htmlspecialchars($detalleEntrega['fechaEntrega'] ?? 'Sin definir'); ?></p>
-            <p><strong>Prioridad:</strong> <?= htmlspecialchars($detalleEntrega['prioridad'] ?? 'Sin definir'); ?></p>
-            <p><strong>Tipo de Carga:</strong> <?= htmlspecialchars($detalleEntrega['tipoCarga'] ?? 'Sin definir'); ?></p>
-        </div>
+<div class="entrega-detalle">
+    <!-- Encabezado Principal -->
+    <div class="encabezado-entrega">
+        <h1>Entrega: #<?= htmlspecialchars($entregaId); ?></h1>
+        <span class="estado-entrega <?= strtolower($detalleEntrega['estado'] ?? 'desconocido'); ?>">
+            <?= htmlspecialchars($detalleEntrega['estado'] ?? 'Desconocido'); ?>
+        </span>
+    </div>
 
-        <!-- Ubicaciones Seleccionadas -->
-        <div class="card">
-            <h3>Ubicaciones</h3>
-            <p><strong>Ubicación de Salida:</strong><br> <?= htmlspecialchars($detalleEntrega['ubicacionSalida'] ?? 'Sin definir'); ?></p><br>
-            
-            <h4>Ubicaciones de Llegada:</h4>
-            <ul>
-                <?php if (!empty($ubicacionesDestino)): ?>
-                    <?php foreach ($ubicacionesDestino as $ubicacion): ?>
-                        <li><?= htmlspecialchars($ubicacion); ?></li>
+    <!-- Información General de la Entrega -->
+    <div class="card">
+        <h3>Información General</h3>
+        <p><strong>Cliente:</strong> <?= htmlspecialchars($detalleEntrega['cliente'] ?? 'Sin definir'); ?></p>
+        <p><strong>Fecha de Pedido:</strong> <?= htmlspecialchars($detalleEntrega['fechaRegistro'] ?? 'Sin definir'); ?></p>
+        <p><strong>Fecha de Entrega:</strong> <?= htmlspecialchars($detalleEntrega['fechaEntrega'] ?? 'Sin definir'); ?></p>
+        <p><strong>Prioridad:</strong> <?= htmlspecialchars($detalleEntrega['prioridad'] ?? 'Sin definir'); ?></p>
+        <p><strong>Tipos de Carga:</strong>
+            <?php if (!empty($tiposCarga)): ?>
+                <ul>
+                    <?php foreach ($tiposCarga as $tipo): ?>
+                        <li><?= htmlspecialchars($tipo); ?></li>
                     <?php endforeach; ?>
-                <?php else: ?>
-                    <li>Sin definir</li>
-                <?php endif; ?>
-            </ul>
-        </div>
+                </ul>
+            <?php else: ?>
+                <span>Sin definir</span>
+            <?php endif; ?>
+        </p>
     </div>
 
-    <!-- Detalles del Producto -->
+    <!-- Ubicaciones Seleccionadas -->
     <div class="card">
-        <h3>Detalles de los Productos</h3>
-        <table>
-            <thead>
-                <tr>
-                    <th>Nombre del Producto</th>
-                    <th>Altura (m)</th>
-                    <th>Ancho (m)</th>
-                    <th>Longitud (m)</th>
-                    <th>Peso (kg)</th>
-                    <th>Cantidad</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($productos as $producto): ?>
-                <tr>
-                    <td><?= htmlspecialchars($producto['nombre'] ?? 'No disponible'); ?></td>
-                    <td><?= number_format($producto['alto'] ?? 0, 2); ?></td>
-                    <td><?= number_format($producto['ancho'] ?? 0, 2); ?></td>
-                    <td><?= number_format($producto['largo'] ?? 0, 2); ?></td>
-                    <td><?= number_format($producto['peso'] ?? 0, 2); ?></td>
-                    <td><?= htmlspecialchars($producto['cantidad'] ?? '0'); ?></td>
-                </tr>
+        <h3>Ubicaciones</h3>
+        <p><strong>Ubicación de Salida:</strong><br> <?= htmlspecialchars($detalleEntrega['ubicacionSalida'] ?? 'Sin definir'); ?></p><br>
+        
+        <h4>Ubicaciones de Llegada:</h4>
+        <ul>
+            <?php if (!empty($ubicacionesDestino)): ?>
+                <?php foreach ($ubicacionesDestino as $ubicacion): ?>
+                    <li><?= htmlspecialchars($ubicacion); ?></li>
                 <?php endforeach; ?>
-            </tbody>
-        </table>
+            <?php else: ?>
+                <li>Sin definir</li>
+            <?php endif; ?>
+        </ul>
     </div>
+</div>
 
-    <!-- Resumen Total del Peso y Volumen -->
-    <div class="card">
-        <h3>Resumen de la Entrega</h3>
-        <p><strong>Peso Total:</strong> <?= number_format($pesoTotalE, 2); ?> kg</p>
-        <p><strong>Volumen Total:</strong> <?= number_format($volumenTotalE, 2); ?> m³</p>
-    </div>
+<!-- Detalles del Producto -->
+<div class="card">
+    <h3>Detalles de los Productos</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Nombre del Producto</th>
+                <th>Altura (m)</th>
+                <th>Ancho (m)</th>
+                <th>Longitud (m)</th>
+                <th>Peso (kg)</th>
+                <th>Cantidad</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($productos as $producto): ?>
+            <tr>
+                <td><?= htmlspecialchars($producto['nombre'] ?? 'No disponible'); ?></td>
+                <td><?= number_format($producto['alto'] ?? 0, 2); ?></td>
+                <td><?= number_format($producto['ancho'] ?? 0, 2); ?></td>
+                <td><?= number_format($producto['largo'] ?? 0, 2); ?></td>
+                <td><?= number_format($producto['peso'] ?? 0, 2); ?></td>
+                <td><?= htmlspecialchars($producto['cantidad'] ?? '0'); ?></td>
+            </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
 
-    <!-- Botón para Asignación de Recursos -->
-    <!-- Agregar botón para Asignar Recursos -->
-    <div class="asignacion-recursos">
-       
-        <button class="btn-guardar" onclick="mostrarModalAsignacion(<?= $detalleEntrega['entregaId']; ?>)">Asignar Recursos</button>
-    </div>
+<!-- Resumen Total del Peso y Volumen -->
+<div class="card">
+    <h3>Resumen de la Entrega</h3>
+    <p><strong>Peso Total:</strong> <?= number_format($pesoTotalE, 2); ?> kg</p>
+    <p><strong>Volumen Total:</strong> <?= number_format($volumenTotalE, 2); ?> m³</p>
+</div>
+
+<!-- Botón para Asignación de Recursos -->
+<div class="asignacion-recursos">
+    <button class="btn-guardar" onclick="mostrarModalAsignacion(<?= $detalleEntrega['entregaId']; ?>)">Asignar Recursos</button>
 </div>
 
 <?php
 // Cerrar conexiones y liberar recursos
 $stmt->close();
 $stmtUbicacionesDestino->close();
+$stmtTiposCarga->close();
 $db->close();
 ?>
