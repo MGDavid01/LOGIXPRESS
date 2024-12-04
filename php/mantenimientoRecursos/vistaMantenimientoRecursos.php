@@ -87,7 +87,7 @@
                         <div class="content-img">
                             <img src="imagenes/vehiculo.png" alt="Vehículo">
                         </div>
-                        <h2>Vehículos</h2>
+                        <h2>Vehicles</h2>
                     </div>
                 </button>
                 <button id="remolques" onclick="elegirRecurso('remolques')">
@@ -95,7 +95,7 @@
                         <div class="content-img">
                             <img src="imagenes/remolque.png" alt="Remolque">
                         </div>
-                        <h2>Remolques</h2>
+                        <h2>Trailers</h2>
                     </div>
                 </button>
             </div>

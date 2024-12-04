@@ -114,7 +114,7 @@ while ($ubicacion = $resultUbicacionesDestino->fetch_assoc()) {
 // Consulta para obtener todos los tipos de carga de la entrega
 $queryTiposCarga = "
     SELECT tc.descripcion AS tipoCarga
-    FROM entre_tipoCarga et
+    FROM entre_tipocarga et
     INNER JOIN tipo_carga tc ON et.tipoCarga = tc.codigo
     WHERE et.entrega = ?";
 
@@ -141,12 +141,12 @@ while ($tipoCarga = $resultTiposCarga->fetch_assoc()) {
 
     <!-- Información General de la Entrega -->
     <div class="card">
-        <h3>Información General</h3>
-        <p><strong>Cliente:</strong> <?= htmlspecialchars($detalleEntrega['cliente'] ?? 'Sin definir'); ?></p>
-        <p><strong>Fecha de Pedido:</strong> <?= htmlspecialchars($detalleEntrega['fechaRegistro'] ?? 'Sin definir'); ?></p>
-        <p><strong>Fecha de Entrega:</strong> <?= htmlspecialchars($detalleEntrega['fechaEntrega'] ?? 'Sin definir'); ?></p>
-        <p><strong>Prioridad:</strong> <?= htmlspecialchars($detalleEntrega['prioridad'] ?? 'Sin definir'); ?></p>
-        <p><strong>Tipos de Carga:</strong>
+        <h3>General Information</h3>
+        <p><strong>Client:</strong> <?= htmlspecialchars($detalleEntrega['cliente'] ?? 'Sin definir'); ?></p>
+        <p><strong>Order Date:</strong> <?= htmlspecialchars($detalleEntrega['fechaRegistro'] ?? 'Sin definir'); ?></p>
+        <p><strong>Delivery Date:</strong> <?= htmlspecialchars($detalleEntrega['fechaEntrega'] ?? 'Sin definir'); ?></p>
+        <p><strong>Priority:</strong> <?= htmlspecialchars($detalleEntrega['prioridad'] ?? 'Sin definir'); ?></p>
+        <p><strong>Load Types:</strong>
             <?php if (!empty($tiposCarga)): ?>
                 <ul>
                     <?php foreach ($tiposCarga as $tipo): ?>
@@ -154,24 +154,23 @@ while ($tipoCarga = $resultTiposCarga->fetch_assoc()) {
                     <?php endforeach; ?>
                 </ul>
             <?php else: ?>
-                <span>Sin definir</span>
+                <span>Undefined</span>
             <?php endif; ?>
         </p>
     </div>
 
     <!-- Ubicaciones Seleccionadas -->
     <div class="card">
-        <h3>Ubicaciones</h3>
-        <p><strong>Ubicación de Salida:</strong><br> <?= htmlspecialchars($detalleEntrega['ubicacionSalida'] ?? 'Sin definir'); ?></p><br>
-        
-        <h4>Ubicaciones de Llegada:</h4>
+        <h3>Locations</h3>
+        <p><strong>Departure Location:</strong><br> <?= htmlspecialchars($detalleEntrega['ubicacionSalida'] ?? 'Sin definir'); ?></p><br>
+        <h4>Arrival Locations:</h4>
         <ul>
             <?php if (!empty($ubicacionesDestino)): ?>
                 <?php foreach ($ubicacionesDestino as $ubicacion): ?>
                     <li><?= htmlspecialchars($ubicacion); ?></li>
                 <?php endforeach; ?>
             <?php else: ?>
-                <li>Sin definir</li>
+                <li>Undefined</li>
             <?php endif; ?>
         </ul>
     </div>
@@ -179,16 +178,16 @@ while ($tipoCarga = $resultTiposCarga->fetch_assoc()) {
 
 <!-- Detalles del Producto -->
 <div class="card">
-    <h3>Detalles de los Productos</h3>
+    <h3>Product Details</h3>
     <table>
         <thead>
             <tr>
-                <th>Nombre del Producto</th>
-                <th>Altura (m)</th>
-                <th>Ancho (m)</th>
-                <th>Longitud (m)</th>
+                <th>Product Name</th>
+                <th>Height (m)</th>
+                <th>Broad (m)</th>
+                <th>Length (m)</th>
                 <th>Peso (kg)</th>
-                <th>Cantidad</th>
+                <th>Amount</th>
             </tr>
         </thead>
         <tbody>
@@ -208,9 +207,9 @@ while ($tipoCarga = $resultTiposCarga->fetch_assoc()) {
 
 <!-- Resumen Total del Peso y Volumen -->
 <div class="card">
-    <h3>Resumen de la Entrega</h3>
-    <p><strong>Peso Total:</strong> <?= number_format($pesoTotalE, 2); ?> kg</p>
-    <p><strong>Volumen Total:</strong> <?= number_format($volumenTotalE, 2); ?> m³</p>
+    <h3>Delivery Summary</h3>
+    <p><strong>Total Weight:</strong> <?= number_format($pesoTotalE, 2); ?> kg</p>
+    <p><strong>Total Volume:</strong> <?= number_format($volumenTotalE, 2); ?> m³</p>
 </div>
 
 <!-- Botón para Asignación de Recursos -->
