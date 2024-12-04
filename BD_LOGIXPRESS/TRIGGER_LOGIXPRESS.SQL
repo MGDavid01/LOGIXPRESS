@@ -96,6 +96,18 @@ BEGIN
 END$$
  /*************************************************************/
 DELIMITER $$
+CREATE TRIGGER TR_cambiarEstadoEmpleadoEntrega
+AFTER INSERT ON entre_empleado
+FOR EACH ROW
+BEGIN
+    -- Actualizar la disponibilidad del empleado a RES (reservado)
+    UPDATE empleado
+    SET estadoEmpleado = 'RES'
+    WHERE num = NEW.empleado;
+
+END$$
+ /*************************************************************/
+DELIMITER $$
 CREATE TRIGGER TR_cambiarEstadosVehiculoRemolqueMantenimiento
 AFTER INSERT ON mantenimiento
 FOR EACH ROW

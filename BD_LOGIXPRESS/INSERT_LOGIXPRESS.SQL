@@ -332,6 +332,7 @@ INSERT INTO producto (nombre, descripcion, categoria, etiquetado, alto, ancho, l
 INSERT INTO estado_emple (codigo, descripcion) VALUES
 ('ACT', 'Activo'),
 ('ENR', 'En Entrega'),
+('RES', 'Reservado'),
 ('SUS', 'Suspendido'),
 ('VAC', 'De Vacaciones'),
 ('RET', 'Retirado');

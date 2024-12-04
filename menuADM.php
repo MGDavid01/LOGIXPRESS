@@ -6,6 +6,7 @@ $db = connectTo2DB();
 function vistaInicial(){
     echo "<p id='welcome'>Welcome, " . $_SESSION['nombre'] . "</p>";
 }
+
 // Función para mostrar el formulario de empleados
 function formularioEmpleado($empleado = null) {
     global $db;
@@ -213,34 +214,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $section = isset($_GET['section']) ? $_GET['section'] : '';
 include_once('includes/headUsers.php');
 ?>
-    <nav>
+    <link rel="stylesheet" href="css/menuADM/menuADM.css">
+    <link rel="stylesheet" href="css/forms.css">
+    <link rel="stylesheet" href="css/tables.css">
+    <nav class="side-nav">
         <div class="logo-container">
-            <img src="imagenes/LOGIXPRESS_LOGO_F2.png" alt="Logo">
+            <a href="menuADM.php" id="logo-hover"><img src="imagenes/LOGIXPRESS_LOGO_F2.png" alt="Logo"></a>
         </div>
         <ul>
-            <li><a href="?section=empleados">Employees</a></li>
-            <li><a href="?section=vehiculos">Vehicles</a></li>
-            <li><a href="?section=remolques">Trailers</a></li>
+            <li><a href="?section=gestion">Resource Management</a></li>
         </ul>
         <!-- Botón de Logout -->
         <form action="" method="post" >
             <button type="submit" name="accion" value="logout">Log out</button>
         </form>
     </nav>
-
-    <div class="main-content">
+    <div class="content-origin">
         <?php
         switch ($section) {
+            case 'gestion':
+                ?>  <link rel="stylesheet" href="css/menuADM/gestionRecursos/vistaGestionRecursos.css">
+                <?php
+                include_once('php/gestionRecursos/vistaGestionRecursos.php');
+                break;
             case 'vehiculos':
-                formularioVehiculo();
+                ?>  <link rel="stylesheet" href="css/menuADM/vistaHerramientaVehiculos.css">
+                <?php
                 break;
             case 'remolques':
-                formularioRemolque();
-                break;
-            case 'empleados':
-                formularioEmpleado();
+                ?>  <link rel="stylesheet" href="css/menuADM/vistaHerramientaRemolques.css">
+                <?php
                 break;
             default:
+            ?>  <link rel="stylesheet" href="css/menuADM/vistaInicial.css">
+            <?php
                 vistaInicial();
                 break;
         }
