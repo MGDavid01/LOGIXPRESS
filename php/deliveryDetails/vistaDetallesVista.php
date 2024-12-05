@@ -6,7 +6,7 @@
              (SELECT es.descripcion
                 FROM entre_estado en
                 INNER JOIN estado_entre es on es.codigo = en.estadoEntrega
-                WHERE e.num = en.entrega) AS estado
+                WHERE e.num = en.entrega LIMIT 1) AS estado 
              FROM entrega e
              WHERE e.cliente = ".$cliente.";";
         

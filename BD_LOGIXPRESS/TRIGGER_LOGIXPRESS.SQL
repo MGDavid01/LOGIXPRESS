@@ -6,30 +6,44 @@ CREATE TRIGGER TR_validarEntrega
 BEFORE INSERT ON entrega 
 FOR EACH ROW
 BEGIN
-    -- Validar que la fechaEntrega no sea sea null.
-    IF NEW.fechaEntrega = NULL THEN
+    DECLARE duration INT;
+
+    -- Validar que la fechaEntrega no sea null.
+    IF NEW.fechaEntrega IS NULL THEN
         SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'La fecha de entrega no debe estar vacio .';
-    -- Validar que la fechaEntrega no sea sea anterior a la fechaRegistro.
+        SET MESSAGE_TEXT = 'La fecha de entrega no debe estar vacía.';
+    
+    -- Validar que la fechaEntrega no sea anterior a la fechaRegistro.
     ELSEIF NEW.fechaEntrega <= NEW.fechaRegistro THEN
         SIGNAL SQLSTATE '45000'
         SET MESSAGE_TEXT = 'La fecha de entrega debe ser al menos un día posterior a la fecha de registro.';
+    
     -- Validar que horaInicio y horaFin no sean nulas
     ELSEIF NEW.horaInicio IS NULL OR NEW.horaFin IS NULL THEN
         SIGNAL SQLSTATE '45000'
         SET MESSAGE_TEXT = 'Las horas de inicio y/o fin no deben estar vacías.';
-    -- Validar que la diferencia entre horaInicio y horaFin sea al menos de 4 horas
-    ELSEIF TIMESTAMPDIFF(HOUR, NEW.horaInicio, NEW.horaFin) < 4 THEN
-        SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'Debe haber un margen de 4hrs    mo ventana de horario.';
-    -- Validar que horaInicio esté dentro del rango permitido
+    
+    -- Validar que horaInicio y horaFin estén dentro del rango permitido
     ELSEIF NEW.horaInicio < '00:00:00' OR NEW.horaInicio > '23:59:59' THEN
         SIGNAL SQLSTATE '45000'
         SET MESSAGE_TEXT = 'La hora de inicio debe estar entre 00:00:00 y 23:59:59.';
-    -- Validar que horaFin esté dentro del rango permitido
     ELSEIF NEW.horaFin < '00:00:00' OR NEW.horaFin > '23:59:59' THEN
         SIGNAL SQLSTATE '45000'
         SET MESSAGE_TEXT = 'La hora de fin debe estar entre 00:00:00 y 23:59:59.';
+    
+    ELSE
+        -- Calcular la duración considerando el cruce de medianoche
+        IF NEW.horaFin >= NEW.horaInicio THEN
+            SET duration = TIMESTAMPDIFF(HOUR, NEW.horaInicio, NEW.horaFin);
+        ELSE
+            SET duration = TIMESTAMPDIFF(HOUR, NEW.horaInicio, ADDTIME(NEW.horaFin, '24:00:00'));
+        END IF;
+
+        -- Validar que la duración sea al menos de 4 horas
+        IF duration < 4 THEN
+            SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = 'Debe haber un margen de 4 horas como ventana de horario.';
+        END IF;
     END IF;
 END$$
 /*************************************************************/
