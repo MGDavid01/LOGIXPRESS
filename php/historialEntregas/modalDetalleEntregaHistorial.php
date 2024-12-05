@@ -112,7 +112,7 @@ if ($result->num_rows > 0) {
     echo "<tr><th>Drivers</th><td>" . (!empty($entrega['empleados']) ? htmlspecialchars($entrega['empleados']) : "Not defined") . "</td></tr>";
     echo "<tr><th>Vehicles</th><td>" . (!empty($entrega['vehiculos_recurso']) ? htmlspecialchars($entrega['vehiculos_recurso']) : "Not defined") . "</td></tr>";
     echo "<tr><th>Trailers</th><td>" . 
-     ((!empty($entrega['remolques_recurso']) && $entrega['remolques_recurso'] != 'No Aplica') ? 
+     ((!empty($entrega['remolques_recurso']) || $entrega['remolques_recurso'] != 'No Aplica') ? 
      htmlspecialchars($entrega['remolques_recurso']) : "Not defined") . 
      "</td></tr>";
     echo "</table>";
